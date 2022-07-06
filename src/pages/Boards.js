@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import BoardCard from "../components/Board/BoardCard";
+import CreateBoardModal from "../components/Board/CreateBoardModal";
 
 // Router
 import { useSelector } from "react-redux";
@@ -16,6 +17,15 @@ import AddIcon from "@mui/icons-material/Add";
 
 function Boards() {
     const boards = useSelector((state) => state.user.data);
+    const [open, setOpen] = useState(true);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (value) => {
+        setOpen(false);
+    };
 
     return (
         <Box>
@@ -32,6 +42,7 @@ function Boards() {
                         variant="contained"
                         size="small"
                         startIcon={<AddIcon />}
+                        onClick={() => handleClickOpen()}
                     >
                         Add
                     </Button>
@@ -43,6 +54,11 @@ function Boards() {
                         </Grid>
                     ))}
                 </Grid>
+                {open ? (
+                    <CreateBoardModal onClose={handleClose} open={open} />
+                ) : (
+                    ""
+                )}
             </Container>
         </Box>
     );
