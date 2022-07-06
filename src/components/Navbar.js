@@ -1,0 +1,151 @@
+import React from "react";
+import Logo from "../assets/img/Logo.svg";
+
+// MUI
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
+import Divider from "@mui/material/Divider";
+import Button from "@mui/material/Button";
+import MenuIcon from "@mui/icons-material/Menu";
+import FormControl, { useFormControl } from "@mui/material/FormControl";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import InputBase from "@mui/material/InputBase";
+import { alpha, styled } from "@mui/material/styles";
+
+const pages = ["Products", "Pricing", "Blog"];
+const settings = ["Profile", "Account", "Dashboard", "Logout"];
+
+const BoardButton = styled(Button)(({ theme }) => ({
+    backgroundColor: theme.palette.secondary.main,
+    fontSize: 12,
+    color: "#828282",
+    boxShadow: "none",
+    marginLeft: 20,
+    textTransform: "capitalize",
+    "&:hover": {
+        backgroundColor: theme.palette.secondary.main,
+    },
+}));
+
+const InputSearch = styled(InputBase)(({ theme }) => ({
+    color: theme.palette.text.secondary,
+    fontSize: 10,
+    fontWeight: 500,
+    borderRadius: 8,
+    border: "1px solid #FFFFFF",
+    paddingLeft: "1rem",
+    boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
+}));
+
+function Navbar() {
+    const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+    const handleOpenNavMenu = (event) => {
+        setAnchorElNav(event.currentTarget);
+    };
+    const handleOpenUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
+    };
+
+    const handleCloseNavMenu = () => {
+        setAnchorElNav(null);
+    };
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
+
+    return (
+        <AppBar
+            position="static"
+            sx={{
+                backgroundColor: "transparent",
+                border: "none",
+                boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.05)",
+            }}
+        >
+            <Box>
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                    <Toolbar>
+                        <IconButton>
+                            <img src={Logo} alt="pag-logo"></img>
+                        </IconButton>
+                        <Typography
+                            variant="h1"
+                            sx={{
+                                ml: 4,
+                                mr: 2,
+                                color: "#333333",
+                            }}
+                        >
+                            Devchallenges Board
+                        </Typography>
+                        <Divider
+                            orientation="vertical"
+                            variant="middle"
+                            flexItem
+                        />
+
+                        <BoardButton
+                            variant="contained"
+                            startIcon={<MenuIcon fontSize="large" />}
+                        >
+                            All board
+                        </BoardButton>
+                    </Toolbar>
+                    <Toolbar sx={{ gap: 2 }}>
+                        <FormControl
+                            sx={{
+                                position: "relative",
+                                width: "65ch",
+                                height: "60%",
+                            }}
+                        >
+                            <InputSearch
+                                placeholder="Keyword..."
+                                sx={{ height: "100%" }}
+                            />
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    position: "absolute",
+                                    right: 4,
+                                    top: 4,
+                                    height: "75%",
+                                    textTransform: "capitalize",
+                                }}
+                            >
+                                Search
+                            </Button>
+                        </FormControl>
+
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                            <Avatar
+                                variant="square"
+                                sx={{ mr: 1, borderRadius: 1 }}
+                            >
+                                N
+                            </Avatar>
+                            <Typography
+                                variant="body2"
+                                sx={{ color: "#333333" }}
+                            >
+                                Xanthe Neal
+                            </Typography>
+                            <IconButton>
+                                <ExpandMoreIcon />
+                            </IconButton>
+                        </Box>
+                    </Toolbar>
+                </Box>
+            </Box>
+        </AppBar>
+    );
+}
+
+export default Navbar;
