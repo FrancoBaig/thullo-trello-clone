@@ -40,7 +40,7 @@ function Boards() {
     };
 
     return (
-        <Box>
+        <Box sx={{ backgroundColor: "#f8f9fd" }}>
             <Navbar />
             <Container maxWidth="lg" sx={{ mt: "4rem" }}>
                 <Stack

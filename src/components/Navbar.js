@@ -76,7 +76,7 @@ function Navbar() {
         <AppBar
             position="static"
             sx={{
-                backgroundColor: "transparent",
+                backgroundColor: "#FFFFFF",
                 border: "none",
                 boxShadow: "0px 2px 2px rgba(0, 0, 0, 0.05)",
             }}

@@ -13,6 +13,8 @@ import Button from "@mui/material/Button";
 import InputBase from "@mui/material/InputBase";
 import AddIcon from "@mui/icons-material/Add";
 
+import CardDetails from "./CardDetails";
+
 const Card = styled(Paper)(({ theme }) => ({
     padding: "1.5rem",
     boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.05)",
@@ -34,6 +36,19 @@ const AddCardButton = styled(Button)(({ theme }) => ({
 function Column({ column, tasks, state, setState }) {
     const [addCard, setAddCard] = useState(false);
     const [newCardInput, setNewCardInput] = useState("");
+    const [open, setOpen] = useState(false);
+    const [task, setTask] = useState({});
+
+    const handleClickOpen = (taskId) => {
+        let element = tasks.find((task) => task.id === taskId);
+        setTask(element);
+        setOpen(true);
+    };
+
+    const handleClose = (value) => {
+        setTask({});
+        setOpen(false);
+    };
 
     const handleNewCard = () => {
         if (newCardInput === "") return;
@@ -47,8 +62,6 @@ function Column({ column, tasks, state, setState }) {
             ...column,
             taskIds: [...column.taskIds, newCard.id],
         };
-
-        console.log("state", state);
 
         // setAddCard(false);
         // setNewCardInput("");
@@ -100,6 +113,9 @@ function Column({ column, tasks, state, setState }) {
                                             ref={draggableProvided.innerRef}
                                             {...draggableProvided.draggableProps}
                                             {...draggableProvided.dragHandleProps}
+                                            onClick={() =>
+                                                handleClickOpen(task.id)
+                                            }
                                         >
                                             <Stack spacing={2}>
                                                 <Typography variant="h3">
@@ -161,6 +177,16 @@ function Column({ column, tasks, state, setState }) {
             <AddCardButton fullWidth endIcon={<AddIcon />}>
                 Add a card
             </AddCardButton>
+            {open ? (
+                <CardDetails
+                    column={column.title}
+                    task={task}
+                    onClose={handleClose}
+                    open={open}
+                />
+            ) : (
+                ""
+            )}
         </Box>
     );
 }
