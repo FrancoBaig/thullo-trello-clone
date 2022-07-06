@@ -61,7 +61,11 @@ function CreateBoardModal({ onClose, open }) {
                     </OptionButton>
                 </Stack>
                 <Stack direction="row" spacing={3} justifyContent="flex-end">
-                    <Button color="secondary" sx={{ color: "#999999" }}>
+                    <Button
+                        color="secondary"
+                        sx={{ color: "#999999" }}
+                        onClick={() => onClose()}
+                    >
                         Cancel
                     </Button>
                     <Button variant="contained" startIcon={<AddIcon />}>

@@ -3,8 +3,11 @@ import Navbar from "../components/Navbar";
 import BoardCard from "../components/Board/BoardCard";
 import CreateBoardModal from "../components/Board/CreateBoardModal";
 
-// Router
+// Redux
 import { useSelector } from "react-redux";
+
+// Router
+import { useNavigate } from "react-router-dom";
 
 // MUI
 import Box from "@mui/material/Box";
@@ -17,7 +20,8 @@ import AddIcon from "@mui/icons-material/Add";
 
 function Boards() {
     const boards = useSelector((state) => state.user.data);
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -25,6 +29,14 @@ function Boards() {
 
     const handleClose = (value) => {
         setOpen(false);
+    };
+
+    const handleRedirectToBoard = (idBoard) => {
+        console.log(idBoard);
+
+        if (boards.find((board) => board.id === idBoard) === undefined) return;
+
+        navigate(`/${idBoard}`, { replace: true });
     };
 
     return (
@@ -49,7 +61,12 @@ function Boards() {
                 </Stack>
                 <Grid container spacing={3}>
                     {boards.map((board) => (
-                        <Grid item xs={3} key={board.id}>
+                        <Grid
+                            item
+                            xs={3}
+                            key={board.id}
+                            onClick={() => handleRedirectToBoard(board.id)}
+                        >
                             <BoardCard {...board} />
                         </Grid>
                     ))}
