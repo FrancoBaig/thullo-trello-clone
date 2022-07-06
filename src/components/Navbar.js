@@ -1,6 +1,12 @@
 import React from "react";
 import Logo from "../assets/img/Logo.svg";
 
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+
+// Router
+import { useParams, useNavigate } from "react-router-dom";
+
 // MUI
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -44,6 +50,15 @@ const InputSearch = styled(InputBase)(({ theme }) => ({
 function Navbar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const state = useSelector((state) => state.user);
+    const userImg = state.user.img_url;
+    const userName = state.user.name;
+    const { boardId } = useParams();
+    let navigate = useNavigate();
+
+    console.log(boardId);
+
+    console.log(userImg, userName);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -72,31 +87,41 @@ function Navbar() {
             <Box>
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                     <Toolbar>
-                        <IconButton>
+                        <IconButton
+                            onClick={() => navigate("/", { replace: true })}
+                        >
                             <img src={Logo} alt="pag-logo"></img>
                         </IconButton>
-                        <Typography
-                            variant="h1"
-                            sx={{
-                                ml: 4,
-                                mr: 2,
-                                color: "#333333",
-                            }}
-                        >
-                            Devchallenges Board
-                        </Typography>
-                        <Divider
-                            orientation="vertical"
-                            variant="middle"
-                            flexItem
-                        />
-
-                        <BoardButton
-                            variant="contained"
-                            startIcon={<MenuIcon fontSize="large" />}
-                        >
-                            All board
-                        </BoardButton>
+                        {boardId !== undefined ? (
+                            <>
+                                <Typography
+                                    variant="h1"
+                                    sx={{
+                                        ml: 4,
+                                        mr: 2,
+                                        color: "#333333",
+                                    }}
+                                >
+                                    Devchallenges Board
+                                </Typography>
+                                <Divider
+                                    orientation="vertical"
+                                    variant="middle"
+                                    flexItem
+                                />
+                                <BoardButton
+                                    variant="contained"
+                                    startIcon={<MenuIcon fontSize="large" />}
+                                    onClick={() =>
+                                        navigate("/", { replace: true })
+                                    }
+                                >
+                                    All board
+                                </BoardButton>
+                            </>
+                        ) : (
+                            ""
+                        )}
                     </Toolbar>
                     <Toolbar sx={{ gap: 2 }}>
                         <FormControl
@@ -128,14 +153,13 @@ function Navbar() {
                             <Avatar
                                 variant="square"
                                 sx={{ mr: 1, borderRadius: 1 }}
-                            >
-                                N
-                            </Avatar>
+                                src={userImg}
+                            />
                             <Typography
                                 variant="body2"
                                 sx={{ color: "#333333" }}
                             >
-                                Xanthe Neal
+                                {userName}
                             </Typography>
                             <IconButton>
                                 <ExpandMoreIcon />

@@ -5,6 +5,7 @@ import "./index.css";
 // pages
 import App from "./App";
 import Signup from "./pages/Signup";
+import Boards from "./pages/Boards";
 
 // Redux
 import { Provider } from "react-redux";
@@ -26,7 +27,8 @@ root.render(
             <BrowserRouter>
                 <Routes>
                     <Route path="/signup" element={<Signup />} />
-                    <Route path="/" element={<App />} />
+                    <Route path="/" element={<Boards />} />
+                    <Route path="/:boardId" element={<App />} />
                 </Routes>
             </BrowserRouter>
         </Provider>
