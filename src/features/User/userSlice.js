@@ -41,7 +41,7 @@ const initialState = {
                 1: { id: "1", content: " take out the garbage" },
                 2: { id: "2", content: "Watch my favorite show" },
                 3: { id: "3", content: "Charge my phone" },
-                4: { id: "4", content: "Cook dinner" },
+                4: { id: "4", content: "Terminar proyecto de Thullo" },
             },
             columns: {
                 "col-1": {

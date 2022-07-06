@@ -54,11 +54,8 @@ function Navbar() {
     const userImg = state.user.img_url;
     const userName = state.user.name;
     const { boardId } = useParams();
+    const actualBoard = state.data.find((el) => el.id === boardId);
     let navigate = useNavigate();
-
-    console.log(boardId);
-
-    console.log(userImg, userName);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -102,7 +99,7 @@ function Navbar() {
                                         color: "#333333",
                                     }}
                                 >
-                                    Devchallenges Board
+                                    {actualBoard.title}
                                 </Typography>
                                 <Divider
                                     orientation="vertical"

@@ -37,15 +37,6 @@ function BoardNav() {
                     <Avatar variant="square" sx={{ borderRadius: 1 }}>
                         N
                     </Avatar>
-                    <Avatar variant="square" sx={{ borderRadius: 1 }}>
-                        N
-                    </Avatar>
-                    <Avatar variant="square" sx={{ borderRadius: 1 }}>
-                        N
-                    </Avatar>
-                    <Avatar variant="square" sx={{ borderRadius: 1 }}>
-                        N
-                    </Avatar>
                 </Stack>
 
                 <CustomAddButton size={"large"} />
