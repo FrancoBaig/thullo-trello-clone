@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { addTask } from "../../features/User/userSlice";
+import { addTask, updateActualBoard } from "../../features/User/userSlice";
 
 // DND
 import { Droppable, Draggable } from "react-beautiful-dnd";
@@ -44,15 +44,26 @@ const AddCardButton = styled(Button)(({ theme }) => ({
     },
 }));
 
+const Input = styled(InputBase)(({ theme }) => ({
+    backgroundColor: "#fafbfc",
+    padding: "1rem 1.5rem",
+    border: `1px solid #dfe1e6`,
+    fontSize: "1.4rem",
+
+    borderRadius: theme.shape.borderRadius,
+}));
+
 function Column({ column, tasks }) {
     const dispatch = useDispatch();
     const state = useSelector((state) => state.user.data);
+    const actualBoard = useSelector((state) => state.user.actualBoard);
 
     const [addCard, setAddCard] = useState(false);
     const [newCardInput, setNewCardInput] = useState("");
     const [open, setOpen] = useState(false);
     const [task, setTask] = useState({});
-    const [editingCol, setEditingCol] = useState("");
+    const [editingCol, setEditingCol] = useState(false);
+    const [input, setInput] = useState("");
 
     // Column menu
     const [anchorEl, setAnchorEl] = useState(null);
@@ -61,8 +72,6 @@ function Column({ column, tasks }) {
 
     const handleMenuClick = (event) => {
         setAnchorEl(event.currentTarget);
-        console.log(anchorEl);
-        console.log(openMenu);
     };
 
     const handleMenuClose = () => {
@@ -73,6 +82,22 @@ function Column({ column, tasks }) {
         console.log("rename column");
         console.log("column", column);
 
+        const newColumn = {
+            ...column,
+            title: input,
+        };
+
+        const newBoard = {
+            ...actualBoard,
+            columns: actualBoard.columns.map((col) =>
+                col.id === column.id ? newColumn : col
+            ),
+        };
+
+        dispatch(updateActualBoard(newBoard));
+
+        setInput("");
+        setEditingCol(false);
         handleMenuClose();
     };
 
@@ -95,14 +120,17 @@ function Column({ column, tasks }) {
         const idTask = `task-${new Date().getTime()}`;
 
         const newCard = {
-            5: {
-                id: idTask,
-                content: newCardInput,
-            },
+            id: idTask,
+            content: newCardInput,
+            description: "",
+            url_cover: "",
         };
 
-        const payload = { newCard, column };
-        dispatch(addTask(payload));
+        console.log("actualBoard", actualBoard);
+
+        // const newBoard = actualBoard.columns.map(col => col.id === column ? )
+
+        // dispatch(addTask(newCard, column));
 
         setAddCard(false);
         setNewCardInput("");
@@ -115,7 +143,31 @@ function Column({ column, tasks }) {
                 justifyContent="space-between"
                 alignItems="center"
             >
-                <Typography variant="h4">{column.title}</Typography>
+                {editingCol ? (
+                    <>
+                        <Input
+                            placeholder="description..."
+                            value={input}
+                            onChange={({ target }) => setInput(target.value)}
+                        />
+
+                        <Box>
+                            <Button
+                                variant="contained"
+                                color="success"
+                                size="small"
+                                sx={{
+                                    mt: "1rem",
+                                }}
+                                onClick={() => handleRenameColumn()}
+                            >
+                                Save
+                            </Button>
+                        </Box>
+                    </>
+                ) : (
+                    <Typography variant="h4">{column.title}</Typography>
+                )}
                 <IconButton
                     id="basic-button"
                     aria-controls={openMenu ? "basic-menu" : undefined}
@@ -134,7 +186,9 @@ function Column({ column, tasks }) {
                         "aria-labelledby": "basic-button",
                     }}
                 >
-                    <MenuItem onClick={handleRenameColumn}>Rename</MenuItem>
+                    <MenuItem onClick={() => setEditingCol(true)}>
+                        Rename
+                    </MenuItem>
                     <Divider />
                     <MenuItem onClick={handleMenuClose}>
                         Delete this list

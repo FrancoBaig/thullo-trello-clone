@@ -100,19 +100,6 @@ export const userSlice = createSlice({
     reducers: {
         addTask(state, action) {
             const { newCard, column } = action.payload;
-
-            /*
-            const newColumn = {
-                ...column,
-                taskIds: [...column.taskIds, newCard.id],
-            };
-            
-            newColumn.tasks.push(newCard);
-            ##
-            state.user.data.map((col) =>
-            col.id === column.id ? newColumn : col
-            );
-            */
         },
         changeActualBoard(state, action) {
             const board = action.payload;
