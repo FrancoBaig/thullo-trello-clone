@@ -108,7 +108,7 @@ export const userSlice = createSlice({
             };
             
             newColumn.tasks.push(newCard);
-            
+            ##
             state.user.data.map((col) =>
             col.id === column.id ? newColumn : col
             );
@@ -122,21 +122,31 @@ export const userSlice = createSlice({
                 actualBoard: board,
             };
         },
-        changeDescription(state, action) {
+        updateActualBoard(state, action) {
             const newBoard = action.payload;
-            const updated = state.data.map((el) =>
-                el.id === newBoard.id ? newBoard : el
-            );
+
+            console.log("Actualizando..");
 
             return {
                 ...state,
-                data: [...updated],
+                data: state.data.map((board) =>
+                    board.id === newBoard.id ? newBoard : board
+                ),
                 actualBoard: newBoard,
             };
+            /*
+            return {
+                ...state,
+                data: state.data.map((el) =>
+                el.id === newBoard.id ? newBoard : el
+                ),
+                actualBoard: newBoard,
+            };
+            */
         },
     },
 });
 
-export const { addTask, changeActualBoard, changeDescription } =
+export const { addTask, changeActualBoard, updateActualBoard } =
     userSlice.actions;
 export default userSlice.reducer;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +20,9 @@ import CustomAddButton from "./CustomAddButton";
 import Button from "@mui/material/Button";
 import InputBase from "@mui/material/InputBase";
 import AddIcon from "@mui/icons-material/Add";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Divider from "@mui/material/Divider";
 
 import CardDetails from "./CardDetails";
 
@@ -49,7 +52,31 @@ function Column({ column, tasks }) {
     const [newCardInput, setNewCardInput] = useState("");
     const [open, setOpen] = useState(false);
     const [task, setTask] = useState({});
+    const [editingCol, setEditingCol] = useState("");
 
+    // Column menu
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const openMenu = Boolean(anchorEl);
+
+    const handleMenuClick = (event) => {
+        setAnchorEl(event.currentTarget);
+        console.log(anchorEl);
+        console.log(openMenu);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleRenameColumn = () => {
+        console.log("rename column");
+        console.log("column", column);
+
+        handleMenuClose();
+    };
+
+    //
     const handleClickOpen = (taskId) => {
         let element = tasks.find((task) => task.id === taskId);
         setTask(element);
@@ -89,9 +116,30 @@ function Column({ column, tasks }) {
                 alignItems="center"
             >
                 <Typography variant="h4">{column.title}</Typography>
-                <IconButton>
+                <IconButton
+                    id="basic-button"
+                    aria-controls={openMenu ? "basic-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={openMenu ? "true" : undefined}
+                    onClick={handleMenuClick}
+                >
                     <MoreHorizIcon />
                 </IconButton>
+                <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={openMenu}
+                    onClose={handleMenuClose}
+                    MenuListProps={{
+                        "aria-labelledby": "basic-button",
+                    }}
+                >
+                    <MenuItem onClick={handleRenameColumn}>Rename</MenuItem>
+                    <Divider />
+                    <MenuItem onClick={handleMenuClose}>
+                        Delete this list
+                    </MenuItem>
+                </Menu>
             </Stack>
             <Droppable droppableId={column.id}>
                 {(droppableProvided, droppableSnapshot) => (
