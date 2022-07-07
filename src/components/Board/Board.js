@@ -2,6 +2,7 @@ import React from "react";
 import BoardNav from "./BoardNav";
 import DragAndDrop from "./DragAndDrop";
 import Box from "@mui/material/Box";
+import BoardDrawer from "./BoardDrawer";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +15,7 @@ function Board() {
         <Box sx={{ m: 3 }}>
             <BoardNav />
             <DragAndDrop />
+            <BoardDrawer />
         </Box>
     );
 }

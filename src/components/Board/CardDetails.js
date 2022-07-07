@@ -17,6 +17,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import LabelIcon from "@mui/icons-material/Label";
 import ArticleIcon from "@mui/icons-material/Article";
 import EditIcon from "@mui/icons-material/Edit";
+import CardMedia from "@mui/material/CardMedia";
 
 import Grid from "@mui/material/Grid";
 
@@ -50,10 +51,12 @@ function CardDetails({ onClose, open, task, column }) {
         <Dialog onClose={onClose} open={open}>
             <Grid container spacing={2} sx={{ padding: "2rem" }}>
                 <Grid item xs={12}>
-                    <img
-                        src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHdvcmt8ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60"
-                        alt="photo"
-                        width="100%"
+                    <CardMedia
+                        component="img"
+                        height="140"
+                        image="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHdvcmt8ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60"
+                        alt="green iguana"
+                        sx={{ borderRadius: 1 }}
                     />
                 </Grid>
                 <Grid item xs={8}>

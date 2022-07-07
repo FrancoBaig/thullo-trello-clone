@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+
+import BoardDrawer from "./BoardDrawer";
 
 // MUI
 import Box from "@mui/material/Box";
@@ -22,6 +24,8 @@ const OptionButton = styled(Button)(({ theme }) => ({
 }));
 
 function BoardNav() {
+    const [state, setState] = useState(false);
+
     return (
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Stack direction="row" spacing={2}>
@@ -50,9 +54,11 @@ function BoardNav() {
                         fontSize: "2rem",
                     },
                 }}
+                onClick={() => setState(true)}
             >
                 Show Menu
             </OptionButton>
+            <BoardDrawer state={state} setState={setState} />
         </Box>
     );
 }

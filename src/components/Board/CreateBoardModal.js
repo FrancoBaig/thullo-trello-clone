@@ -7,6 +7,7 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import Button from "@mui/material/Button";
+import CardMedia from "@mui/material/CardMedia";
 
 import LockIcon from "@mui/icons-material/Lock";
 import ImageIcon from "@mui/icons-material/Image";
@@ -39,9 +40,12 @@ function CreateBoardModal({ onClose, open }) {
     return (
         <Dialog onClose={onClose} open={open}>
             <Stack spacing={2} sx={{ padding: "2rem" }}>
-                <img
-                    src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHdvcmt8ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60"
-                    alt="photo"
+                <CardMedia
+                    component="img"
+                    height="140"
+                    image="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHdvcmt8ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60"
+                    alt="green iguana"
+                    sx={{ borderRadius: 1 }}
                 />
                 <Input placeholder="Add board title"></Input>
                 <Stack direction="row" spacing={3}>
