@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+
+// Compoennts
 import BoardDrawer from "./BoardDrawer";
 
 // MUI
@@ -25,6 +29,7 @@ const OptionButton = styled(Button)(({ theme }) => ({
 
 function BoardNav() {
     const [state, setState] = useState(false);
+    const store = useSelector((store) => store.user.data);
 
     return (
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -58,7 +63,7 @@ function BoardNav() {
             >
                 Show Menu
             </OptionButton>
-            <BoardDrawer state={state} setState={setState} />
+            <BoardDrawer state={state} setState={setState} store={store} />
         </Box>
     );
 }

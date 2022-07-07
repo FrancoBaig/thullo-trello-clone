@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Logo from "../assets/img/Logo.svg";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
+import { changeActualBoard } from "../features/User/userSlice";
 
 // Router
 import { useParams, useNavigate } from "react-router-dom";
@@ -48,13 +49,19 @@ const InputSearch = styled(InputBase)(({ theme }) => ({
 }));
 
 function Navbar() {
+    const dispatch = useDispatch();
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const state = useSelector((state) => state.user);
     const userImg = state.user.img_url;
     const userName = state.user.name;
     const { boardId } = useParams();
-    const actualBoard = state.data.find((el) => el.id === boardId);
+    const actualBoard = state.actualBoard;
+
+    useEffect(() => {
+        let board = state.data.find((el) => el.id === boardId);
+        dispatch(changeActualBoard(board));
+    }, [boardId]);
 
     let navigate = useNavigate();
 

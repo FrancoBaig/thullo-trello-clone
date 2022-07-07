@@ -1,4 +1,9 @@
 import React, { useState, Fragment } from "react";
+
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+
+// MUI
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -9,7 +14,9 @@ import Button from "@mui/material/Button";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
 import FeedIcon from "@mui/icons-material/Feed";
 
-function BoardDrawer({ state, setState }) {
+function BoardDrawer({ state, setState, store }) {
+    console.log("store from Drawer", store);
+
     return (
         <Drawer
             open={state}
