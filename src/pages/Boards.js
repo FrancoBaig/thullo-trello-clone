@@ -32,8 +32,6 @@ function Boards() {
     };
 
     const handleRedirectToBoard = (idBoard) => {
-        console.log(idBoard);
-
         if (boards.find((board) => board.id === idBoard) === undefined) return;
 
         navigate(`/${idBoard}`, { replace: true });

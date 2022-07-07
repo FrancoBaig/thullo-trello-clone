@@ -14,8 +14,12 @@ import Button from "@mui/material/Button";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
 import FeedIcon from "@mui/icons-material/Feed";
 
-function BoardDrawer({ state, setState, store }) {
-    console.log("store from Drawer", store);
+function BoardDrawer({ state, setState }) {
+    const actualBoard = useSelector((state) => state.user.actualBoard);
+
+    if (actualBoard === undefined) {
+        return <h1>waiting</h1>;
+    }
 
     return (
         <Drawer
@@ -42,16 +46,7 @@ function BoardDrawer({ state, setState, store }) {
                     <Typography variant="caption">Description</Typography>
                 </Stack>
 
-                <Typography variant="h3">
-                    Ideas are created and share here through a card. Here you
-                    can describe what you'd like to accomplish. For example you
-                    can follow three simple questions to create the card related
-                    to your idea: * Why ? (Why do you wish to do it ?) * What ?
-                    (What it is it, what are the goals, who is concerned) * How
-                    ? (How do you think you can do it ? What are the required
-                    steps ?) After creation, you can move your card to the todo
-                    list.
-                </Typography>
+                <Typography variant="h3">{actualBoard.description}</Typography>
 
                 <Stack
                     direction="row"

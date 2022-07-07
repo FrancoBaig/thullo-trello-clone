@@ -56,10 +56,10 @@ function Navbar() {
     const userImg = state.user.img_url;
     const userName = state.user.name;
     const { boardId } = useParams();
-    const actualBoard = state.actualBoard;
 
     useEffect(() => {
         let board = state.data.find((el) => el.id === boardId);
+        if (board === undefined) return;
         dispatch(changeActualBoard(board));
     }, [boardId]);
 
@@ -107,7 +107,7 @@ function Navbar() {
                                         color: "#333333",
                                     }}
                                 >
-                                    {actualBoard.title}
+                                    {state.actualBoard.title}
                                 </Typography>
                                 <Divider
                                     orientation="vertical"
