@@ -55,6 +55,7 @@ function Navbar() {
     const userName = state.user.name;
     const { boardId } = useParams();
     const actualBoard = state.data.find((el) => el.id === boardId);
+
     let navigate = useNavigate();
 
     const handleOpenNavMenu = (event) => {

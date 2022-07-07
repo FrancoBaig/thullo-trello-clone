@@ -1,5 +1,13 @@
 import React, { useState } from "react";
+
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { addTask } from "../../features/User/userSlice";
+
+// DND
 import { Droppable, Draggable } from "react-beautiful-dnd";
+
+// MUI
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -33,7 +41,10 @@ const AddCardButton = styled(Button)(({ theme }) => ({
     },
 }));
 
-function Column({ column, tasks, state, setState }) {
+function Column({ column, tasks }) {
+    const dispatch = useDispatch();
+    const state = useSelector((state) => state.user.data);
+
     const [addCard, setAddCard] = useState(false);
     const [newCardInput, setNewCardInput] = useState("");
     const [open, setOpen] = useState(false);
@@ -50,21 +61,24 @@ function Column({ column, tasks, state, setState }) {
         setOpen(false);
     };
 
-    const handleNewCard = () => {
+    const handleNewCard = (e) => {
+        e.preventDefault();
         if (newCardInput === "") return;
 
+        const idTask = `task-${new Date().getTime()}`;
+
         const newCard = {
-            id: `task-${new Date().getTime()}`,
-            content: newCardInput,
+            5: {
+                id: idTask,
+                content: newCardInput,
+            },
         };
 
-        const newColumn = {
-            ...column,
-            taskIds: [...column.taskIds, newCard.id],
-        };
+        const payload = { newCard, column };
+        dispatch(addTask(payload));
 
-        // setAddCard(false);
-        // setNewCardInput("");
+        setAddCard(false);
+        setNewCardInput("");
     };
 
     return (
@@ -154,27 +168,33 @@ function Column({ column, tasks, state, setState }) {
             </Droppable>
             {addCard ? (
                 <Card>
-                    <InputBase
-                        placeholder="Enter a title for this card..."
-                        value={newCardInput}
-                        onChange={({ target }) => {
-                            setNewCardInput(target.value);
-                        }}
-                    />
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="success"
-                        size="small"
-                        onClick={() => handleNewCard()}
-                    >
-                        Save
-                    </Button>
+                    <form onSubmit={handleNewCard}>
+                        <InputBase
+                            placeholder="Enter a title for this card..."
+                            value={newCardInput}
+                            onChange={({ target }) => {
+                                setNewCardInput(target.value);
+                            }}
+                        />
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            color="success"
+                            size="small"
+                            onClick={(e) => handleNewCard(e)}
+                        >
+                            Save
+                        </Button>
+                    </form>
                 </Card>
             ) : (
                 ""
             )}
-            <AddCardButton fullWidth endIcon={<AddIcon />}>
+            <AddCardButton
+                fullWidth
+                endIcon={<AddIcon />}
+                onClick={() => setAddCard(true)}
+            >
                 Add a card
             </AddCardButton>
             {open ? (
