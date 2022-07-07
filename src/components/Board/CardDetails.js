@@ -98,15 +98,20 @@ function CardDetails({ onClose, open, task, column }) {
     return (
         <Dialog onClose={onClose} open={open}>
             <Grid container spacing={2} sx={{ padding: "2rem" }}>
-                <Grid item xs={12}>
-                    <CardMedia
-                        component="img"
-                        height="140"
-                        image="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHdvcmt8ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60"
-                        alt="green iguana"
-                        sx={{ borderRadius: 1 }}
-                    />
-                </Grid>
+                {openCard.url_cover !== "" ? (
+                    <Grid item xs={12}>
+                        <CardMedia
+                            component="img"
+                            height="140"
+                            image={openCard.url_cover}
+                            alt="green iguana"
+                            sx={{ borderRadius: 1 }}
+                        />
+                    </Grid>
+                ) : (
+                    ""
+                )}
+
                 <Grid item xs={8}>
                     <Stack direction="row" spacing={1}>
                         {editingTitle ? (

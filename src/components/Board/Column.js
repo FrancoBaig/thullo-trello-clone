@@ -23,6 +23,7 @@ import AddIcon from "@mui/icons-material/Add";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
+import CardMedia from "@mui/material/CardMedia";
 
 import CardDetails from "./CardDetails";
 
@@ -126,14 +127,21 @@ function Column({ column, tasks }) {
             url_cover: "",
         };
 
-        console.log("actualBoard", actualBoard);
+        /**
+         * 1. Llevar la tarea completa a boardActual -> tasks.
+         * 2. ir a boardActual -> columns -> (la qe tiene el mismo id) meter el id de la nueva task
+         * 3. crer un nuevoBoard y mandar a dispatch
+         *
+         * hacer todo en actualBoard y simplemente copiar en el otro
+         */
 
-        // const newBoard = actualBoard.columns.map(col => col.id === column ? )
+        // const payload = { newCard, column };
 
-        // dispatch(addTask(newCard, column));
+        // dispatch(addTask(payload));
 
-        setAddCard(false);
-        setNewCardInput("");
+        // setAddCard(false);
+        // setNewCardInput("");
+        // console.log("actualBoard", actualBoard);
     };
 
     return (
@@ -234,6 +242,18 @@ function Column({ column, tasks }) {
                                             }
                                         >
                                             <Stack spacing={2}>
+                                                {task.url_cover !== "" ? (
+                                                    <CardMedia
+                                                        component="img"
+                                                        height="100"
+                                                        image={task.url_cover}
+                                                        alt="green iguana"
+                                                        sx={{ borderRadius: 1 }}
+                                                    />
+                                                ) : (
+                                                    ""
+                                                )}
+
                                                 <Typography variant="h3">
                                                     {task.content}
                                                 </Typography>

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { current } from "@reduxjs/toolkit";
 
 const initialState = {
     user: {
@@ -20,16 +21,29 @@ const initialState = {
                 {
                     id: "1",
                     content: " take out the garbage",
+                    url_cover:
+                        "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHdvcmt8ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60",
                     description:
                         "Udeas are created and share here through a card. Here you can describe what you'd like to accomplish.",
                 },
                 {
                     id: "2",
+                    url_cover: "",
                     content: "Watch my favorite show",
                     description: "",
                 },
-                { id: "3", content: "Charge my phone", description: "" },
-                { id: "4", content: "Cook dinner", description: "" },
+                {
+                    id: "3",
+                    content: "Charge my phone",
+                    url_cover: "",
+                    description: "",
+                },
+                {
+                    id: "4",
+                    content: "Cook dinner",
+                    url_cover: "",
+                    description: "",
+                },
             ],
             columns: [
                 {
@@ -55,16 +69,28 @@ const initialState = {
                 {
                     id: "1",
                     content: " take out the garbage",
+                    url_cover: "",
                     description:
                         "Udeas are created and share here through a card. Here you can describe what you'd like to accomplish.",
                 },
                 {
                     id: "2",
                     content: "Watch my favorite show",
+                    url_cover: "",
                     description: "",
                 },
-                { id: "3", content: "Charge my phone", description: "" },
-                { id: "4", content: "Cook dinner", description: "" },
+                {
+                    id: "3",
+                    content: "Charge my phone",
+                    url_cover: "",
+                    description: "",
+                },
+                {
+                    id: "4",
+                    content: "Cook dinner",
+                    url_cover: "",
+                    description: "",
+                },
             ],
             columns: [
                 {
@@ -121,15 +147,6 @@ export const userSlice = createSlice({
                 ),
                 actualBoard: newBoard,
             };
-            /*
-            return {
-                ...state,
-                data: state.data.map((el) =>
-                el.id === newBoard.id ? newBoard : el
-                ),
-                actualBoard: newBoard,
-            };
-            */
         },
     },
 });
