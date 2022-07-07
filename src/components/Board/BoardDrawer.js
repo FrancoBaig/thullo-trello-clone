@@ -2,6 +2,7 @@ import React, { useState, Fragment } from "react";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
+import { changeDescription } from "../../features/User/userSlice";
 
 // MUI
 import Drawer from "@mui/material/Drawer";
@@ -10,16 +11,40 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
+import TextareaAutosize from "@mui/material/TextareaAutosize";
+import { alpha, styled } from "@mui/material/styles";
 
 import PersonPinIcon from "@mui/icons-material/PersonPin";
 import FeedIcon from "@mui/icons-material/Feed";
 
-function BoardDrawer({ state, setState }) {
-    const actualBoard = useSelector((state) => state.user.actualBoard);
+const CustomTextArea = styled(TextareaAutosize)(({ theme }) => ({
+    fontFamily: theme.typography.h1.fontFamily,
+    fontSize: "1.4rem",
+    resize: "vertical",
+    padding: ".5rem",
+    border: "1px solid #828282",
+    borderRadius: 4,
+    outline: "none",
+}));
 
-    if (actualBoard === undefined) {
-        return <h1>waiting</h1>;
-    }
+function BoardDrawer({ state, setState }) {
+    const dispatch = useDispatch();
+    const actualBoard = useSelector((state) => state.user.actualBoard);
+    const paSaber = useSelector((state) => state);
+    const [editing, setEditing] = useState(false);
+    const [input, setInput] = useState("");
+
+    const handleUpdateDescription = () => {
+        const newBoard = {
+            ...actualBoard,
+            description: input,
+        };
+
+        dispatch(changeDescription(newBoard));
+
+        setEditing(!editing);
+        setInput("");
+    };
 
     return (
         <Drawer
@@ -43,10 +68,61 @@ function BoardDrawer({ state, setState }) {
                     sx={{ color: "#BDBDBD" }}
                 >
                     <PersonPinIcon />
-                    <Typography variant="caption">Description</Typography>
+                    <Typography variant="body2">Description</Typography>
                 </Stack>
 
-                <Typography variant="h3">{actualBoard.description}</Typography>
+                <Box>
+                    {editing ? (
+                        <>
+                            <CustomTextArea
+                                aria-label="description"
+                                minRows={3}
+                                placeholder="description..."
+                                value={input}
+                                style={{ width: "100%" }}
+                                onChange={({ target }) =>
+                                    setInput(target.value)
+                                }
+                            />
+                            <Button
+                                variant="contained"
+                                color="success"
+                                size="small"
+                                sx={{
+                                    mt: "1rem",
+                                }}
+                                onClick={() => handleUpdateDescription()}
+                            >
+                                Save
+                            </Button>
+                        </>
+                    ) : (
+                        <>
+                            <Typography
+                                variant="h5"
+                                sx={{ whiteSpace: "pre-line" }}
+                            >
+                                {actualBoard.description}
+                            </Typography>
+                            <Button
+                                variant="outlined"
+                                color="secondary"
+                                size="small"
+                                sx={{
+                                    mt: "1rem",
+                                    borderColor: "#828282",
+                                    color: "#828282",
+                                }}
+                                onClick={() => {
+                                    setInput(actualBoard.description);
+                                    setEditing(!editing);
+                                }}
+                            >
+                                Edit
+                            </Button>
+                        </>
+                    )}
+                </Box>
 
                 <Stack
                     direction="row"
@@ -55,7 +131,7 @@ function BoardDrawer({ state, setState }) {
                     sx={{ color: "#BDBDBD" }}
                 >
                     <FeedIcon />
-                    <Typography variant="caption">Team</Typography>
+                    <Typography variant="body2">Team</Typography>
                 </Stack>
 
                 <Stack spacing={1}>

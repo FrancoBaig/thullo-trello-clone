@@ -122,8 +122,21 @@ export const userSlice = createSlice({
                 actualBoard: board,
             };
         },
+        changeDescription(state, action) {
+            const newBoard = action.payload;
+            const updated = state.data.map((el) =>
+                el.id === newBoard.id ? newBoard : el
+            );
+
+            return {
+                ...state,
+                data: [...updated],
+                actualBoard: newBoard,
+            };
+        },
     },
 });
 
-export const { addTask, changeActualBoard } = userSlice.actions;
+export const { addTask, changeActualBoard, changeDescription } =
+    userSlice.actions;
 export default userSlice.reducer;
