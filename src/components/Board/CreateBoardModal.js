@@ -1,7 +1,8 @@
 import React from "react";
+import useUnsplash from "../../services/unsplash";
+import UnsplashModal from "../UnsplashModal";
 
 // MUI
-import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
@@ -49,13 +50,7 @@ function CreateBoardModal({ onClose, open }) {
                 />
                 <Input placeholder="Add board title"></Input>
                 <Stack direction="row" spacing={3}>
-                    <OptionButton
-                        variant="contained"
-                        color="secondary"
-                        startIcon={<ImageIcon />}
-                    >
-                        Cover
-                    </OptionButton>
+                    <UnsplashModal />
                     <OptionButton
                         variant="contained"
                         color="secondary"
