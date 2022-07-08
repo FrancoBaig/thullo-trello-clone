@@ -32,7 +32,7 @@ function Boards() {
     };
 
     const handleRedirectToBoard = (idBoard) => {
-        if (boards.find((board) => board.id === idBoard) === undefined) return;
+        if (boards[idBoard] === undefined) return;
 
         navigate(`/${idBoard}`, { replace: true });
     };
@@ -58,14 +58,16 @@ function Boards() {
                     </Button>
                 </Stack>
                 <Grid container spacing={3}>
-                    {boards.map((board) => (
+                    {Object.keys(boards).map((key, index) => (
                         <Grid
                             item
                             xs={3}
-                            key={board.id}
-                            onClick={() => handleRedirectToBoard(board.id)}
+                            key={index}
+                            onClick={() =>
+                                handleRedirectToBoard(boards[key].id)
+                            }
                         >
-                            <BoardCard {...board} />
+                            <BoardCard {...boards[key]} />
                         </Grid>
                     ))}
                 </Grid>

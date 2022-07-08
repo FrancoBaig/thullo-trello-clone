@@ -25,8 +25,9 @@ const reorderColumnList = (sourceCol, startIndex, endIndex) => {
 
 function DragAndDrop() {
     const user = useSelector((state) => state.user);
+
     const { boardId } = useParams();
-    const actualBoard = user.data.find((el) => el.id === boardId);
+    const actualBoard = user.data[boardId];
     const [state, setState] = useState(actualBoard);
 
     const onDragEnd = (result) => {
@@ -43,12 +44,9 @@ function DragAndDrop() {
             return;
         }
 
-        const sourceCol = state.columns.find(
-            (el) => el.id === source.droppableId
-        );
-        const destinationCol = state.columns.find(
-            (el) => el.id === destination.droppableId
-        );
+        // if user drops within the same column but in a different position
+        const sourceCol = state.columns[source.droppableId];
+        const destinationCol = state.columns[destination.droppableId];
 
         if (sourceCol.id === destinationCol.id) {
             const newColumn = reorderColumnList(
@@ -57,16 +55,15 @@ function DragAndDrop() {
                 destination.index
             );
 
-            const newColumns = state.columns.map((el) =>
-                el.id === newColumn.id ? newColumn : el
-            );
-
             const newState = {
                 ...state,
-                columns: [...newColumns],
+                columns: {
+                    ...state.columns,
+                    [newColumn.id]: newColumn,
+                },
             };
-            setState(newState);
 
+            setState(newState);
             return;
         }
 
@@ -85,19 +82,13 @@ function DragAndDrop() {
             taskIds: endTaskIds,
         };
 
-        const newColumns = state.columns.map((col) => {
-            if (col.id === newStartCol.id) {
-                return newStartCol;
-            } else if (col.id === newEndCol.id) {
-                return newEndCol;
-            } else {
-                return col;
-            }
-        });
-
         const newState = {
             ...state,
-            columns: [...newColumns],
+            columns: {
+                ...state.columns,
+                [newStartCol.id]: newStartCol,
+                [newEndCol.id]: newEndCol,
+            },
         };
 
         setState(newState);
@@ -115,12 +106,9 @@ function DragAndDrop() {
             <Stack direction="row" spacing={3}>
                 <DragDropContext onDragEnd={onDragEnd}>
                     {state.columnOrder.map((columnId) => {
-                        const column = state.columns.find(
-                            (el) => el.id === columnId
-                        );
-                        // state.columns[columnId];
-                        const tasks = column.taskIds.map((taskId) =>
-                            state.tasks.find((el) => el.id === taskId)
+                        const column = state.columns[columnId];
+                        const tasks = column.taskIds.map(
+                            (taskId) => state.tasks[taskId]
                         );
 
                         return (

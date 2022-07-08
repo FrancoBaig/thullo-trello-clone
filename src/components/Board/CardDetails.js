@@ -78,9 +78,10 @@ function CardDetails({ onClose, open, task, column }) {
             };
         }
 
-        const newTasks = actualBoard.tasks.map((el) =>
-            el.id === newTask.id ? newTask : el
-        );
+        const newTasks = {
+            ...actualBoard.tasks,
+            [newTask.id]: newTask,
+        };
 
         const newBoard = {
             ...actualBoard,
@@ -93,8 +94,6 @@ function CardDetails({ onClose, open, task, column }) {
         setEditingTitle(false);
         setInputDescription("");
         setInputName("");
-
-        console.log("actualBoard", actualBoard);
     };
 
     return (

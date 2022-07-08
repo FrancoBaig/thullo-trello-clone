@@ -58,7 +58,7 @@ function Navbar() {
     const { boardId } = useParams();
 
     useEffect(() => {
-        let board = state.data.find((el) => el.id === boardId);
+        let board = state.data[boardId];
         if (board === undefined) return;
         dispatch(changeActualBoard(board));
     }, [boardId]);

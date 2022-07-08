@@ -90,9 +90,10 @@ function Column({ column, tasks }) {
 
         const newBoard = {
             ...actualBoard,
-            columns: actualBoard.columns.map((col) =>
-                col.id === column.id ? newColumn : col
-            ),
+            columns: {
+                ...actualBoard.columns,
+                [column.id]: newColumn,
+            },
         };
 
         dispatch(updateActualBoard(newBoard));

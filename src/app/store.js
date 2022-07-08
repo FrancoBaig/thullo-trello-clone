@@ -6,3 +6,10 @@ export const store = configureStore({
         user: userReducer,
     },
 });
+
+store.subscribe(() => {
+    const storeNow = store.getState();
+    console.log("---------------------");
+    console.log("Store now", storeNow);
+    console.log("---------------------");
+});

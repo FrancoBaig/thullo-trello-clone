@@ -8,8 +8,8 @@ const initialState = {
         token: "Boea 123",
         img_url: "https://www.blexar.com/avatar.png",
     },
-    data: [
-        {
+    data: {
+        "board-1": {
             id: "board-1",
             title: "Devchallenges Board",
             isPrivate: true,
@@ -17,95 +17,48 @@ const initialState = {
                 "Ideas are created and share here through a card. Here you can describe what you'd like to accomplish. For example you can follow three simple questions to create the card relatedto your idea: * Why ? (Why do you wish to do it ?) * What ?(What it is it, what are the goals, who is concerned) * How? (How do you think you can do it ? What are the requiredsteps ?) After creation, you can move your card to the todolist.",
             image_url:
                 "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d29ya3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400&q=60",
-            tasks: [
-                {
-                    id: "1",
+            tasks: {
+                "task-1": {
+                    id: "task-1",
                     content: " take out the garbage",
                     url_cover:
                         "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHdvcmt8ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60",
                     description:
                         "Udeas are created and share here through a card. Here you can describe what you'd like to accomplish.",
                 },
-                {
-                    id: "2",
+                "task-2": {
+                    id: "task-2",
                     url_cover: "",
                     content: "Watch my favorite show",
                     description: "",
                 },
-                {
-                    id: "3",
+                "task-3": {
+                    id: "task-3",
                     content: "Charge my phone",
                     url_cover: "",
                     description: "",
                 },
-                {
-                    id: "4",
+                "task-4": {
+                    id: "task-4",
                     content: "Cook dinner",
                     url_cover: "",
                     description: "",
                 },
-            ],
-            columns: [
-                {
+            },
+            columns: {
+                "col-1": {
                     id: "col-1",
                     title: "To do",
-                    taskIds: ["1", "2", "3"],
+                    taskIds: ["task-1", "task-2", "task-3"],
                 },
-                { id: "col-2", title: "Doing", taskIds: ["4"] },
-                { id: "col-3", title: "Done", taskIds: [] },
-            ],
+                "col-2": { id: "col-2", title: "Doing", taskIds: ["task-4"] },
+                "col-3": { id: "col-3", title: "Done", taskIds: [] },
+            },
             columnOrder: ["col-1", "col-2", "col-3"],
             members: ["email1@gmail.com"], // Acá debería almacenar foto, y todo de cada user, para mostrarla
             admins: ["email1@gmail.com"],
         },
-        {
-            id: "board-2",
-            title: "Devchallenges Board",
-            isPrivate: true,
-            description: "",
-            image_url:
-                "https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d29ya3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400&q=60",
-            tasks: [
-                {
-                    id: "1",
-                    content: " take out the garbage",
-                    url_cover: "",
-                    description:
-                        "Udeas are created and share here through a card. Here you can describe what you'd like to accomplish.",
-                },
-                {
-                    id: "2",
-                    content: "Watch my favorite show",
-                    url_cover: "",
-                    description: "",
-                },
-                {
-                    id: "3",
-                    content: "Charge my phone",
-                    url_cover: "",
-                    description: "",
-                },
-                {
-                    id: "4",
-                    content: "Cook dinner",
-                    url_cover: "",
-                    description: "",
-                },
-            ],
-            columns: [
-                {
-                    id: "col-1",
-                    title: "To do",
-                    taskIds: ["1", "2", "3"],
-                },
-                { id: "col-2", title: "Doing", taskIds: ["4"] },
-                { id: "col-3", title: "Done", taskIds: [] },
-            ],
-            columnOrder: ["col-1", "col-2", "col-3"],
-            members: ["email1@gmail.com"], // Acá debería almacenar foto, y todo de cada user, para mostrarla
-            admins: ["email1@gmail.com"],
-        },
-    ],
+    },
     actualBoard: {
         id: "",
         title: "",
@@ -137,14 +90,14 @@ export const userSlice = createSlice({
         },
         updateActualBoard(state, action) {
             const newBoard = action.payload;
-
-            console.log("Actualizando..");
+            console.log("board a implementar", newBoard);
 
             return {
                 ...state,
-                data: state.data.map((board) =>
-                    board.id === newBoard.id ? newBoard : board
-                ),
+                data: {
+                    ...state.data,
+                    [newBoard.id]: newBoard,
+                },
                 actualBoard: newBoard,
             };
         },
