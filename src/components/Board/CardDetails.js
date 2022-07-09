@@ -47,7 +47,7 @@ const OptionButton = styled(Button)(({ theme }) => ({
     fontSize: "1.4rem",
     textTransform: "capitalize",
     justifyContent: "flex-start",
-    paddingLeft: "2rem",
+    paddingLeft: "3rem",
     gap: "1rem",
     "&:hover": {
         color: theme.palette.primary.contrastText,

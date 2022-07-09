@@ -21,6 +21,9 @@ const CoverButton = styled(Button)(({ theme }) => ({
     padding: "1 2rem",
     fontSize: "1.4rem",
     textTransform: "capitalize",
+    justifyContent: "flex-start",
+    paddingLeft: "3rem",
+    gap: "1rem",
     "&:hover": {
         color: theme.palette.primary.contrastText,
     },
@@ -78,6 +81,7 @@ function UnsplashModal({ setUrlCover }) {
                 aria-controls={open ? "basic-menu" : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
+                fullWidth
                 onClick={handleClick}
             >
                 Cover

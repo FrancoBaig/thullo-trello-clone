@@ -12,6 +12,7 @@ import { styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import Button from "@mui/material/Button";
 import CardMedia from "@mui/material/CardMedia";
+import Box from "@mui/material/Box";
 
 import LockIcon from "@mui/icons-material/Lock";
 import AddIcon from "@mui/icons-material/Add";
@@ -31,6 +32,9 @@ const OptionButton = styled(Button)(({ theme }) => ({
     width: "50%",
     fontSize: "1.4rem",
     textTransform: "capitalize",
+    justifyContent: "flex-start",
+    paddingLeft: "3rem",
+    gap: "1rem",
     "&:hover": {
         color: theme.palette.primary.contrastText,
     },
@@ -74,8 +78,10 @@ function CreateBoardModal({ onClose, open }) {
                     onChange={({ target }) => setBoardName(target.value)}
                     required
                 ></Input>
-                <Stack direction="row" spacing={3}>
-                    <UnsplashModal setUrlCover={setUrlCover} />
+                <Stack direction={{ xs: "column", sm: "row" }} spacing={3}>
+                    <Box sx={{ width: "50%" }}>
+                        <UnsplashModal setUrlCover={setUrlCover} />
+                    </Box>
                     <OptionButton
                         variant="contained"
                         color="secondary"
