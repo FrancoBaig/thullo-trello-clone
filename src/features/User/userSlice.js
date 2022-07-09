@@ -247,7 +247,7 @@ export const userSlice = createSlice({
                 admins: [state.user.email],
                 columnOrder: [],
                 colmns: {},
-                isPrivate: true,
+                isPrivate: boardData.isPrivate,
                 members: [state.user.email],
                 tasks: {},
             };
@@ -258,6 +258,21 @@ export const userSlice = createSlice({
                     ...state.data,
                     [idBoard]: newBoard,
                 },
+            };
+        },
+        togglePrivacity(state, action) {
+            const newBoard = {
+                ...state.actualBoard,
+                isPrivate: !state.actualBoard.isPrivate,
+            };
+
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    [newBoard.id]: newBoard,
+                },
+                actualBoard: newBoard,
             };
         },
         changeActualBoard(state, action) {
@@ -290,6 +305,7 @@ export const {
     deleteColumn,
     addLabel,
     createBoard,
+    togglePrivacity,
     changeActualBoard,
     updateActualBoard,
 } = userSlice.actions;

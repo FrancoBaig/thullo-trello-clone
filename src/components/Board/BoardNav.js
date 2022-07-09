@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 // Compoennts
 import BoardDrawer from "./BoardDrawer";
+import TogglePrivate from "./TogglePrivate";
 
 // MUI
 import Box from "@mui/material/Box";
@@ -34,13 +35,7 @@ function BoardNav() {
     return (
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Stack direction="row" spacing={2}>
-                <OptionButton
-                    variant="contained"
-                    color="secondary"
-                    startIcon={<LockIcon />}
-                >
-                    Private
-                </OptionButton>
+                <TogglePrivate />
 
                 <Stack direction="row" spacing={1}>
                     <Avatar variant="square" sx={{ borderRadius: 1 }}>

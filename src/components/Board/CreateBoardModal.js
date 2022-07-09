@@ -16,6 +16,7 @@ import Box from "@mui/material/Box";
 
 import LockIcon from "@mui/icons-material/Lock";
 import AddIcon from "@mui/icons-material/Add";
+import PublicIcon from "@mui/icons-material/Public";
 
 const Input = styled(InputBase)(({ theme }) => ({
     backgroundColor: "#fafbfc",
@@ -48,12 +49,14 @@ function CreateBoardModal({ onClose, open }) {
     const [urlCover, setUrlCover] = useState(
         "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHdvcmt8ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60"
     );
+    const [isPrivate, setIsPrivate] = useState(true);
     const dispatch = useDispatch();
 
     const handleCreateBoard = () => {
         const boardData = {
             title: boardName,
             image_url: urlCover,
+            isPrivate: isPrivate,
         };
 
         dispatch(createBoard(boardData));
@@ -85,9 +88,10 @@ function CreateBoardModal({ onClose, open }) {
                     <OptionButton
                         variant="contained"
                         color="secondary"
-                        startIcon={<LockIcon />}
+                        startIcon={isPrivate ? <LockIcon /> : <PublicIcon />}
+                        onClick={() => setIsPrivate(!isPrivate)}
                     >
-                        Private
+                        {isPrivate ? "Private" : "Public"}
                     </OptionButton>
                 </Stack>
                 <Stack direction="row" spacing={3} justifyContent="flex-end">
