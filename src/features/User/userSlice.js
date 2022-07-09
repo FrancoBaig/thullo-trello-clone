@@ -78,7 +78,16 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         addTask(state, action) {
-            const { newCard, column } = action.payload;
+            const { newCardInput, column } = action.payload;
+
+            const idTask = `task-${new Date().getTime()}`;
+
+            const newCard = {
+                id: idTask,
+                content: newCardInput,
+                description: "",
+                url_cover: "",
+            };
 
             // 1. Add task id to column ✅
             const newColumn = {
@@ -86,7 +95,7 @@ export const userSlice = createSlice({
                 taskIds: [...column.taskIds, newCard.id],
             };
 
-            // 2. Agregar la nueva columna a Actual Board ✅
+            // 2. Add new column to actual board ✅
 
             const newActualBoard = {
                 ...state.actualBoard,
@@ -138,6 +147,34 @@ export const userSlice = createSlice({
                 actualBoard: newBoard,
             };
         },
+        deleteColumn(state, action) {
+            const column = action.payload;
+
+            // Get columns without column -> newList
+            const { [column.id]: remove, ...newList } =
+                state.actualBoard.columns;
+
+            // Get columnOrder without column.id -> result
+            const array = state.actualBoard.columnOrder;
+            const index = array.indexOf(column.id);
+            const result = array.slice(0, index).concat(array.slice(index + 1));
+
+            // New board
+            const newBoard = {
+                ...state.actualBoard,
+                columnOrder: [...result],
+                columns: { ...newList },
+            };
+
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    [newBoard.id]: newBoard,
+                },
+                actualBoard: newBoard,
+            };
+        },
         changeActualBoard(state, action) {
             const board = action.payload;
 
@@ -161,6 +198,11 @@ export const userSlice = createSlice({
     },
 });
 
-export const { addTask, addColumn, changeActualBoard, updateActualBoard } =
-    userSlice.actions;
+export const {
+    addTask,
+    addColumn,
+    deleteColumn,
+    changeActualBoard,
+    updateActualBoard,
+} = userSlice.actions;
 export default userSlice.reducer;

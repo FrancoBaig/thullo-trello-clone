@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, updateActualBoard } from "../../features/User/userSlice";
+import {
+    addTask,
+    updateActualBoard,
+    deleteColumn,
+} from "../../features/User/userSlice";
 
 // DND
 import { Droppable, Draggable } from "react-beautiful-dnd";
@@ -116,20 +120,16 @@ function Column({ column, tasks }) {
         e.preventDefault();
         if (newCardInput === "") return;
 
-        const idTask = `task-${new Date().getTime()}`;
-
-        const newCard = {
-            id: idTask,
-            content: newCardInput,
-            description: "",
-            url_cover: "",
-        };
-
-        const payload = { newCard, column };
+        const payload = { newCardInput, column };
         dispatch(addTask(payload));
 
         setAddCard(false);
         setNewCardInput("");
+    };
+
+    const handleColumnDelete = () => {
+        dispatch(deleteColumn(column));
+        handleMenuClose();
     };
 
     return (
@@ -186,7 +186,7 @@ function Column({ column, tasks }) {
                         Rename
                     </MenuItem>
                     <Divider />
-                    <MenuItem onClick={handleMenuClose}>
+                    <MenuItem onClick={() => handleColumnDelete()}>
                         Delete this list
                     </MenuItem>
                 </Menu>
