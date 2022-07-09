@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { updateActualBoard } from "../../features/User/userSlice";
+import {
+    updateActualBoard,
+    updateTaskCover,
+} from "../../features/User/userSlice";
 
 // MUI
 import Comments from "./Comments";
@@ -62,6 +65,11 @@ function CardDetails({ onClose, open, task, column }) {
     const [inputName, setInputName] = useState("");
     const [editingTitle, setEditingTitle] = useState(false);
     const [openCard, setOpenCard] = useState(task);
+    const [urlCover, setUrlCover] = useState("");
+
+    useEffect(() => {
+        handleNewCover();
+    }, [urlCover]);
 
     const handleEdit = () => {
         let newTask = {};
@@ -94,6 +102,18 @@ function CardDetails({ onClose, open, task, column }) {
         setEditingTitle(false);
         setInputDescription("");
         setInputName("");
+    };
+
+    const handleNewCover = () => {
+        if (urlCover === "") return;
+
+        const newTask = {
+            ...openCard,
+            url_cover: urlCover,
+        };
+
+        setOpenCard(newTask);
+        dispatch(updateTaskCover(newTask));
     };
 
     return (
@@ -254,7 +274,7 @@ function CardDetails({ onClose, open, task, column }) {
                         >
                             Labels
                         </OptionButton>
-                        <UnsplashModal />
+                        <UnsplashModal setUrlCover={setUrlCover} />
                     </Stack>
                 </Grid>
             </Grid>

@@ -124,6 +124,28 @@ export const userSlice = createSlice({
                 actualBoard: final,
             };
         },
+        updateTaskCover(state, action) {
+            const newTask = action.payload;
+
+            const newBoard = {
+                ...state.actualBoard,
+                tasks: {
+                    ...state.actualBoard.tasks,
+                    [newTask.id]: newTask,
+                },
+            };
+
+            console.log("new board->", newBoard);
+
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    [newBoard.id]: newBoard,
+                },
+                actualBoard: newBoard,
+            };
+        },
         addColumn(state, action) {
             const name = action.payload;
 
@@ -226,6 +248,7 @@ export const userSlice = createSlice({
 
 export const {
     addTask,
+    updateTaskCover,
     addColumn,
     deleteColumn,
     createBoard,
