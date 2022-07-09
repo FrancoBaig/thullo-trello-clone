@@ -115,6 +115,29 @@ export const userSlice = createSlice({
                 actualBoard: final,
             };
         },
+        addColumn(state, action) {
+            const name = action.payload;
+
+            const idCol = `col-${new Date().getTime()}`;
+
+            const newBoard = {
+                ...state.actualBoard,
+                columns: {
+                    ...state.actualBoard.columns,
+                    [idCol]: { id: idCol, title: name, taskIds: [] },
+                },
+                columnOrder: [...state.actualBoard.columnOrder, idCol],
+            };
+
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    [newBoard.id]: newBoard,
+                },
+                actualBoard: newBoard,
+            };
+        },
         changeActualBoard(state, action) {
             const board = action.payload;
 
@@ -138,6 +161,6 @@ export const userSlice = createSlice({
     },
 });
 
-export const { addTask, changeActualBoard, updateActualBoard } =
+export const { addTask, addColumn, changeActualBoard, updateActualBoard } =
     userSlice.actions;
 export default userSlice.reducer;
