@@ -28,8 +28,10 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import CardMedia from "@mui/material/CardMedia";
+import Grid from "@mui/material/Grid";
 
 import CardDetails from "./CardDetails";
+import Label from "../Label/Label";
 
 const Card = styled(Paper)(({ theme }) => ({
     padding: "1.5rem",
@@ -245,19 +247,22 @@ function Column({ column, tasks }) {
                                                 <Typography variant="h3">
                                                     {task.content}
                                                 </Typography>
-                                                <Stack
-                                                    direction="row"
-                                                    spacing={1}
-                                                >
-                                                    <Chip
-                                                        label="Chip Filled"
-                                                        size="small"
-                                                    />
-                                                    <Chip
-                                                        label="Chip Filled"
-                                                        size="small"
-                                                    />
-                                                </Stack>
+                                                <Grid container spacing={1}>
+                                                    {task.labels.map(
+                                                        (label) => (
+                                                            <Grid item>
+                                                                <Label
+                                                                    text={
+                                                                        label.text
+                                                                    }
+                                                                    color={
+                                                                        label.color
+                                                                    }
+                                                                />
+                                                            </Grid>
+                                                        )
+                                                    )}
+                                                </Grid>
                                                 <Stack
                                                     direction="row"
                                                     justifyContent="space-between"

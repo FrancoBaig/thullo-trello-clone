@@ -1,4 +1,6 @@
+import { lightGreen } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
+const { palette } = createTheme();
 
 export const theme = createTheme({
     palette: {
@@ -14,6 +16,30 @@ export const theme = createTheme({
         light: {
             main: "#dae4fd",
             contrastText: "#2c81ea",
+        },
+        red: {
+            main: "#FFEBEB",
+            contrastText: "#EB5757",
+        },
+        green: {
+            main: "#D3EADD",
+            contrastText: "#219653",
+        },
+        yellow: {
+            main: "#FCF4DB",
+            contrastText: "#F2C94C",
+        },
+        orange: {
+            main: "rgba(242, 153, 74, 0.2)",
+            contrastText: "#F2994A",
+        },
+        purple: {
+            main: "#EBDCF9",
+            contrastText: "#9B51E0",
+        },
+        blue: {
+            main: "#D5E6FB",
+            contrastText: "#2F80ED",
         },
         text: {
             primary: "#333333",

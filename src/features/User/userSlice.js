@@ -13,6 +13,7 @@ const initialState = {
             id: "board-1",
             title: "Devchallenges Board",
             isPrivate: true,
+            labels: [],
             description:
                 "Ideas are created and share here through a card. Here you can describe what you'd like to accomplish. For example you can follow three simple questions to create the card relatedto your idea: * Why ? (Why do you wish to do it ?) * What ?(What it is it, what are the goals, who is concerned) * How? (How do you think you can do it ? What are the requiredsteps ?) After creation, you can move your card to the todolist.",
             image_url:
@@ -25,24 +26,28 @@ const initialState = {
                         "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHdvcmt8ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60",
                     description:
                         "Udeas are created and share here through a card. Here you can describe what you'd like to accomplish.",
+                    labels: [],
                 },
                 "task-2": {
                     id: "task-2",
                     url_cover: "",
                     content: "Watch my favorite show",
                     description: "",
+                    labels: [],
                 },
                 "task-3": {
                     id: "task-3",
                     content: "Charge my phone",
                     url_cover: "",
                     description: "",
+                    labels: [],
                 },
                 "task-4": {
                     id: "task-4",
                     content: "Cook dinner",
                     url_cover: "",
                     description: "",
+                    labels: [],
                 },
             },
             columns: {
@@ -87,6 +92,7 @@ export const userSlice = createSlice({
                 content: newCardInput,
                 description: "",
                 url_cover: "",
+                labels: [],
             };
 
             // 1. Add task id to column ✅
@@ -197,6 +203,37 @@ export const userSlice = createSlice({
                 actualBoard: newBoard,
             };
         },
+        addLabel(state, action) {
+            const { task, input, selected } = action.payload;
+
+            const newLabel = {
+                text: input,
+                color: selected,
+            };
+
+            const newTask = {
+                ...task,
+                labels: [...task.labels, newLabel],
+            };
+
+            const newBoard = {
+                ...state.actualBoard,
+                labels: [...state.actualBoard.labels, newLabel],
+                tasks: {
+                    ...state.actualBoard.tasks,
+                    [newTask.id]: newTask,
+                },
+            };
+
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    [newBoard.id]: newBoard,
+                },
+                actualBoard: newBoard,
+            };
+        },
         createBoard(state, action) {
             const boardData = action.payload;
 
@@ -251,6 +288,7 @@ export const {
     updateTaskCover,
     addColumn,
     deleteColumn,
+    addLabel,
     createBoard,
     changeActualBoard,
     updateActualBoard,

@@ -31,6 +31,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 
 import UnsplashModal from "../UnsplashModal";
+import LabelModal from "../Label/LabelModal";
 
 const Input = styled(InputBase)(({ theme }) => ({
     backgroundColor: "#fafbfc",
@@ -266,14 +267,7 @@ function CardDetails({ onClose, open, task, column }) {
                         >
                             Members
                         </OptionButton>
-                        <OptionButton
-                            variant="contained"
-                            color="secondary"
-                            fullWidth
-                            startIcon={<LabelIcon />}
-                        >
-                            Labels
-                        </OptionButton>
+                        <LabelModal task={openCard} />
                         <UnsplashModal setUrlCover={setUrlCover} />
                     </Stack>
                 </Grid>
