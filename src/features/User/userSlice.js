@@ -175,6 +175,32 @@ export const userSlice = createSlice({
                 actualBoard: newBoard,
             };
         },
+        createBoard(state, action) {
+            const boardData = action.payload;
+
+            const idBoard = `board-${new Date().getTime()}`;
+
+            const newBoard = {
+                id: idBoard,
+                title: boardData.title,
+                image_url: boardData.image_url,
+                description: "",
+                admins: [state.user.email],
+                columnOrder: [],
+                colmns: {},
+                isPrivate: true,
+                members: [state.user.email],
+                tasks: {},
+            };
+
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    [idBoard]: newBoard,
+                },
+            };
+        },
         changeActualBoard(state, action) {
             const board = action.payload;
 
@@ -202,6 +228,7 @@ export const {
     addTask,
     addColumn,
     deleteColumn,
+    createBoard,
     changeActualBoard,
     updateActualBoard,
 } = userSlice.actions;

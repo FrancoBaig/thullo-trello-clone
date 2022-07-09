@@ -1,6 +1,9 @@
-import React from "react";
-import useUnsplash from "../../services/unsplash";
+import React, { useState } from "react";
 import UnsplashModal from "../UnsplashModal";
+
+// Redux
+import { useDispatch } from "react-redux";
+import { createBoard } from "../../features/User/userSlice";
 
 // MUI
 import Dialog from "@mui/material/Dialog";
@@ -11,7 +14,6 @@ import Button from "@mui/material/Button";
 import CardMedia from "@mui/material/CardMedia";
 
 import LockIcon from "@mui/icons-material/Lock";
-import ImageIcon from "@mui/icons-material/Image";
 import AddIcon from "@mui/icons-material/Add";
 
 const Input = styled(InputBase)(({ theme }) => ({
@@ -38,19 +40,42 @@ const OptionButton = styled(Button)(({ theme }) => ({
 }));
 
 function CreateBoardModal({ onClose, open }) {
+    const [boardName, setBoardName] = useState("");
+    const [urlCover, setUrlCover] = useState(
+        "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHdvcmt8ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60"
+    );
+    const dispatch = useDispatch();
+
+    const handleCreateBoard = () => {
+        const boardData = {
+            title: boardName,
+            image_url: urlCover,
+        };
+
+        dispatch(createBoard(boardData));
+
+        setBoardName("");
+        onClose();
+    };
+
     return (
         <Dialog onClose={onClose} open={open}>
             <Stack spacing={2} sx={{ padding: "2rem" }}>
                 <CardMedia
                     component="img"
                     height="140"
-                    image="https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHdvcmt8ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60"
+                    image={urlCover}
                     alt="green iguana"
                     sx={{ borderRadius: 1 }}
                 />
-                <Input placeholder="Add board title"></Input>
+                <Input
+                    placeholder="Add board title"
+                    value={boardName}
+                    onChange={({ target }) => setBoardName(target.value)}
+                    required
+                ></Input>
                 <Stack direction="row" spacing={3}>
-                    <UnsplashModal />
+                    <UnsplashModal setUrlCover={setUrlCover} />
                     <OptionButton
                         variant="contained"
                         color="secondary"
@@ -67,7 +92,11 @@ function CreateBoardModal({ onClose, open }) {
                     >
                         Cancel
                     </Button>
-                    <Button variant="contained" startIcon={<AddIcon />}>
+                    <Button
+                        variant="contained"
+                        startIcon={<AddIcon />}
+                        onClick={() => handleCreateBoard()}
+                    >
                         Create
                     </Button>
                 </Stack>
