@@ -204,7 +204,7 @@ function Column({ column, tasks }) {
                                 borderRadius: "12px",
                                 backgroundColor:
                                     droppableSnapshot.isDraggingOver
-                                        ? "#bdbdbd"
+                                        ? "#e2e8f6"
                                         : "",
                             }}
                         >

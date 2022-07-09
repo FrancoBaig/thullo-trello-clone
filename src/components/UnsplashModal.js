@@ -11,9 +11,10 @@ import { styled } from "@mui/material/styles";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import Box from "@mui/material/Box";
-import useUnsplash from "../services/unsplash";
-
 import ImageIcon from "@mui/icons-material/Image";
+
+import SkeletonGrid from "./Skeleton";
+import useUnsplash from "../services/unsplash";
 
 const CoverButton = styled(Button)(({ theme }) => ({
     boxShadow: "none",
@@ -140,7 +141,6 @@ function UnsplashModal({ setUrlCover }) {
                                         src={`${item.urls.full}`}
                                         srcSet={`${item.urls.full}`}
                                         alt={item.alt_description}
-                                        loading="lazy"
                                         style={{
                                             borderRadius: 4,
                                             cursor: "pointer",
@@ -151,7 +151,7 @@ function UnsplashModal({ setUrlCover }) {
                             ))}
                         </ImageList>
                     ) : (
-                        ""
+                        <SkeletonGrid />
                     )}
                 </Stack>
             </Menu>
