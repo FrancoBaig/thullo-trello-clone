@@ -80,9 +80,6 @@ function Column({ column, tasks }) {
     };
 
     const handleRenameColumn = () => {
-        console.log("rename column");
-        console.log("column", column);
-
         const newColumn = {
             ...column,
             title: input,
@@ -128,21 +125,11 @@ function Column({ column, tasks }) {
             url_cover: "",
         };
 
-        /**
-         * 1. Llevar la tarea completa a boardActual -> tasks.
-         * 2. ir a boardActual -> columns -> (la qe tiene el mismo id) meter el id de la nueva task
-         * 3. crer un nuevoBoard y mandar a dispatch
-         *
-         * hacer todo en actualBoard y simplemente copiar en el otro
-         */
+        const payload = { newCard, column };
+        dispatch(addTask(payload));
 
-        // const payload = { newCard, column };
-
-        // dispatch(addTask(payload));
-
-        // setAddCard(false);
-        // setNewCardInput("");
-        // console.log("actualBoard", actualBoard);
+        setAddCard(false);
+        setNewCardInput("");
     };
 
     return (

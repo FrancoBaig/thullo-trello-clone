@@ -79,6 +79,41 @@ export const userSlice = createSlice({
     reducers: {
         addTask(state, action) {
             const { newCard, column } = action.payload;
+
+            // 1. Add task id to column ✅
+            const newColumn = {
+                ...column,
+                taskIds: [...column.taskIds, newCard.id],
+            };
+
+            // 2. Agregar la nueva columna a Actual Board ✅
+
+            const newActualBoard = {
+                ...state.actualBoard,
+                columns: {
+                    ...state.actualBoard.columns,
+                    [newColumn.id]: newColumn,
+                },
+            };
+
+            // 3. Add task to tasks
+
+            const final = {
+                ...newActualBoard,
+                tasks: {
+                    ...state.actualBoard.tasks,
+                    [newCard.id]: newCard,
+                },
+            };
+
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    [state.actualBoard.id]: final,
+                },
+                actualBoard: final,
+            };
         },
         changeActualBoard(state, action) {
             const board = action.payload;
@@ -90,7 +125,6 @@ export const userSlice = createSlice({
         },
         updateActualBoard(state, action) {
             const newBoard = action.payload;
-            console.log("board a implementar", newBoard);
 
             return {
                 ...state,

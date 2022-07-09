@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Column from "./Column";
 import Box from "@mui/material/Box";
@@ -24,11 +24,13 @@ const reorderColumnList = (sourceCol, startIndex, endIndex) => {
 };
 
 function DragAndDrop() {
-    const user = useSelector((state) => state.user);
-
     const { boardId } = useParams();
-    const actualBoard = user.data[boardId];
+    const actualBoard = useSelector((state) => state.user.data[boardId]);
     const [state, setState] = useState(actualBoard);
+
+    useEffect(() => {
+        setState(actualBoard);
+    }, [actualBoard]);
 
     const onDragEnd = (result) => {
         const { destination, source } = result;
