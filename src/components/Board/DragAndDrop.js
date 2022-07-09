@@ -6,6 +6,7 @@ import Stack from "@mui/material/Stack";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
+import { updateActualBoard } from "../../features/User/userSlice";
 
 // Router
 import { useParams, useNavigate } from "react-router-dom";
@@ -24,13 +25,9 @@ const reorderColumnList = (sourceCol, startIndex, endIndex) => {
 };
 
 function DragAndDrop() {
+    const dispatch = useDispatch();
     const { boardId } = useParams();
     const actualBoard = useSelector((state) => state.user.data[boardId]);
-    const [state, setState] = useState(actualBoard);
-
-    useEffect(() => {
-        setState(actualBoard);
-    }, [actualBoard]);
 
     const onDragEnd = (result) => {
         const { destination, source } = result;
@@ -47,8 +44,8 @@ function DragAndDrop() {
         }
 
         // if user drops within the same column but in a different position
-        const sourceCol = state.columns[source.droppableId];
-        const destinationCol = state.columns[destination.droppableId];
+        const sourceCol = actualBoard.columns[source.droppableId];
+        const destinationCol = actualBoard.columns[destination.droppableId];
 
         if (sourceCol.id === destinationCol.id) {
             const newColumn = reorderColumnList(
@@ -58,14 +55,14 @@ function DragAndDrop() {
             );
 
             const newState = {
-                ...state,
+                ...actualBoard,
                 columns: {
-                    ...state.columns,
+                    ...actualBoard.columns,
                     [newColumn.id]: newColumn,
                 },
             };
 
-            setState(newState);
+            dispatch(updateActualBoard(newState));
             return;
         }
 
@@ -85,15 +82,15 @@ function DragAndDrop() {
         };
 
         const newState = {
-            ...state,
+            ...actualBoard,
             columns: {
-                ...state.columns,
+                ...actualBoard.columns,
                 [newStartCol.id]: newStartCol,
                 [newEndCol.id]: newEndCol,
             },
         };
 
-        setState(newState);
+        dispatch(updateActualBoard(newState));
     };
 
     return (
@@ -107,10 +104,10 @@ function DragAndDrop() {
         >
             <Stack direction="row" spacing={3}>
                 <DragDropContext onDragEnd={onDragEnd}>
-                    {state.columnOrder.map((columnId) => {
-                        const column = state.columns[columnId];
+                    {actualBoard.columnOrder.map((columnId) => {
+                        const column = actualBoard.columns[columnId];
                         const tasks = column.taskIds.map(
-                            (taskId) => state.tasks[taskId]
+                            (taskId) => actualBoard.tasks[taskId]
                         );
 
                         return (
@@ -118,8 +115,7 @@ function DragAndDrop() {
                                 key={column.id}
                                 column={column}
                                 tasks={tasks}
-                                state={state}
-                                setState={setState}
+                                state={actualBoard}
                             />
                         );
                     })}
