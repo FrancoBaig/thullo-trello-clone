@@ -1,13 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { current } from "@reduxjs/toolkit";
 import { loginService, signupService } from "../../services/register";
+import { sendPhoto } from "../../services/cloudinary";
 
 const initialState = {
     user: {
         name: "",
         email: "",
         token: "",
-        img_url: "",
+        img_id: "thullo/wjzdsclpxkjpeyssir28",
     },
     data: {
         "board-1": {
@@ -97,13 +98,11 @@ export const userSlice = createSlice({
             };
         },
         setNewPhoto(state, action) {
-            const { url } = action.payload;
-
             return {
                 ...state,
                 user: {
                     ...state.user,
-                    img_url: url,
+                    img_id: action.payload,
                 },
             };
         },
@@ -337,11 +336,16 @@ export const signUpUser = (data) => {
 };
 
 export const changePhoto = (data) => {
-    return async (dispatch) => {};
+    return async (dispatch) => {
+        const response = await sendPhoto(data);
+        const id = response.public_id;
+        dispatch(setNewPhoto(id));
+    };
 };
 
 export const {
     setUser,
+    setNewPhoto,
     addTask,
     updateTaskCover,
     addColumn,

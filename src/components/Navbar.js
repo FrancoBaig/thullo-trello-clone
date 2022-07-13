@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Logo from "../assets/img/Logo.svg";
 
+import ProfilePhoto from "./ProfilePhoto";
+
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { changeActualBoard, changePhoto } from "../features/User/userSlice";
@@ -61,10 +63,10 @@ function Navbar() {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
     const state = useSelector((state) => state.user);
-    const userImg = state.user.img_url;
+    const userImg = state.user.img_id;
     const userName = state.user.name;
     const { boardId } = useParams();
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const [file, setFile] = useState("");
     const [image, setImage] = useState("");
 
@@ -112,13 +114,11 @@ function Navbar() {
         const file = e.target.files[0];
         setFile(file);
         previewFiles(file);
-        console.log("image", image);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("new");
-        console.log("file", file);
+        dispatch(changePhoto(image));
     };
 
     return (
@@ -199,16 +199,21 @@ function Navbar() {
                         </FormControl>
 
                         <Box sx={{ display: "flex", alignItems: "center" }}>
-                            <Avatar
-                                variant="square"
-                                sx={{
-                                    mr: 1,
-                                    borderRadius: 1,
-                                    cursor: "pointer",
-                                }}
-                                src={userImg}
-                                onClick={() => handleClickOpen()}
-                            />
+                            {userImg ? (
+                                <ProfilePhoto upploadedImage={userImg} />
+                            ) : (
+                                <Avatar
+                                    variant="square"
+                                    sx={{
+                                        mr: 1,
+                                        borderRadius: 1,
+                                        cursor: "pointer",
+                                    }}
+                                    src={userImg}
+                                    onClick={() => handleClickOpen()}
+                                />
+                            )}
+
                             <Dialog onClose={handleClose} open={open}>
                                 <Stack spacing={2} sx={{ padding: "2rem" }}>
                                     {image !== "" ? (
@@ -226,12 +231,13 @@ function Navbar() {
                                         direction={{ xs: "column", sm: "row" }}
                                         spacing={3}
                                     ></Stack>
-                                    <Stack
-                                        direction="row"
-                                        spacing={3}
-                                        justifyContent="flex-end"
-                                    >
-                                        <form onSubmit={(e) => handleSubmit(e)}>
+
+                                    <form onSubmit={(e) => handleSubmit(e)}>
+                                        <Stack
+                                            direction="row"
+                                            spacing={3}
+                                            justifyContent="flex-end"
+                                        >
                                             <label htmlFor="contained-button-file">
                                                 <Input
                                                     accept="image/*"
@@ -241,6 +247,7 @@ function Navbar() {
                                                     onChange={(e) =>
                                                         handleFile(e)
                                                     }
+                                                    required
                                                 />
                                                 <Button
                                                     variant="contained"
@@ -252,16 +259,14 @@ function Navbar() {
                                             </label>
                                             <Button
                                                 variant="contained"
-                                                component="span"
                                                 type="submit"
                                             >
                                                 Send
                                             </Button>
-                                        </form>
-                                    </Stack>
+                                        </Stack>
+                                    </form>
                                 </Stack>
                             </Dialog>
-
                             <Typography
                                 variant="body2"
                                 sx={{ color: "#333333" }}
