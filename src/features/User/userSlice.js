@@ -8,7 +8,7 @@ const initialState = {
         name: "",
         email: "",
         token: "",
-        img_id: "thullo/wjzdsclpxkjpeyssir28",
+        img_id: "",
     },
     data: {
         "board-1": {
