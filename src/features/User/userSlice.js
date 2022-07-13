@@ -85,7 +85,7 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         setUser(state, action) {
-            const { name, email, token, img_url } = action.payload;
+            const { name, email, token, img_id } = action.payload;
 
             return {
                 ...state,
@@ -93,7 +93,7 @@ export const userSlice = createSlice({
                     name,
                     email,
                     token,
-                    img_url,
+                    img_id,
                 },
             };
         },

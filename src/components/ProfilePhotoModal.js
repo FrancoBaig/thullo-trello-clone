@@ -31,7 +31,11 @@ function ProfilePhotoModal({ open, setOpen }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!file) return;
-        dispatch(changePhoto(image));
+        const data = {
+            image: image,
+            token: state.user.token,
+        };
+        dispatch(changePhoto(data));
         handleClose();
     };
 
