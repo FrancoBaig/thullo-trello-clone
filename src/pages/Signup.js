@@ -14,7 +14,7 @@ import Divider from "@mui/material/Divider";
 
 // Redux
 import { useDispatch } from "react-redux";
-import { loginUser } from "../features/User/userSlice";
+import { loginUser, signUpUser } from "../features/User/userSlice";
 
 // React router
 import { useNavigate } from "react-router-dom";
@@ -43,12 +43,23 @@ function Signup() {
     const handleSignUp = async (e) => {
         e.preventDefault();
 
-        const dataLogin = {
-            email,
-            password,
-        };
+        if (isLogin) {
+            const dataLogin = {
+                email,
+                password,
+            };
 
-        dispatch(loginUser(dataLogin));
+            dispatch(loginUser(dataLogin));
+        } else {
+            const dataSignUp = {
+                email,
+                password,
+                name,
+            };
+
+            dispatch(signUpUser(dataSignUp));
+            dispatch(loginUser({ email, password }));
+        }
 
         setEmail("");
         setName("");

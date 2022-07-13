@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { current } from "@reduxjs/toolkit";
-import { loginService } from "../../services/register";
+import { loginService, signupService } from "../../services/register";
 
 const initialState = {
     user: {
@@ -315,9 +315,13 @@ export const userSlice = createSlice({
 export const loginUser = (data) => {
     return async (dispatch) => {
         const response = await loginService(data);
-        console.log("response to set", response);
-
         dispatch(setUser(response));
+    };
+};
+
+export const signUpUser = (data) => {
+    return async (dispatch) => {
+        const response = await signupService(data);
     };
 };
 
