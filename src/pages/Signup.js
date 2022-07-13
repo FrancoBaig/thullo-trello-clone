@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Logo from "../assets/img/Logo.svg";
 
 // MUI
@@ -10,6 +10,11 @@ import InputBase from "@mui/material/InputBase";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import Divider from "@mui/material/Divider";
+
+// Redux
+import { useDispatch } from "react-redux";
+import { loginUser } from "../features/User/userSlice";
 
 // React router
 import { useNavigate } from "react-router-dom";
@@ -29,14 +34,27 @@ const Input = styled(InputBase)(({ theme }) => ({
 
 function Signup() {
     let navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [isLogin, setIsLogin] = useState(false);
+    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
+    const [password, setPassword] = useState("");
 
-    const handleSignUp = (e) => {
+    const handleSignUp = async (e) => {
         e.preventDefault();
-        console.log("Sing up");
 
+        const dataLogin = {
+            email,
+            password,
+        };
+
+        dispatch(loginUser(dataLogin));
+
+        setEmail("");
+        setName("");
+        setPassword("");
         navigate("/", { replace: true });
     };
-
     return (
         <Container maxWidth="xs">
             <Box sx={{ display: "flex", justifyContent: "center", mt: "5rem" }}>
@@ -45,32 +63,53 @@ function Signup() {
             <CustomPaper>
                 <form onSubmit={handleSignUp}>
                     <Stack direction="column" spacing={2}>
-                        <Typography variant="h3">
+                        <Typography variant="h1" component="h3">
                             Sign up for your account
                         </Typography>
                         <Input
-                            placeholder="Enter email address"
+                            placeholder="Email"
                             fullWidth
                             required
                             type="email"
+                            onChange={({ target }) => setEmail(target.value)}
                         />
+                        {!isLogin ? (
+                            <Input
+                                placeholder="Name"
+                                fullWidth
+                                required
+                                type="text"
+                                onChange={({ target }) => setName(target.value)}
+                            />
+                        ) : (
+                            ""
+                        )}
                         <Input
-                            placeholder="Enter your email"
-                            fullWidth
-                            required
-                            type="text"
-                        />
-                        <Input
-                            placeholder="Enter a password"
+                            placeholder="Password"
                             type="password"
                             fullWidth
                             required
+                            onChange={({ target }) => setPassword(target.value)}
                         />
                         <Button variant="contained" fullWidth type="submit">
-                            Sign up
+                            {!isLogin ? "Sign up" : "Log in"}
                         </Button>
                     </Stack>
                 </form>
+                <Stack spacing={1} sx={{ mt: 2 }} justifyContent="center">
+                    <Divider />
+                    <Typography variant="h4">
+                        {!isLogin
+                            ? "Have an account?"
+                            : "Don't have an account?"}{" "}
+                        <span
+                            style={{ color: "#2f80ed", cursor: "pointer" }}
+                            onClick={() => setIsLogin(!isLogin)}
+                        >
+                            {!isLogin ? "Log in" : "Sign up"}
+                        </span>
+                    </Typography>
+                </Stack>
             </CustomPaper>
         </Container>
     );

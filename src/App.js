@@ -10,7 +10,7 @@ import Board from "./components/Board/Board";
 
 function App() {
     return (
-        <Box>
+        <Box sx={{ backgroundColor: "#FFFFF" }}>
             <Navbar />
             <Board />
         </Box>

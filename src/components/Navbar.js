@@ -105,6 +105,9 @@ function Navbar() {
                                         ml: 4,
                                         mr: 2,
                                         color: "#333333",
+                                        fontSize: {
+                                            lg: "1.5rem",
+                                        },
                                     }}
                                 >
                                     {state.actualBoard.title}

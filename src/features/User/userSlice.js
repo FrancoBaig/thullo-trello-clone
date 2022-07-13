@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { current } from "@reduxjs/toolkit";
+import { loginService } from "../../services/register";
 
 const initialState = {
     user: {
-        name: "Franco",
-        email: "email1@gmail.com",
-        token: "Boea 123",
-        img_url: "https://www.blexar.com/avatar.png",
+        name: "",
+        email: "",
+        token: "",
+        img_url: "",
     },
     data: {
         "board-1": {
@@ -60,7 +61,7 @@ const initialState = {
                 "col-3": { id: "col-3", title: "Done", taskIds: [] },
             },
             columnOrder: ["col-1", "col-2", "col-3"],
-            members: ["email1@gmail.com"], // Acá debería almacenar foto, y todo de cada user, para mostrarla
+            members: ["email1@gmail.com"],
             admins: ["email1@gmail.com"],
         },
     },
@@ -73,7 +74,7 @@ const initialState = {
         tasks: [],
         columns: [],
         columnOrder: [],
-        members: [], // Acá debería almacenar foto, y todo de cada user, para mostrarla
+        members: [],
         admins: [],
     },
 };
@@ -82,6 +83,19 @@ export const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
+        setUser(state, action) {
+            const { name, email, token, img_url } = action.payload;
+
+            return {
+                ...state,
+                user: {
+                    name,
+                    email,
+                    token,
+                    img_url,
+                },
+            };
+        },
         addTask(state, action) {
             const { newCardInput, column } = action.payload;
 
@@ -298,7 +312,17 @@ export const userSlice = createSlice({
     },
 });
 
+export const loginUser = (data) => {
+    return async (dispatch) => {
+        const response = await loginService(data);
+        console.log("response to set", response);
+
+        dispatch(setUser(response));
+    };
+};
+
 export const {
+    setUser,
     addTask,
     updateTaskCover,
     addColumn,
