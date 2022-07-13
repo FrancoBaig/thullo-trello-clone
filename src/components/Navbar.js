@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../assets/img/Logo.svg";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { changeActualBoard } from "../features/User/userSlice";
+import { changeActualBoard, changePhoto } from "../features/User/userSlice";
 
 // Router
 import { useParams, useNavigate } from "react-router-dom";
@@ -22,6 +22,10 @@ import FormControl, { useFormControl } from "@mui/material/FormControl";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import InputBase from "@mui/material/InputBase";
 import { alpha, styled } from "@mui/material/styles";
+import Dialog from "@mui/material/Dialog";
+import Stack from "@mui/material/Stack";
+import CardMedia from "@mui/material/CardMedia";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -38,6 +42,10 @@ const BoardButton = styled(Button)(({ theme }) => ({
     },
 }));
 
+const Input = styled("input")({
+    display: "none",
+});
+
 const InputSearch = styled(InputBase)(({ theme }) => ({
     color: theme.palette.text.secondary,
     fontSize: 10,
@@ -50,12 +58,15 @@ const InputSearch = styled(InputBase)(({ theme }) => ({
 
 function Navbar() {
     const dispatch = useDispatch();
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
     const state = useSelector((state) => state.user);
     const userImg = state.user.img_url;
     const userName = state.user.name;
     const { boardId } = useParams();
+    const [open, setOpen] = useState(true);
+    const [file, setFile] = useState("");
+    const [image, setImage] = useState("");
 
     useEffect(() => {
         let board = state.data[boardId];
@@ -78,6 +89,36 @@ function Navbar() {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (value) => {
+        setOpen(false);
+    };
+
+    const previewFiles = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onloadend = () => {
+            setImage(reader.result);
+        };
+    };
+
+    const handleFile = (e) => {
+        const file = e.target.files[0];
+        setFile(file);
+        previewFiles(file);
+        console.log("image", image);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log("new");
+        console.log("file", file);
     };
 
     return (
@@ -160,9 +201,67 @@ function Navbar() {
                         <Box sx={{ display: "flex", alignItems: "center" }}>
                             <Avatar
                                 variant="square"
-                                sx={{ mr: 1, borderRadius: 1 }}
+                                sx={{
+                                    mr: 1,
+                                    borderRadius: 1,
+                                    cursor: "pointer",
+                                }}
                                 src={userImg}
+                                onClick={() => handleClickOpen()}
                             />
+                            <Dialog onClose={handleClose} open={open}>
+                                <Stack spacing={2} sx={{ padding: "2rem" }}>
+                                    {image !== "" ? (
+                                        <CardMedia
+                                            component="img"
+                                            height="140"
+                                            image={image}
+                                            alt={userName}
+                                            sx={{ borderRadius: 1 }}
+                                        />
+                                    ) : (
+                                        ""
+                                    )}
+                                    <Stack
+                                        direction={{ xs: "column", sm: "row" }}
+                                        spacing={3}
+                                    ></Stack>
+                                    <Stack
+                                        direction="row"
+                                        spacing={3}
+                                        justifyContent="flex-end"
+                                    >
+                                        <form onSubmit={(e) => handleSubmit(e)}>
+                                            <label htmlFor="contained-button-file">
+                                                <Input
+                                                    accept="image/*"
+                                                    id="contained-button-file"
+                                                    multiple
+                                                    type="file"
+                                                    onChange={(e) =>
+                                                        handleFile(e)
+                                                    }
+                                                />
+                                                <Button
+                                                    variant="contained"
+                                                    component="span"
+                                                    startIcon={<PhotoCamera />}
+                                                >
+                                                    Upload
+                                                </Button>
+                                            </label>
+                                            <Button
+                                                variant="contained"
+                                                component="span"
+                                                type="submit"
+                                            >
+                                                Send
+                                            </Button>
+                                        </form>
+                                    </Stack>
+                                </Stack>
+                            </Dialog>
+
                             <Typography
                                 variant="body2"
                                 sx={{ color: "#333333" }}

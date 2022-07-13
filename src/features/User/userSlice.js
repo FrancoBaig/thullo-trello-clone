@@ -96,6 +96,17 @@ export const userSlice = createSlice({
                 },
             };
         },
+        setNewPhoto(state, action) {
+            const { url } = action.payload;
+
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    img_url: url,
+                },
+            };
+        },
         addTask(state, action) {
             const { newCardInput, column } = action.payload;
 
@@ -321,8 +332,12 @@ export const loginUser = (data) => {
 
 export const signUpUser = (data) => {
     return async (dispatch) => {
-        const response = await signupService(data);
+        await signupService(data);
     };
+};
+
+export const changePhoto = (data) => {
+    return async (dispatch) => {};
 };
 
 export const {
