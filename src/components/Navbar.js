@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import Logo from "../assets/img/Logo.svg";
 
 import ProfilePhoto from "./ProfilePhoto";
+import ProfilePhotoModal from "./ProfilePhotoModal";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { changeActualBoard, changePhoto } from "../features/User/userSlice";
+import { changeActualBoard } from "../features/User/userSlice";
 
 // Router
 import { useParams, useNavigate } from "react-router-dom";
@@ -24,13 +25,6 @@ import FormControl, { useFormControl } from "@mui/material/FormControl";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import InputBase from "@mui/material/InputBase";
 import { alpha, styled } from "@mui/material/styles";
-import Dialog from "@mui/material/Dialog";
-import Stack from "@mui/material/Stack";
-import CardMedia from "@mui/material/CardMedia";
-import PhotoCamera from "@mui/icons-material/PhotoCamera";
-
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const BoardButton = styled(Button)(({ theme }) => ({
     backgroundColor: theme.palette.secondary.main,
@@ -43,10 +37,6 @@ const BoardButton = styled(Button)(({ theme }) => ({
         backgroundColor: theme.palette.secondary.main,
     },
 }));
-
-const Input = styled("input")({
-    display: "none",
-});
 
 const InputSearch = styled(InputBase)(({ theme }) => ({
     color: theme.palette.text.secondary,
@@ -62,13 +52,11 @@ function Navbar() {
     const dispatch = useDispatch();
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
+    const [open, setOpen] = useState(false);
     const state = useSelector((state) => state.user);
     const userImg = state.user.img_id;
     const userName = state.user.name;
     const { boardId } = useParams();
-    const [open, setOpen] = useState(false);
-    const [file, setFile] = useState("");
-    const [image, setImage] = useState("");
 
     useEffect(() => {
         let board = state.data[boardId];
@@ -95,30 +83,6 @@ function Navbar() {
 
     const handleClickOpen = () => {
         setOpen(true);
-    };
-
-    const handleClose = (value) => {
-        setOpen(false);
-    };
-
-    const previewFiles = (file) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-
-        reader.onloadend = () => {
-            setImage(reader.result);
-        };
-    };
-
-    const handleFile = (e) => {
-        const file = e.target.files[0];
-        setFile(file);
-        previewFiles(file);
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        dispatch(changePhoto(image));
     };
 
     return (
@@ -200,7 +164,10 @@ function Navbar() {
 
                         <Box sx={{ display: "flex", alignItems: "center" }}>
                             {userImg ? (
-                                <ProfilePhoto upploadedImage={userImg} />
+                                <ProfilePhoto
+                                    upploadedImage={userImg}
+                                    handleClickOpen={handleClickOpen}
+                                />
                             ) : (
                                 <Avatar
                                     variant="square"
@@ -214,59 +181,8 @@ function Navbar() {
                                 />
                             )}
 
-                            <Dialog onClose={handleClose} open={open}>
-                                <Stack spacing={2} sx={{ padding: "2rem" }}>
-                                    {image !== "" ? (
-                                        <CardMedia
-                                            component="img"
-                                            height="140"
-                                            image={image}
-                                            alt={userName}
-                                            sx={{ borderRadius: 1 }}
-                                        />
-                                    ) : (
-                                        ""
-                                    )}
-                                    <Stack
-                                        direction={{ xs: "column", sm: "row" }}
-                                        spacing={3}
-                                    ></Stack>
+                            <ProfilePhotoModal open={open} setOpen={setOpen} />
 
-                                    <form onSubmit={(e) => handleSubmit(e)}>
-                                        <Stack
-                                            direction="row"
-                                            spacing={3}
-                                            justifyContent="flex-end"
-                                        >
-                                            <label htmlFor="contained-button-file">
-                                                <Input
-                                                    accept="image/*"
-                                                    id="contained-button-file"
-                                                    multiple
-                                                    type="file"
-                                                    onChange={(e) =>
-                                                        handleFile(e)
-                                                    }
-                                                    required
-                                                />
-                                                <Button
-                                                    variant="contained"
-                                                    component="span"
-                                                    startIcon={<PhotoCamera />}
-                                                >
-                                                    Upload
-                                                </Button>
-                                            </label>
-                                            <Button
-                                                variant="contained"
-                                                type="submit"
-                                            >
-                                                Send
-                                            </Button>
-                                        </Stack>
-                                    </form>
-                                </Stack>
-                            </Dialog>
                             <Typography
                                 variant="body2"
                                 sx={{ color: "#333333" }}

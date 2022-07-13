@@ -12,7 +12,7 @@ import { byRadius } from "@cloudinary/url-gen/actions/roundCorners";
 import { focusOn } from "@cloudinary/url-gen/qualifiers/gravity";
 import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
 
-function ProfilePhoto({ upploadedImage }) {
+function ProfilePhoto({ upploadedImage, handleClickOpen }) {
     // Create and configure your Cloudinary instance.
     const cld = new Cloudinary({
         cloud: {
@@ -28,7 +28,7 @@ function ProfilePhoto({ upploadedImage }) {
         ) // Crop the image.
         .roundCorners(byRadius(12));
 
-    return <AdvancedImage cldImg={myImage} />;
+    return <AdvancedImage cldImg={myImage} onClick={() => handleClickOpen()} />;
 }
 
 export default ProfilePhoto;
