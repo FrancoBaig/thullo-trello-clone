@@ -85,15 +85,14 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         setUser(state, action) {
-            const { name, email, token, img_id } = action.payload;
-
+            const { name, email, token, image_id } = action.payload;
             return {
                 ...state,
                 user: {
                     name,
                     email,
                     token,
-                    img_id,
+                    img_id: image_id,
                 },
             };
         },
