@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { current } from "@reduxjs/toolkit";
 import { loginService, signupService } from "../../services/register";
 import { sendPhoto } from "../../services/cloudinary";
-import { getUserBoards } from "../../services/data";
+import { getUserBoards, getBoardColumns } from "../../services/data";
 
 const initialState = {
     user: {
@@ -12,7 +12,7 @@ const initialState = {
         img_id: "",
     },
     data: {
-        "board-1": {
+        3: {
             id: "board-1",
             title: "Devchallenges Board",
             isPrivate: true,
@@ -87,6 +87,7 @@ export const userSlice = createSlice({
     reducers: {
         setUser(state, action) {
             const { name, email, token, image_id } = action.payload;
+
             return {
                 ...state,
                 user: {
@@ -193,6 +194,63 @@ export const userSlice = createSlice({
                 data: {
                     ...state.data,
                     [newBoard.id]: newBoard,
+                },
+                actualBoard: newBoard,
+            };
+        },
+        setColumns(state, action) {
+            /*
+             *  too slow, refactoring needed
+             */
+
+            const { boardId, columns } = action.payload;
+
+            let columnsResult = {};
+
+            for (let el of columns) {
+                columnsResult = {
+                    ...columnsResult,
+                    [el.idColumn]: {
+                        id: el.idColumn,
+                        title: el.title,
+                        taskIds: [],
+                    },
+                };
+            }
+
+            for (let task of columns) {
+                if (!task.idTask) continue;
+                columnsResult[task.idColumn].taskIds.push(task.idTask);
+            }
+
+            let newTasks = {};
+
+            for (let t of columns) {
+                if (!t.idTask) continue;
+                newTasks = {
+                    ...newTasks,
+                    [t.idTask]: {
+                        id: t.idTask,
+                        url_cover: t.coverUrl,
+                        content: t.content,
+                        description: "", // falta
+                        labels: [], // falta
+                    },
+                };
+            }
+
+            const newBoard = {
+                ...state.data[boardId],
+                columnOrder: Object.keys(columnsResult),
+                columns: columnsResult,
+                tasks: newTasks,
+            };
+
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    [boardId]: newBoard,
                 },
                 actualBoard: newBoard,
             };
@@ -350,9 +408,13 @@ export const userSlice = createSlice({
 
 export const loginUser = (data) => {
     return async (dispatch) => {
+        console.log("logeado..");
         const response = await loginService(data);
+        console.log("logeado..");
         dispatch(setUser(response));
         const token = response.token;
+        console.log("buscando boards..");
+
         dispatch(initialBoards(token));
     };
 };
@@ -378,12 +440,24 @@ export const initialBoards = (data) => {
     };
 };
 
+export const getColumns = (boardId) => {
+    return async (dispatch) => {
+        const response = await getBoardColumns(boardId);
+        const data = {
+            boardId: boardId,
+            columns: response,
+        };
+        dispatch(setColumns(data));
+    };
+};
+
 export const {
     setUser,
     setNewPhoto,
     addTask,
     updateTaskCover,
     addColumn,
+    setColumns,
     deleteColumn,
     addLabel,
     setBoards,

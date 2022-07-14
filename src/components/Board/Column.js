@@ -193,7 +193,7 @@ function Column({ column, tasks }) {
                     </MenuItem>
                 </Menu>
             </Stack>
-            <Droppable droppableId={column.id}>
+            <Droppable droppableId={column.id.toString()}>
                 {(droppableProvided, droppableSnapshot) => (
                     <div
                         ref={droppableProvided.innerRef}

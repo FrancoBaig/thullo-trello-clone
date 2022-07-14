@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
+import { getColumns } from "../../features/User/userSlice";
 
 // Compoennts
 import BoardDrawer from "./BoardDrawer";
 import TogglePrivate from "./TogglePrivate";
+
+import { useParams, useNavigate } from "react-router-dom";
 
 // MUI
 import Box from "@mui/material/Box";
@@ -31,6 +34,15 @@ const OptionButton = styled(Button)(({ theme }) => ({
 function BoardNav() {
     const [state, setState] = useState(false);
     const store = useSelector((store) => store.user.data);
+
+    const dispatch = useDispatch();
+    const boardId = useParams();
+
+    useEffect(() => {
+        console.log("eh");
+
+        dispatch(getColumns(boardId.boardId));
+    }, [boardId]);
 
     return (
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
