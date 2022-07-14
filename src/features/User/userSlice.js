@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { current } from "@reduxjs/toolkit";
 import { loginService, signupService } from "../../services/register";
 import { sendPhoto } from "../../services/cloudinary";
+import { getUserBoards } from "../../services/data";
 
 const initialState = {
     user: {
@@ -257,6 +258,36 @@ export const userSlice = createSlice({
                 actualBoard: newBoard,
             };
         },
+        setBoards(state, action) {
+            const raw = action.payload;
+
+            let result = {};
+            for (let board of raw) {
+                result = {
+                    ...result,
+                    [board.boardId]: {
+                        id: board.boardId,
+                        columnOrder: [],
+                        admins: [],
+                        columns: {},
+                        description: board.description,
+                        image_url: board.image_url,
+                        isProvate: board.isPrivate,
+                        labels: [],
+                        members: [],
+                        tasks: [],
+                        title: board.title,
+                    },
+                };
+            }
+
+            console.log("result", result);
+
+            return {
+                ...state,
+                data: result,
+            };
+        },
         createBoard(state, action) {
             const boardData = action.payload;
 
@@ -325,6 +356,10 @@ export const loginUser = (data) => {
     return async (dispatch) => {
         const response = await loginService(data);
         dispatch(setUser(response));
+        const token = response.token;
+        console.log("token", token);
+
+        dispatch(initialBoards(token));
     };
 };
 
@@ -342,6 +377,13 @@ export const changePhoto = (data) => {
     };
 };
 
+export const initialBoards = (data) => {
+    return async (dispatch) => {
+        const response = await getUserBoards(data);
+        dispatch(setBoards(response));
+    };
+};
+
 export const {
     setUser,
     setNewPhoto,
@@ -350,6 +392,7 @@ export const {
     addColumn,
     deleteColumn,
     addLabel,
+    setBoards,
     createBoard,
     togglePrivacity,
     changeActualBoard,

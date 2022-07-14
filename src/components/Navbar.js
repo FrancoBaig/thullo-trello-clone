@@ -184,8 +184,13 @@ function Navbar() {
                             <ProfilePhotoModal open={open} setOpen={setOpen} />
 
                             <Typography
-                                variant="body2"
-                                sx={{ color: "#333333" }}
+                                variant="body1"
+                                sx={{
+                                    color: "#333333",
+                                    ml: "1rem",
+                                    fontWeight: "500",
+                                    fontSize: "1.1rem",
+                                }}
                             >
                                 {userName}
                             </Typography>
