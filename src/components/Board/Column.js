@@ -232,7 +232,9 @@ function Column({ column, tasks }) {
                                             }
                                         >
                                             <Stack spacing={2}>
-                                                {task.url_cover !== "" ? (
+                                                {task.url_cover == undefined ? (
+                                                    ""
+                                                ) : (
                                                     <CardMedia
                                                         component="img"
                                                         height="100"
@@ -240,8 +242,6 @@ function Column({ column, tasks }) {
                                                         alt="green iguana"
                                                         sx={{ borderRadius: 1 }}
                                                     />
-                                                ) : (
-                                                    ""
                                                 )}
 
                                                 <Typography variant="h3">
