@@ -165,8 +165,6 @@ export const userSlice = createSlice({
                 },
             };
 
-            console.log("new board->", newBoard);
-
             return {
                 ...state,
                 data: {
@@ -281,8 +279,6 @@ export const userSlice = createSlice({
                 };
             }
 
-            console.log("result", result);
-
             return {
                 ...state,
                 data: result,
@@ -357,8 +353,6 @@ export const loginUser = (data) => {
         const response = await loginService(data);
         dispatch(setUser(response));
         const token = response.token;
-        console.log("token", token);
-
         dispatch(initialBoards(token));
     };
 };
