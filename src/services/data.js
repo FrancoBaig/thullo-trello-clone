@@ -36,3 +36,12 @@ export const createBoard = async (data, token) => {
         console.log(err);
     }
 };
+
+export const createColumn = async (data) => {
+    try {
+        const response = await axios.post(`${baseURL}/column`, data);
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+};

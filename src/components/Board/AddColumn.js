@@ -8,8 +8,8 @@ import Box from "@mui/material/Box";
 import AddIcon from "@mui/icons-material/Add";
 
 // Redux
-import { useDispatch } from "react-redux";
-import { addColumn } from "../../features/User/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { createNewColumn } from "../../features/User/userSlice";
 
 const AddColumnButton = styled(Button)(({ theme }) => ({
     backgroundColor: theme.palette.light.main,
@@ -37,12 +37,18 @@ const Input = styled(InputBase)(({ theme }) => ({
 function AddColumn() {
     const [open, setOpen] = useState(false);
     const [columnName, setColumnName] = useState("");
+    const actualBoard = useSelector((state) => state.user.actualBoard);
     const dispatch = useDispatch();
 
     const handleNewColumn = () => {
         if (columnName === "") return;
 
-        dispatch(addColumn(columnName));
+        const data = {
+            title: columnName,
+            Board_boardId: actualBoard.id,
+        };
+
+        dispatch(createNewColumn(data));
 
         // reset
         setOpen(false);

@@ -6,6 +6,7 @@ import {
     getUserBoards,
     getBoardColumns,
     createBoard,
+    createColumn,
 } from "../../services/data";
 
 const initialState = {
@@ -180,17 +181,22 @@ export const userSlice = createSlice({
             };
         },
         addColumn(state, action) {
-            const name = action.payload;
-
-            const idCol = `col-${new Date().getTime()}`;
+            const dataColumn = action.payload;
 
             const newBoard = {
                 ...state.actualBoard,
                 columns: {
                     ...state.actualBoard.columns,
-                    [idCol]: { id: idCol, title: name, taskIds: [] },
+                    [dataColumn.colId]: {
+                        id: dataColumn.colId,
+                        title: dataColumn.title,
+                        taskIds: [],
+                    },
                 },
-                columnOrder: [...state.actualBoard.columnOrder, idCol],
+                columnOrder: [
+                    ...state.actualBoard.columnOrder,
+                    dataColumn.colId.toString(),
+                ],
             };
 
             return {
@@ -454,6 +460,25 @@ export const createNewBoard = (data) => {
         await createBoard(data.data, data.token);
         const boardData = data.data;
         dispatch(setNewBoard(boardData));
+    };
+};
+
+export const createNewColumn = (data) => {
+    return async (dispatch) => {
+        console.log("data pasada", data);
+        try {
+            const response = await createColumn(data);
+
+            const dataColumn = {
+                ...data,
+                colId: response.insertId,
+            };
+            console.log("respuesta");
+
+            dispatch(addColumn(dataColumn));
+        } catch (err) {
+            console.log(err);
+        }
     };
 };
 
