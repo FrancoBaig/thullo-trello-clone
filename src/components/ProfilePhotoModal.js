@@ -98,6 +98,7 @@ function ProfilePhotoModal({ open, setOpen }) {
                             fullWidth
                             type="submit"
                             onClick={(e) => handleSubmit(e)}
+                            disabled={image == ""}
                         >
                             Send
                         </Button>
