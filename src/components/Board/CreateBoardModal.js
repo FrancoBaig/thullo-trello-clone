@@ -13,6 +13,8 @@ import InputBase from "@mui/material/InputBase";
 import Button from "@mui/material/Button";
 import CardMedia from "@mui/material/CardMedia";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
 
 import LockIcon from "@mui/icons-material/Lock";
 import AddIcon from "@mui/icons-material/Add";
@@ -52,8 +54,17 @@ function CreateBoardModal({ onClose, open }) {
     );
     const [isPrivate, setIsPrivate] = useState(true);
     const dispatch = useDispatch();
+    const [noInput, setNoInput] = useState(false);
 
     const handleCreateBoard = () => {
+        if (boardName === "") {
+            setNoInput(true);
+            setTimeout(() => {
+                setNoInput(false);
+            }, 3000);
+            return;
+        }
+
         const boardData = {
             title: boardName,
             description: "",
@@ -87,7 +98,21 @@ function CreateBoardModal({ onClose, open }) {
                     value={boardName}
                     onChange={({ target }) => setBoardName(target.value)}
                     required
-                ></Input>
+                    id="BoardName"
+                    helperText="No input"
+                    error={noInput}
+                />
+                {noInput ? (
+                    <Typography
+                        variant="body2"
+                        color="error"
+                        sx={{ mb: 1, fontSize: "1.2rem" }}
+                    >
+                        name is required
+                    </Typography>
+                ) : (
+                    ""
+                )}
                 <Stack direction={{ xs: "column", sm: "row" }} spacing={3}>
                     <Box sx={{ width: "50%" }}>
                         <UnsplashModal setUrlCover={setUrlCover} />
@@ -101,6 +126,7 @@ function CreateBoardModal({ onClose, open }) {
                         {isPrivate ? "Private" : "Public"}
                     </OptionButton>
                 </Stack>
+
                 <Stack direction="row" spacing={3} justifyContent="flex-end">
                     <Button
                         color="secondary"
