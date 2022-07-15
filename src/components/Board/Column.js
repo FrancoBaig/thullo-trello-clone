@@ -56,8 +56,6 @@ const AddCardButton = styled(Button)(({ theme }) => ({
 
 function Column({ column, tasks }) {
     const dispatch = useDispatch();
-    const state = useSelector((state) => state.user.data);
-    const actualBoard = useSelector((state) => state.user.actualBoard);
 
     const [addCard, setAddCard] = useState(false);
     const [newCardInput, setNewCardInput] = useState("");
@@ -100,7 +98,7 @@ function Column({ column, tasks }) {
         setOpen(true);
     };
 
-    const handleClose = (value) => {
+    const handleClose = () => {
         setTask({});
         setOpen(false);
     };
@@ -210,7 +208,7 @@ function Column({ column, tasks }) {
                                             }
                                         >
                                             <Stack spacing={2}>
-                                                {task.url_cover == undefined ? (
+                                                {task.url_cover === "" ? (
                                                     ""
                                                 ) : (
                                                     <CardMedia
@@ -260,10 +258,11 @@ function Column({ column, tasks }) {
                 )}
             </Droppable>
             {addCard ? (
-                <Card>
+                <Card sx={{ mt: "1.5rem" }}>
                     <form onSubmit={handleNewCard}>
                         <InputBase
                             placeholder="Enter a title for this card..."
+                            sx={{ fontSize: "1.4rem" }}
                             value={newCardInput}
                             onChange={({ target }) => {
                                 setNewCardInput(target.value);

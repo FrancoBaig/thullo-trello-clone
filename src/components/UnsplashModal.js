@@ -138,12 +138,12 @@ function UnsplashModal({ setUrlCover }) {
                                 <ImageListItem
                                     key={item.id}
                                     onClick={() =>
-                                        handleSelectImage(item.urls.full)
+                                        handleSelectImage(item.urls.small)
                                     }
                                 >
                                     <img
-                                        src={`${item.urls.full}`}
-                                        srcSet={`${item.urls.full}`}
+                                        src={`${item.urls.thumb}`}
+                                        srcSet={`${item.urls.thumb}`}
                                         alt={item.alt_description}
                                         style={{
                                             borderRadius: 4,
