@@ -11,6 +11,8 @@ import AddIcon from "@mui/icons-material/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { createNewColumn } from "../../features/User/userSlice";
 
+import Input from "./Input";
+
 const AddColumnButton = styled(Button)(({ theme }) => ({
     backgroundColor: theme.palette.light.main,
     color: theme.palette.light.contrastText,
@@ -23,15 +25,6 @@ const AddColumnButton = styled(Button)(({ theme }) => ({
     "&:hover": {
         backgroundColor: theme.palette.light.main,
     },
-}));
-
-const Input = styled(InputBase)(({ theme }) => ({
-    backgroundColor: "#fafbfc",
-    padding: "1rem 1.5rem",
-    border: `1px solid #dfe1e6`,
-    fontSize: "1.4rem",
-
-    borderRadius: theme.shape.borderRadius,
 }));
 
 function AddColumn() {
@@ -56,30 +49,13 @@ function AddColumn() {
     };
 
     return (
-        <Box>
+        <Box sx={{ minWidth: "25rem" }}>
             {open ? (
-                <>
-                    <Input
-                        placeholder="description..."
-                        value={columnName}
-                        onChange={({ target }) => setColumnName(target.value)}
-                    />
-                    <Box>
-                        <Button
-                            variant="contained"
-                            color="success"
-                            size="small"
-                            sx={{
-                                mt: "1rem",
-                            }}
-                            onClick={() => {
-                                handleNewColumn();
-                            }}
-                        >
-                            Save
-                        </Button>
-                    </Box>
-                </>
+                <Input
+                    input={columnName}
+                    setInput={setColumnName}
+                    handleOnClick={handleNewColumn}
+                />
             ) : (
                 <AddColumnButton
                     endIcon={<AddIcon />}

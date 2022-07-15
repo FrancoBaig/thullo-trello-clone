@@ -12,7 +12,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 function Board() {
     return (
-        <Box sx={{ m: 3 }}>
+        <Box sx={{ m: 3, overflowX: "scroll" }}>
             <BoardNav />
             <DragAndDrop />
             <BoardDrawer />

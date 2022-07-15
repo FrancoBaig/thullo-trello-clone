@@ -34,6 +34,8 @@ import Grid from "@mui/material/Grid";
 import CardDetails from "./CardDetails";
 import Label from "../Label/Label";
 
+import Input from "./Input";
+
 const Card = styled(Paper)(({ theme }) => ({
     padding: "1.5rem",
     boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.05)",
@@ -50,15 +52,6 @@ const AddCardButton = styled(Button)(({ theme }) => ({
     "&:hover": {
         backgroundColor: theme.palette.light.main,
     },
-}));
-
-const Input = styled(InputBase)(({ theme }) => ({
-    backgroundColor: "#fafbfc",
-    padding: "1rem 1.5rem",
-    border: `1px solid #dfe1e6`,
-    fontSize: "1.4rem",
-
-    borderRadius: theme.shape.borderRadius,
 }));
 
 function Column({ column, tasks }) {
@@ -87,17 +80,17 @@ function Column({ column, tasks }) {
     };
 
     const handleRenameColumn = () => {
+        handleMenuClose();
 
         const data = {
             idCol: column.id,
-            title: input
-        }
+            title: input,
+        };
 
         dispatch(updateColumnName(data));
 
         setInput("");
         setEditingCol(false);
-        handleMenuClose();
     };
 
     //
@@ -129,46 +122,32 @@ function Column({ column, tasks }) {
     };
 
     return (
-        <Box sx={{ width: "20%", height: "75vh" }}>
+        <Box sx={{ width: "20%", minWidth: "25rem", height: "75vh" }}>
             <Stack
                 direction="row"
                 justifyContent="space-between"
                 alignItems="center"
             >
                 {editingCol ? (
-                    <>
-                        <Input
-                            placeholder="description..."
-                            value={input}
-                            onChange={({ target }) => setInput(target.value)}
-                        />
-
-                        <Box>
-                            <Button
-                                variant="contained"
-                                color="success"
-                                size="small"
-                                sx={{
-                                    mt: "1rem",
-                                }}
-                                onClick={() => handleRenameColumn()}
-                            >
-                                Save
-                            </Button>
-                        </Box>
-                    </>
+                    <Input
+                        input={input}
+                        setInput={setInput}
+                        handleOnClick={handleRenameColumn}
+                    />
                 ) : (
-                    <Typography variant="h4">{column.title}</Typography>
+                    <>
+                        <Typography variant="h4">{column.title}</Typography>
+                        <IconButton
+                            id="basic-button"
+                            aria-controls={openMenu ? "basic-menu" : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={openMenu ? "true" : undefined}
+                            onClick={handleMenuClick}
+                        >
+                            <MoreHorizIcon />
+                        </IconButton>
+                    </>
                 )}
-                <IconButton
-                    id="basic-button"
-                    aria-controls={openMenu ? "basic-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={openMenu ? "true" : undefined}
-                    onClick={handleMenuClick}
-                >
-                    <MoreHorizIcon />
-                </IconButton>
                 <Menu
                     id="basic-menu"
                     anchorEl={anchorEl}
@@ -178,7 +157,12 @@ function Column({ column, tasks }) {
                         "aria-labelledby": "basic-button",
                     }}
                 >
-                    <MenuItem onClick={() => setEditingCol(true)}>
+                    <MenuItem
+                        onClick={() => {
+                            handleMenuClose();
+                            setEditingCol(true);
+                        }}
+                    >
                         Rename
                     </MenuItem>
                     <Divider />
