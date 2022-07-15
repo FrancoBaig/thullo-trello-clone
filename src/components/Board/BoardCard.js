@@ -17,15 +17,15 @@ function BoardCard({ id, title, image_url }) {
                 alt={title}
                 sx={{ borderRadius: 1 }}
             />
-            <CardContent>
-                <Typography gutterBottom variant="h3" component="div">
-                    {title}
-                </Typography>
-            </CardContent>
-            <Stack direction="row" spacing={2}>
-                <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
-                <Avatar sx={{ bgcolor: deepPurple[500] }}>OP</Avatar>
-            </Stack>
+
+            <Typography
+                gutterBottom
+                variant="h3"
+                component="div"
+                sx={{ fontWeight: 500, mt: "1rem" }}
+            >
+                {title}
+            </Typography>
         </Card>
     );
 }

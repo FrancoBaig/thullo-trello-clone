@@ -387,7 +387,7 @@ export const userSlice = createSlice({
                 description: "",
                 admins: [state.user.email],
                 columnOrder: [],
-                colmns: {},
+                columns: {},
                 isPrivate: boardData.isPrivate,
                 members: [state.user.email],
                 tasks: {},

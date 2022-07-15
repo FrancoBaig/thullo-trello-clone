@@ -105,6 +105,7 @@ function DragAndDrop() {
                 borderRadius: "24px",
                 mt: "2rem",
                 padding: "1.5rem 2.5rem",
+                minHeight: "70vh",
             }}
         >
             <Stack direction="row" spacing={3}>
