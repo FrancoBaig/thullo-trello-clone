@@ -6,6 +6,7 @@ import {
     getUserBoards,
     getBoardColumns,
     createBoard,
+    updateDescription,
     createColumn,
 } from "../../services/data";
 
@@ -411,6 +412,25 @@ export const userSlice = createSlice({
                 actualBoard: newBoard,
             };
         },
+        setNewDescription(state, action) {
+            const data = action.payload;
+
+            const newBoard = {
+                ...state.actualBoard,
+                description: data.description,
+            };
+
+            console.log("newBoard", newBoard);
+
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    [newBoard.id]: newBoard,
+                },
+                actualBoard: newBoard,
+            };
+        },
     },
 });
 
@@ -482,6 +502,17 @@ export const createNewColumn = (data) => {
     };
 };
 
+export const updateBoardDescription = (data) => {
+    return async (dispatch) => {
+        try {
+            await updateDescription(data);
+            dispatch(setNewDescription(data));
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
 export const {
     setUser,
     setNewPhoto,
@@ -496,5 +527,6 @@ export const {
     togglePrivacity,
     changeActualBoard,
     updateActualBoard,
+    setNewDescription,
 } = userSlice.actions;
 export default userSlice.reducer;

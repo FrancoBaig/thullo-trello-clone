@@ -45,3 +45,12 @@ export const createColumn = async (data) => {
         console.log(err);
     }
 };
+
+export const updateDescription = async (data) => {
+    try {
+        const response = await axios.put(`${baseURL}/description`, data);
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+};

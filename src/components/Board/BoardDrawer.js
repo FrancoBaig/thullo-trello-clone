@@ -2,7 +2,7 @@ import React, { useState, Fragment } from "react";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { updateActualBoard } from "../../features/User/userSlice";
+import { updateBoardDescription } from "../../features/User/userSlice";
 
 // MUI
 import Drawer from "@mui/material/Drawer";
@@ -36,11 +36,11 @@ function BoardDrawer({ state, setState }) {
 
     const handleUpdateDescription = () => {
         const newBoard = {
-            ...actualBoard,
+            boardId: actualBoard.id,
             description: input,
         };
 
-        dispatch(updateActualBoard(newBoard));
+        dispatch(updateBoardDescription(newBoard));
 
         setEditing(!editing);
         setInput("");
