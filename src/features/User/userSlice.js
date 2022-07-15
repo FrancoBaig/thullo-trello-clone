@@ -2,7 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { current } from "@reduxjs/toolkit";
 import { loginService, signupService } from "../../services/register";
 import { sendPhoto } from "../../services/cloudinary";
-import { getUserBoards, getBoardColumns } from "../../services/data";
+import {
+    getUserBoards,
+    getBoardColumns,
+    createBoard,
+} from "../../services/data";
 
 const initialState = {
     user: {
@@ -342,13 +346,11 @@ export const userSlice = createSlice({
                 data: result,
             };
         },
-        createBoard(state, action) {
+        setNewBoard(state, action) {
             const boardData = action.payload;
 
-            const idBoard = `board-${new Date().getTime()}`;
-
             const newBoard = {
-                id: idBoard,
+                id: boardData.boardId,
                 title: boardData.title,
                 image_url: boardData.image_url,
                 description: "",
@@ -364,7 +366,7 @@ export const userSlice = createSlice({
                 ...state,
                 data: {
                     ...state.data,
-                    [idBoard]: newBoard,
+                    [newBoard.id]: newBoard,
                 },
             };
         },
@@ -408,13 +410,9 @@ export const userSlice = createSlice({
 
 export const loginUser = (data) => {
     return async (dispatch) => {
-        console.log("logeado..");
         const response = await loginService(data);
-        console.log("logeado..");
         dispatch(setUser(response));
         const token = response.token;
-        console.log("buscando boards..");
-
         dispatch(initialBoards(token));
     };
 };
@@ -451,6 +449,14 @@ export const getColumns = (boardId) => {
     };
 };
 
+export const createNewBoard = (data) => {
+    return async (dispatch) => {
+        await createBoard(data.data, data.token);
+        const boardData = data.data;
+        dispatch(setNewBoard(boardData));
+    };
+};
+
 export const {
     setUser,
     setNewPhoto,
@@ -461,7 +467,7 @@ export const {
     deleteColumn,
     addLabel,
     setBoards,
-    createBoard,
+    setNewBoard,
     togglePrivacity,
     changeActualBoard,
     updateActualBoard,

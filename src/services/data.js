@@ -23,3 +23,16 @@ export const getBoardColumns = async (boardId) => {
         console.log(err);
     }
 };
+
+export const createBoard = async (data, token) => {
+    try {
+        const config = {
+            headers: { Authorization: token },
+        };
+        const response = await axios.post(`${baseURL}/`, data, config);
+
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+};

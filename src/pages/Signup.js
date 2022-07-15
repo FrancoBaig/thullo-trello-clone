@@ -35,7 +35,7 @@ const Input = styled(InputBase)(({ theme }) => ({
 function Signup() {
     let navigate = useNavigate();
     const dispatch = useDispatch();
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
@@ -75,7 +75,9 @@ function Signup() {
                 <form onSubmit={handleSignUp}>
                     <Stack direction="column" spacing={2}>
                         <Typography variant="h1" component="h3">
-                            Sign up for your account
+                            {!isLogin
+                                ? "Sign up for your account"
+                                : "Sign in to your account "}
                         </Typography>
                         <Input
                             placeholder="Email"

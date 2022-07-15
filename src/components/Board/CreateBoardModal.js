@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import UnsplashModal from "../UnsplashModal";
 
 // Redux
-import { useDispatch } from "react-redux";
-import { createBoard } from "../../features/User/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { createNewBoard } from "../../features/User/userSlice";
 
 // MUI
 import Dialog from "@mui/material/Dialog";
@@ -45,6 +45,7 @@ const OptionButton = styled(Button)(({ theme }) => ({
 }));
 
 function CreateBoardModal({ onClose, open }) {
+    const user = useSelector((state) => state.user.user);
     const [boardName, setBoardName] = useState("");
     const [urlCover, setUrlCover] = useState(
         "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fHdvcmt8ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60"
@@ -55,11 +56,17 @@ function CreateBoardModal({ onClose, open }) {
     const handleCreateBoard = () => {
         const boardData = {
             title: boardName,
+            description: "",
             image_url: urlCover,
             isPrivate: isPrivate,
         };
 
-        dispatch(createBoard(boardData));
+        const data = {
+            data: boardData,
+            token: user.token,
+        };
+
+        dispatch(createNewBoard(data));
 
         setBoardName("");
         onClose();
