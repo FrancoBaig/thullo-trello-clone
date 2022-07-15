@@ -54,3 +54,12 @@ export const updateDescription = async (data) => {
         console.log(err);
     }
 };
+
+export const updateColumnNameService = async (data) => {
+    try {
+        const response = await axios.put(`${baseURL}/column`, data);
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+};

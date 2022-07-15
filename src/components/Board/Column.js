@@ -6,6 +6,7 @@ import {
     addTask,
     updateActualBoard,
     deleteColumn,
+    updateColumnName,
 } from "../../features/User/userSlice";
 
 // DND
@@ -86,20 +87,13 @@ function Column({ column, tasks }) {
     };
 
     const handleRenameColumn = () => {
-        const newColumn = {
-            ...column,
-            title: input,
-        };
 
-        const newBoard = {
-            ...actualBoard,
-            columns: {
-                ...actualBoard.columns,
-                [column.id]: newColumn,
-            },
-        };
+        const data = {
+            idCol: column.id,
+            title: input
+        }
 
-        dispatch(updateActualBoard(newBoard));
+        dispatch(updateColumnName(data));
 
         setInput("");
         setEditingCol(false);

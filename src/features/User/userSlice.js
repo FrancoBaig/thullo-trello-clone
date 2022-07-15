@@ -7,6 +7,7 @@ import {
     getBoardColumns,
     createBoard,
     updateDescription,
+    updateColumnNameService,
     createColumn,
 } from "../../services/data";
 
@@ -294,6 +295,29 @@ export const userSlice = createSlice({
                 actualBoard: newBoard,
             };
         },
+        setNewColName(state, action) {
+            const data = action.payload;
+
+            const newBoard = {
+                ...state.actualBoard,
+                columns: {
+                    ...state.actualBoard.columns,
+                    [data.idCol]: {
+                        ...state.actualBoard.columns[data.idCol],
+                        title: data.title,
+                    },
+                },
+            };
+
+            return {
+                ...state,
+                data: {
+                    ...state.data,
+                    [newBoard.id]: newBoard,
+                },
+                actualBoard: newBoard,
+            };
+        },
         addLabel(state, action) {
             const { task, input, selected } = action.payload;
 
@@ -513,6 +537,17 @@ export const updateBoardDescription = (data) => {
     };
 };
 
+export const updateColumnName = (data) => {
+    return async (dispatch) => {
+        try {
+            await updateColumnNameService(data);
+            dispatch(setNewColName(data));
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
 export const {
     setUser,
     setNewPhoto,
@@ -520,6 +555,7 @@ export const {
     updateTaskCover,
     addColumn,
     setColumns,
+    setNewColName,
     deleteColumn,
     addLabel,
     setBoards,
