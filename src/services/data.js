@@ -63,3 +63,12 @@ export const updateColumnNameService = async (data) => {
         console.log(err);
     }
 };
+
+export const updateTaskContentService = async (data) => {
+    try {
+        const response = await axios.put(`${baseURL}/task/content`, data);
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+};

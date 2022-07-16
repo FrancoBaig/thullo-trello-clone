@@ -8,6 +8,7 @@ import {
     createBoard,
     updateDescription,
     updateColumnNameService,
+    updateTaskContentService,
     createColumn,
 } from "../../services/data";
 
@@ -501,8 +502,8 @@ export const getColumns = (boardId) => {
 
 export const createNewBoard = (data) => {
     return async (dispatch) => {
-        await createBoard(data.data, data.token);
-        const boardData = data.data;
+        const response = await createBoard(data.data, data.token);
+        const boardData = { ...data.data, boardId: response.boardId };
         dispatch(setNewBoard(boardData));
     };
 };
@@ -541,6 +542,17 @@ export const updateColumnName = (data) => {
     return async (dispatch) => {
         try {
             await updateColumnNameService(data);
+            dispatch(setNewColName(data));
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const updateTaskContent = (data) => {
+    return async (dispatch) => {
+        try {
+            await updateTaskContentService(data);
             dispatch(setNewColName(data));
         } catch (err) {
             console.log(err);
