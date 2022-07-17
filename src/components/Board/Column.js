@@ -294,7 +294,7 @@ function Column({ column, tasks }) {
             </AddCardButton>
             {open ? (
                 <CardDetails
-                    column={column.title}
+                    column={column}
                     task={task}
                     onClose={handleClose}
                     open={open}

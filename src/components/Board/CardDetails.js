@@ -2,14 +2,10 @@ import React, { useState, useEffect } from "react";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import {
-    updateActualBoard,
-    updateTaskCover,
-} from "../../features/User/userSlice";
+import { updateTask } from "../../features/User/userSlice";
 
 // MUI
 import Comments from "./Comments";
-import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
@@ -19,11 +15,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 
-import LockIcon from "@mui/icons-material/Lock";
-import ImageIcon from "@mui/icons-material/Image";
-import AddIcon from "@mui/icons-material/Add";
 import GroupIcon from "@mui/icons-material/Group";
-import LabelIcon from "@mui/icons-material/Label";
 import ArticleIcon from "@mui/icons-material/Article";
 import EditIcon from "@mui/icons-material/Edit";
 import CardMedia from "@mui/material/CardMedia";
@@ -62,11 +54,13 @@ function CardDetails({ onClose, open, task, column }) {
     const dispatch = useDispatch();
     const actualBoard = useSelector((state) => state.user.actualBoard);
     const [editing, setEditing] = useState(false);
-    const [inputDescription, setInputDescription] = useState("");
-    const [inputName, setInputName] = useState("");
     const [editingTitle, setEditingTitle] = useState(false);
     const [openCard, setOpenCard] = useState(task);
     const [urlCover, setUrlCover] = useState("");
+    const [inputDescription, setInputDescription] = useState(
+        openCard.description
+    );
+    const [inputName, setInputName] = useState(openCard.content);
 
     useEffect(() => {
         handleNewCover();
@@ -74,30 +68,24 @@ function CardDetails({ onClose, open, task, column }) {
 
     const handleEdit = () => {
         let newTask = {};
+        const idColumn = column.id;
 
         if (editingTitle) {
             newTask = {
                 ...openCard,
                 content: inputName,
             };
+
+            dispatch(updateTask(newTask, idColumn, "content"));
         } else {
             newTask = {
                 ...openCard,
                 description: inputDescription,
             };
+
+            dispatch(updateTask(newTask, idColumn, "description"));
         }
 
-        const newTasks = {
-            ...actualBoard.tasks,
-            [newTask.id]: newTask,
-        };
-
-        const newBoard = {
-            ...actualBoard,
-            tasks: newTasks,
-        };
-
-        dispatch(updateActualBoard(newBoard));
         setOpenCard(newTask);
         setEditing(false);
         setEditingTitle(false);
@@ -107,14 +95,14 @@ function CardDetails({ onClose, open, task, column }) {
 
     const handleNewCover = () => {
         if (urlCover === "") return;
-
+        const idColumn = column.id;
         const newTask = {
             ...openCard,
             url_cover: urlCover,
         };
 
+        dispatch(updateTask(newTask, idColumn, "cover"));
         setOpenCard(newTask);
-        dispatch(updateTaskCover(newTask));
     };
 
     return (
@@ -185,7 +173,7 @@ function CardDetails({ onClose, open, task, column }) {
                             },
                         }}
                     >
-                        In list <span>{column}</span>
+                        In list <span>{column.title}</span>
                     </Typography>
                     <Box>
                         <Stack

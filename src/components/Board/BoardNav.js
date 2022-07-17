@@ -39,8 +39,6 @@ function BoardNav() {
     const boardId = useParams();
 
     useEffect(() => {
-        console.log("eh");
-
         dispatch(getColumns(boardId.boardId));
     }, [boardId]);
 

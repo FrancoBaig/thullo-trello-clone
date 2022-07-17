@@ -82,18 +82,36 @@ export const updateTaskColumnService = async (data) => {
     }
 };
 
-export const updateColumnNameService = async (data) => {
+export const updateTaskContentService = async (data) => {
     try {
-        const response = await axios.put(`${baseURL}/column`, data);
+        const response = await axios.put(`${baseURL}/task/content`, data);
         return response.data;
     } catch (err) {
         console.log(err);
     }
 };
 
-export const updateTaskContentService = async (data) => {
+export const updateTaskDescriptionService = async (data) => {
     try {
-        const response = await axios.put(`${baseURL}/task/content`, data);
+        const response = await axios.put(`${baseURL}/task/description`, data);
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const updateTaskCoverService = async (data) => {
+    try {
+        const response = await axios.put(`${baseURL}/task/cover`, data);
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const updateColumnNameService = async (data) => {
+    try {
+        const response = await axios.put(`${baseURL}/column`, data);
         return response.data;
     } catch (err) {
         console.log(err);

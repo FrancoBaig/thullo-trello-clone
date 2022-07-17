@@ -33,7 +33,7 @@ const reorderColumnList = (sourceCol, startIndex, endIndex) => {
 function DragAndDrop() {
     const dispatch = useDispatch();
     const { boardId } = useParams();
-    const actualBoard = useSelector((state) => state.user.data[boardId]);
+    const actualBoard = useSelector((state) => state.user.actualBoard);
 
     const onDragEnd = (result) => {
         const { destination, source } = result;

@@ -9,8 +9,10 @@ import {
     updateDescription,
     updateTaskPositionService,
     updateTaskColumnService,
-    updateColumnNameService,
     updateTaskContentService,
+    updateTaskDescriptionService,
+    updateTaskCoverService,
+    updateColumnNameService,
     createColumn,
 } from "../../services/data";
 
@@ -165,6 +167,24 @@ export const userSlice = createSlice({
                     [state.actualBoard.id]: final,
                 },
                 actualBoard: final,
+            };
+        },
+        setUpdatedTask(state, action) {
+            const newTask = action.payload;
+
+            const newTasks = {
+                ...state.actualBoard.tasks,
+                [newTask.id]: newTask,
+            };
+
+            const newBoard = {
+                ...state.actualBoard,
+                tasks: newTasks,
+            };
+
+            return {
+                ...state,
+                actualBoard: newBoard,
             };
         },
         updateTaskCover(state, action) {
@@ -574,12 +594,61 @@ export const updateTwoColumnsPosition = (data) => {
     return async (dispatch) => {
         try {
             // update task column
+            console.log("data to update", data);
+
             await updateTaskColumnService(data.taskColumnData);
             dispatch(updateTaskPositions(data.firstColumn));
             dispatch(updateTaskPositions(data.secondColumn));
         } catch (err) {
             console.log(err);
         }
+    };
+};
+
+export const updateTask = (newTask, columnId, mode) => {
+    let data = {
+        idTask: newTask.id,
+        idColumn: columnId,
+    };
+
+    return async (dispatch) => {
+        switch (mode.toLowerCase()) {
+            case "content":
+                try {
+                    data = {
+                        ...data,
+                        newContent: newTask.content,
+                    };
+                    await updateTaskContentService(data);
+                } catch (err) {
+                    console.log(err);
+                }
+                break;
+            case "description":
+                try {
+                    data = {
+                        ...data,
+                        newDescription: newTask.description,
+                    };
+                    await updateTaskDescriptionService(data);
+                } catch (err) {
+                    console.log(err);
+                }
+                break;
+            case "cover":
+                try {
+                    data = {
+                        ...data,
+                        newCoverUrl: newTask.url_cover,
+                    };
+                    await updateTaskCoverService(data);
+                } catch (err) {
+                    console.log(err);
+                }
+                break;
+        }
+
+        dispatch(setUpdatedTask(newTask));
     };
 };
 
@@ -602,6 +671,7 @@ export const {
     setUser,
     setNewPhoto,
     addTask,
+    setUpdatedTask,
     updateTaskCover,
     addColumn,
     setColumns,
