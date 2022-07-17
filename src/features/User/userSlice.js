@@ -8,7 +8,8 @@ import {
     createBoard,
     createTaskService,
     updateDescription,
-    updataTaskPositionService,
+    updateTaskPositionService,
+    updateTaskColumnService,
     updateColumnNameService,
     updateTaskContentService,
     createColumn,
@@ -568,7 +569,20 @@ export const updateTaskContent = (data) => {
 export const updateTaskPositions = (data) => {
     return async (dispatch) => {
         try {
-            await updataTaskPositionService(data);
+            await updateTaskPositionService(data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const updateTwoColumnsPosition = (data) => {
+    return async (dispatch) => {
+        try {
+            // update task column
+            await updateTaskColumnService(data.taskColumnData);
+            dispatch(updateTaskPositions(data.firstColumn));
+            dispatch(updateTaskPositions(data.secondColumn));
         } catch (err) {
             console.log(err);
         }

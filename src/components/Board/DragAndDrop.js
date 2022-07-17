@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     updateActualBoard,
     updateTaskPositions,
+    updateTwoColumnsPosition,
 } from "../../features/User/userSlice";
 
 // Router
@@ -93,10 +94,48 @@ function DragAndDrop() {
         };
 
         const endTaskIds = [...destinationCol.taskIds];
+
         endTaskIds.splice(destination.index, 0, removed);
+
         const newEndCol = {
             ...destinationCol,
             taskIds: endTaskIds,
+        };
+
+        // change idtask
+        const taskColumnData = {
+            idColumn: newEndCol.id,
+            idTask: removed,
+        };
+
+        // new first column
+        const firstColumn = [
+            { idColumn: newStartCol.id },
+            newStartCol.taskIds.map((el) => {
+                return {
+                    taskId: el,
+                    position: newStartCol.taskIds.indexOf(el) + 1,
+                };
+            }),
+            ,
+        ];
+
+        // new end column
+        const secondColumn = [
+            { idColumn: newEndCol.id },
+            newEndCol.taskIds.map((el) => {
+                return {
+                    taskId: el,
+                    position: newEndCol.taskIds.indexOf(el) + 1,
+                };
+            }),
+            ,
+        ];
+
+        const data = {
+            taskColumnData: taskColumnData,
+            firstColumn: firstColumn,
+            secondColumn: secondColumn,
         };
 
         const newState = {
@@ -107,6 +146,8 @@ function DragAndDrop() {
                 [newEndCol.id]: newEndCol,
             },
         };
+
+        dispatch(updateTwoColumnsPosition(data));
 
         dispatch(updateActualBoard(newState));
     };

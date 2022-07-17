@@ -64,10 +64,18 @@ export const updateDescription = async (data) => {
     }
 };
 
-// ACA
-export const updataTaskPositionService = async (data) => {
+export const updateTaskPositionService = async (data) => {
     try {
         const response = await axios.put(`${baseURL}/task/position`, data);
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const updateTaskColumnService = async (data) => {
+    try {
+        const response = await axios.put(`${baseURL}/task/column`, data);
         return response.data;
     } catch (err) {
         console.log(err);
