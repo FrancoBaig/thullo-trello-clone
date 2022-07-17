@@ -450,8 +450,6 @@ export const userSlice = createSlice({
                 description: data.description,
             };
 
-            console.log("newBoard", newBoard);
-
             return {
                 ...state,
                 data: {
@@ -515,15 +513,12 @@ export const createNewBoard = (data) => {
 
 export const createNewColumn = (data) => {
     return async (dispatch) => {
-        console.log("data pasada", data);
         try {
             const response = await createColumn(data);
-
             const dataColumn = {
                 ...data,
                 colId: response.insertId,
             };
-            console.log("respuesta");
 
             dispatch(addColumn(dataColumn));
         } catch (err) {
