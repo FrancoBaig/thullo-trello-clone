@@ -17,6 +17,8 @@ import { alpha, styled } from "@mui/material/styles";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
 import FeedIcon from "@mui/icons-material/Feed";
 
+import ProfilePhoto from "../ProfilePhoto";
+
 const CustomTextArea = styled(TextareaAutosize)(({ theme }) => ({
     fontFamily: theme.typography.h1.fontFamily,
     fontSize: "1.4rem",
@@ -30,7 +32,6 @@ const CustomTextArea = styled(TextareaAutosize)(({ theme }) => ({
 function BoardDrawer({ state, setState }) {
     const dispatch = useDispatch();
     const actualBoard = useSelector((state) => state.user.actualBoard);
-    const paSaber = useSelector((state) => state);
     const [editing, setEditing] = useState(false);
     const [input, setInput] = useState("");
 
@@ -57,7 +58,7 @@ function BoardDrawer({ state, setState }) {
                 },
             }}
         >
-            <Stack sx={{ width: "30rem", padding: "2rem" }} spacing={2}>
+            <Stack sx={{ width: "33rem", padding: "2rem" }} spacing={2}>
                 <Typography variant="h4">Menu</Typography>
                 <Divider />
 
@@ -133,47 +134,38 @@ function BoardDrawer({ state, setState }) {
                     <FeedIcon />
                     <Typography variant="body2">Team</Typography>
                 </Stack>
-
                 <Stack spacing={1}>
-                    <Stack
-                        direction="row"
-                        alignItems="center"
-                        justifyContent="space-between"
-                    >
-                        <Stack direction="row" alignItems="center" spacing={1}>
-                            <img
-                                width="30rem"
-                                height="30rem"
-                                src="https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d29ya3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400&q=60"
-                                alt="1"
-                            />
-                            <Typography variant="h6">Daniel Jensen</Typography>
+                    {actualBoard.members.map((member) => (
+                        <Stack
+                            direction="row"
+                            alignItems="center"
+                            justifyContent="space-between"
+                            key={member.userId}
+                        >
+                            <Stack
+                                direction="row"
+                                alignItems="center"
+                                spacing={1}
+                            >
+                                <ProfilePhoto upploadedImage={member.imgUrl} />
+                                <Stack>
+                                    <Typography variant="h6">
+                                        {member.name}
+                                    </Typography>
+                                    <Typography variant="body1">
+                                        {member.email}
+                                    </Typography>
+                                </Stack>
+                            </Stack>
+                            <Button
+                                variant="outlined"
+                                color="error"
+                                size="small"
+                            >
+                                Remove
+                            </Button>
                         </Stack>
-                        {/* si es admin display otro botón */}
-                        <Button variant="outlined" color="error" size="small">
-                            Remove
-                        </Button>
-                    </Stack>
-
-                    <Stack
-                        direction="row"
-                        alignItems="center"
-                        justifyContent="space-between"
-                    >
-                        <Stack direction="row" alignItems="center" spacing={1}>
-                            <img
-                                width="30rem"
-                                height="30rem"
-                                src="https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8d29ya3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400&q=60"
-                                alt="1"
-                            />
-                            <Typography variant="h6">Daniel Jensen</Typography>
-                        </Stack>
-                        {/* si es admin display otro botón */}
-                        <Button variant="outlined" color="error" size="small">
-                            Remove
-                        </Button>
-                    </Stack>
+                    ))}
                 </Stack>
             </Stack>
         </Drawer>

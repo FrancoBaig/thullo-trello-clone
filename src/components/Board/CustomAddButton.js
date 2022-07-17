@@ -58,7 +58,6 @@ function CustomAddButton({ size = "medium" }) {
 
     const handleRequest = async () => {
         const results = await searchUsersByEmailService(input);
-        console.log("results", results);
 
         setSearchResults(results);
         setInput("");
