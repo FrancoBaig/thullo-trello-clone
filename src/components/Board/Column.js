@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     addTask,
+    createTask,
     updateActualBoard,
     deleteColumn,
     updateColumnName,
@@ -20,7 +21,6 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import IconButton from "@mui/material/IconButton";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import Chip from "@mui/material/Chip";
 import CustomAddButton from "./CustomAddButton";
 import Button from "@mui/material/Button";
 import InputBase from "@mui/material/InputBase";
@@ -107,8 +107,13 @@ function Column({ column, tasks }) {
         e.preventDefault();
         if (newCardInput === "") return;
 
-        const payload = { newCardInput, column };
-        dispatch(addTask(payload));
+        const data = {
+            content: newCardInput,
+            position: column.taskIds.length + 1,
+            idColumn: column.id,
+        };
+
+        dispatch(createTask(data));
 
         setAddCard(false);
         setNewCardInput("");

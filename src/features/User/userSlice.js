@@ -6,7 +6,9 @@ import {
     getUserBoards,
     getBoardColumns,
     createBoard,
+    createTaskService,
     updateDescription,
+    updataTaskPositionService,
     updateColumnNameService,
     updateTaskContentService,
     createColumn,
@@ -116,22 +118,24 @@ export const userSlice = createSlice({
             };
         },
         addTask(state, action) {
-            const { newCardInput, column } = action.payload;
-
-            const idTask = `task-${new Date().getTime()}`;
+            const { content, taskId, position, idColumn } = action.payload;
 
             const newCard = {
-                id: idTask,
-                content: newCardInput,
+                id: taskId,
+                content: content,
                 description: "",
                 url_cover: "",
+                position: position,
                 labels: [],
             };
 
             // 1. Add task id to column ✅
             const newColumn = {
-                ...column,
-                taskIds: [...column.taskIds, newCard.id],
+                ...state.actualBoard.columns[idColumn],
+                taskIds: [
+                    ...state.actualBoard.columns[idColumn].taskIds,
+                    newCard.id,
+                ],
             };
 
             // 2. Add new column to actual board ✅
@@ -549,11 +553,37 @@ export const updateColumnName = (data) => {
     };
 };
 
+// ...
 export const updateTaskContent = (data) => {
     return async (dispatch) => {
         try {
             await updateTaskContentService(data);
             dispatch(setNewColName(data));
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const updateTaskPositions = (data) => {
+    return async (dispatch) => {
+        try {
+            await updataTaskPositionService(data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const createTask = (data) => {
+    return async (dispatch) => {
+        try {
+            const response = await createTaskService(data);
+            const payload = {
+                ...data,
+                taskId: response.insertId,
+            };
+            dispatch(addTask(payload));
         } catch (err) {
             console.log(err);
         }

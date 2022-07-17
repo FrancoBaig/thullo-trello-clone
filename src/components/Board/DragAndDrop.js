@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import React from "react";
+import { DragDropContext } from "react-beautiful-dnd";
 import Column from "./Column";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
 
 import AddColumn from "./AddColumn";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { updateActualBoard } from "../../features/User/userSlice";
+import {
+    updateActualBoard,
+    updateTaskPositions,
+} from "../../features/User/userSlice";
 
 // Router
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const reorderColumnList = (sourceCol, startIndex, endIndex) => {
     const newTaskIds = [...sourceCol.taskIds];
@@ -58,6 +58,19 @@ function DragAndDrop() {
                 source.index,
                 destination.index
             );
+
+            const data = [
+                { idColumn: newColumn.id },
+                newColumn.taskIds.map((el) => {
+                    return {
+                        taskId: el,
+                        position: newColumn.taskIds.indexOf(el) + 1,
+                    };
+                }),
+                ,
+            ];
+
+            dispatch(updateTaskPositions(data));
 
             const newState = {
                 ...actualBoard,

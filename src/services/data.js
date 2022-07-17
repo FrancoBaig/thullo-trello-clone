@@ -46,9 +46,28 @@ export const createColumn = async (data) => {
     }
 };
 
+export const createTaskService = async (data) => {
+    try {
+        const response = await axios.post(`${baseURL}/task`, data);
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 export const updateDescription = async (data) => {
     try {
         const response = await axios.put(`${baseURL}/description`, data);
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+// ACA
+export const updataTaskPositionService = async (data) => {
+    try {
+        const response = await axios.put(`${baseURL}/task/position`, data);
         return response.data;
     } catch (err) {
         console.log(err);
