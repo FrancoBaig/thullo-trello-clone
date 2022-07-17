@@ -13,6 +13,7 @@ import {
     updateTaskDescriptionService,
     updateTaskCoverService,
     updateColumnNameService,
+    updateBoardPrivacityService,
     createColumn,
     deleteColumnService,
 } from "../../services/data";
@@ -389,7 +390,7 @@ export const userSlice = createSlice({
                         columns: {},
                         description: board.description,
                         image_url: board.image_url,
-                        isProvate: board.isPrivate,
+                        isPrivate: board.isPrivate,
                         labels: [],
                         members: [],
                         tasks: [],
@@ -595,8 +596,6 @@ export const updateTwoColumnsPosition = (data) => {
     return async (dispatch) => {
         try {
             // update task column
-            console.log("data to update", data);
-
             await updateTaskColumnService(data.taskColumnData);
             dispatch(updateTaskPositions(data.firstColumn));
             dispatch(updateTaskPositions(data.secondColumn));
@@ -673,6 +672,17 @@ export const deleteColumnAndTask = (data) => {
         try {
             await deleteColumnService(data);
             dispatch(deleteColumn(data));
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const updateBoardPrivacity = (data) => {
+    return async (dispatch) => {
+        try {
+            await updateBoardPrivacityService(data);
+            dispatch(togglePrivacity());
         } catch (err) {
             console.log(err);
         }

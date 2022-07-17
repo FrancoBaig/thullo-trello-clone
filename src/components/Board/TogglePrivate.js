@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { togglePrivacity } from "../../features/User/userSlice";
+import { updateBoardPrivacity } from "../../features/User/userSlice";
 
 // MUI
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import LockIcon from "@mui/icons-material/Lock";
-import { alpha, styled } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import PublicIcon from "@mui/icons-material/Public";
 
@@ -42,7 +40,12 @@ function TogglePrivate() {
     };
 
     const handlePrivate = () => {
-        dispatch(togglePrivacity());
+        const data = {
+            boardId: actualBoard.id,
+            isPrivate: actualBoard.isPrivate,
+        };
+
+        dispatch(updateBoardPrivacity(data));
         handleMenuClose();
     };
 
@@ -82,6 +85,7 @@ function TogglePrivate() {
                         startIcon={<LockIcon />}
                         sx={{ padding: "1rem 0", fontSize: "1.4rem" }}
                         disabled={actualBoard.isPrivate}
+                        onClick={() => handlePrivate()}
                     >
                         Private
                     </OptionButton>

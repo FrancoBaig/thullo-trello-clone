@@ -126,3 +126,14 @@ export const deleteColumnService = async (data) => {
         console.log(err);
     }
 };
+
+export const updateBoardPrivacityService = async (data) => {
+    console.log("mandando...");
+
+    try {
+        const response = await axios.put(`${baseURL}/privacity`, data);
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+};
