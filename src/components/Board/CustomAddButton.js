@@ -11,11 +11,11 @@ import Typography from "@mui/material/Typography";
 import FormControl from "@mui/material/FormControl";
 import InputBase from "@mui/material/InputBase";
 import Paper from "@mui/material/Paper";
-import Avatar from "@mui/material/Avatar";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { searchUsersByEmailService } from "../../services/data";
+import { assignBoardToUser } from "../../features/User/userSlice";
 
 import ProfilePhoto from "../ProfilePhoto";
 
@@ -64,8 +64,25 @@ function CustomAddButton({ size = "medium" }) {
         setInput("");
     };
 
-    const handleNewMember = () => {
-        console.log("agregando miembro...");
+    const handleNewMember = (user) => {
+        let already = false;
+
+        for (let i of actualBoard.members) {
+            if (i.userId === user.userId) {
+                already = true;
+            }
+        }
+
+        if (!already) {
+            user = {
+                ...user,
+                boardId: actualBoard.id,
+            };
+
+            dispatch(assignBoardToUser(user));
+        }
+
+        handleMenuClose();
     };
     return (
         <>
@@ -121,11 +138,12 @@ function CustomAddButton({ size = "medium" }) {
                     </FormControl>
                     {searchResults.length > 0 ? (
                         <Paper sx={{ p: 1 }}>
-                            {searchResults.map((user) => (
+                            {searchResults.map((user, index) => (
                                 <Stack
                                     direction="row"
                                     spacing={2}
                                     alignItems="center"
+                                    key={index}
                                     sx={{
                                         cursor: "pointer",
                                         mt: ".5rem",
@@ -138,7 +156,7 @@ function CustomAddButton({ size = "medium" }) {
                                         },
                                     }}
                                     onClick={() => {
-                                        handleNewMember();
+                                        handleNewMember(user);
                                     }}
                                 >
                                     <ProfilePhoto

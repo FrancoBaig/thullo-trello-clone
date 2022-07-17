@@ -144,3 +144,20 @@ export const searchUsersByEmailService = async (input) => {
         console.log(err);
     }
 };
+
+export const assignBoardToUserService = async (data) => {
+    try {
+        await axios.post(`${baseURL}/assign`, data);
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const getAllUsers = async (boardId) => {
+    try {
+        const response = await axios.get(`${baseURL}/all/users/${boardId}`);
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+};

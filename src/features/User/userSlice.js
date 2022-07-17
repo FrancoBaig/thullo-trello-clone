@@ -13,10 +13,12 @@ import {
     updateTaskDescriptionService,
     updateTaskCoverService,
     updateColumnNameService,
+    assignBoardToUserService,
     updateBoardPrivacityService,
     createColumn,
     deleteColumnService,
     searchUsersByEmailService,
+    getAllUsers,
 } from "../../services/data";
 
 const initialState = {
@@ -78,7 +80,7 @@ const initialState = {
                 "col-3": { id: "col-3", title: "Done", taskIds: [] },
             },
             columnOrder: ["col-1", "col-2", "col-3"],
-            members: ["email1@gmail.com"],
+            members: [],
             admins: ["email1@gmail.com"],
         },
     },
@@ -119,6 +121,19 @@ export const userSlice = createSlice({
                 user: {
                     ...state.user,
                     img_id: action.payload,
+                },
+            };
+        },
+        setUserToBoard(state, action) {
+            const data = action.payload;
+
+            delete data[0].boardId;
+
+            return {
+                ...state,
+                actualBoard: {
+                    ...state.actualBoard,
+                    members: [...state.actualBoard.members, ...data],
                 },
             };
         },
@@ -522,6 +537,7 @@ export const getColumns = (boardId) => {
             columns: response,
         };
         dispatch(setColumns(data));
+        dispatch(getAllUsersFromBoard(boardId));
     };
 };
 
@@ -690,6 +706,30 @@ export const updateBoardPrivacity = (data) => {
     };
 };
 
+export const assignBoardToUser = (user) => {
+    return async (dispatch) => {
+        try {
+            await assignBoardToUserService(user);
+            console.log([user]);
+
+            dispatch(setUserToBoard([user]));
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const getAllUsersFromBoard = (boardId) => {
+    return async (dispatch) => {
+        try {
+            const users = await getAllUsers(boardId);
+            dispatch(setUserToBoard(users));
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
 export const {
     setUser,
     setNewPhoto,
@@ -699,6 +739,7 @@ export const {
     addColumn,
     setColumns,
     setNewColName,
+    setUserToBoard,
     deleteColumn,
     addLabel,
     setBoards,
