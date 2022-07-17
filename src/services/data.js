@@ -128,10 +128,17 @@ export const deleteColumnService = async (data) => {
 };
 
 export const updateBoardPrivacityService = async (data) => {
-    console.log("mandando...");
-
     try {
         const response = await axios.put(`${baseURL}/privacity`, data);
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const searchUsersByEmailService = async (input) => {
+    try {
+        const response = await axios.get(`${baseURL}/users/${input}`);
         return response.data;
     } catch (err) {
         console.log(err);

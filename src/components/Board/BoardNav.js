@@ -6,19 +6,15 @@ import { getColumns } from "../../features/User/userSlice";
 
 // Compoennts
 import BoardDrawer from "./BoardDrawer";
-import TogglePrivate from "./TogglePrivate";
+import AddMember from "./members/AddMember";
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 // MUI
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import LockIcon from "@mui/icons-material/Lock";
-import Stack from "@mui/material/Stack";
-import Avatar from "@mui/material/Avatar";
-import { alpha, styled } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import CustomAddButton from "./CustomAddButton";
 
 const OptionButton = styled(Button)(({ theme }) => ({
     boxShadow: "none",
@@ -44,17 +40,7 @@ function BoardNav() {
 
     return (
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Stack direction="row" spacing={2}>
-                <TogglePrivate />
-
-                <Stack direction="row" spacing={1}>
-                    <Avatar variant="square" sx={{ borderRadius: 1 }}>
-                        N
-                    </Avatar>
-                </Stack>
-
-                <CustomAddButton size={"large"} />
-            </Stack>
+            <AddMember />
             <OptionButton
                 variant="contained"
                 color="secondary"

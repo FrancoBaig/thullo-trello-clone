@@ -12,7 +12,7 @@ import { byRadius } from "@cloudinary/url-gen/actions/roundCorners";
 import { focusOn } from "@cloudinary/url-gen/qualifiers/gravity";
 import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
 
-function ProfilePhoto({ upploadedImage, handleClickOpen }) {
+function ProfilePhoto({ upploadedImage, handleClickOpen = () => {} }) {
     // Create and configure your Cloudinary instance.
     const cld = new Cloudinary({
         cloud: {
@@ -21,7 +21,7 @@ function ProfilePhoto({ upploadedImage, handleClickOpen }) {
     });
 
     // Use the image with public ID, 'upploadedImage'.
-    const myImage = cld.image(upploadedImage);
+    const myImage = cld.image(upploadedImage || "/thullo/default_jnapnn.webp");
     myImage
         .resize(
             thumbnail().width(45).height(45).gravity(focusOn(FocusOn.face()))

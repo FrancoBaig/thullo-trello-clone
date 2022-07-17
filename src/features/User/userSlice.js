@@ -16,6 +16,7 @@ import {
     updateBoardPrivacityService,
     createColumn,
     deleteColumnService,
+    searchUsersByEmailService,
 } from "../../services/data";
 
 const initialState = {

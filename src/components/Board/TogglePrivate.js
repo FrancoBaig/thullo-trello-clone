@@ -75,7 +75,7 @@ function TogglePrivate() {
                 }}
             >
                 <Stack spacing={1} sx={{ padding: 1 }}>
-                    <Typography variant="h3">Visibilty</Typography>
+                    <Typography variant="h3">Visibility</Typography>
                     <Typography variant="h4" sx={{ color: "#828282" }}>
                         Choose who can see to this board.
                     </Typography>
