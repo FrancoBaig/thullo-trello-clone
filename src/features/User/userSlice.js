@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { current } from "@reduxjs/toolkit";
 import { loginService, signupService } from "../../services/register";
 import { sendPhoto } from "../../services/cloudinary";
 import {

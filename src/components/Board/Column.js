@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 // Redux
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
-    addTask,
     createTask,
-    updateActualBoard,
     deleteColumn,
     updateColumnName,
 } from "../../features/User/userSlice";
@@ -213,7 +211,7 @@ function Column({ column, tasks }) {
                                             }
                                         >
                                             <Stack spacing={2}>
-                                                {task.url_cover === "" ? (
+                                                {task.url_cover === null ? (
                                                     ""
                                                 ) : (
                                                     <CardMedia

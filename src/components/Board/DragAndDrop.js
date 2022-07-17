@@ -68,7 +68,6 @@ function DragAndDrop() {
                         position: newColumn.taskIds.indexOf(el) + 1,
                     };
                 }),
-                ,
             ];
 
             dispatch(updateTaskPositions(data));
@@ -117,7 +116,6 @@ function DragAndDrop() {
                     position: newStartCol.taskIds.indexOf(el) + 1,
                 };
             }),
-            ,
         ];
 
         // new end column
@@ -129,7 +127,6 @@ function DragAndDrop() {
                     position: newEndCol.taskIds.indexOf(el) + 1,
                 };
             }),
-            ,
         ];
 
         const data = {
