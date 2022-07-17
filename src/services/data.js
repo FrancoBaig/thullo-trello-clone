@@ -127,6 +127,17 @@ export const deleteColumnService = async (data) => {
     }
 };
 
+export const deleteUserHasBoardService = async (data) => {
+    try {
+        const response = await axios.delete(
+            `${baseURL}/${data.boardId}/${data.userId}`
+        );
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+};
+
 export const updateBoardPrivacityService = async (data) => {
     try {
         const response = await axios.put(`${baseURL}/privacity`, data);

@@ -2,7 +2,10 @@ import React, { useState, Fragment } from "react";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { updateBoardDescription } from "../../features/User/userSlice";
+import {
+    updateBoardDescription,
+    deleteUserHasBoard,
+} from "../../features/User/userSlice";
 
 // MUI
 import Drawer from "@mui/material/Drawer";
@@ -45,6 +48,15 @@ function BoardDrawer({ state, setState }) {
 
         setEditing(!editing);
         setInput("");
+    };
+
+    const handleRemove = (user) => {
+        const data = {
+            ...user,
+            boardId: actualBoard.id,
+        };
+
+        dispatch(deleteUserHasBoard(data));
     };
 
     return (
@@ -161,6 +173,7 @@ function BoardDrawer({ state, setState }) {
                                 variant="outlined"
                                 color="error"
                                 size="small"
+                                onClick={() => handleRemove(member)}
                             >
                                 Remove
                             </Button>

@@ -18,6 +18,7 @@ import {
     createColumn,
     deleteColumnService,
     searchUsersByEmailService,
+    deleteUserHasBoardService,
     getAllUsers,
 } from "../../services/data";
 
@@ -134,6 +135,21 @@ export const userSlice = createSlice({
                 actualBoard: {
                     ...state.actualBoard,
                     members: [...state.actualBoard.members, ...data],
+                },
+            };
+        },
+        removeMember(state, action) {
+            const data = action.payload;
+
+            const filtered = state.actualBoard.members.filter(
+                (el) => el.userId !== data
+            );
+
+            return {
+                ...state,
+                actualBoard: {
+                    ...state.actualBoard,
+                    members: filtered,
                 },
             };
         },
@@ -730,6 +746,17 @@ export const getAllUsersFromBoard = (boardId) => {
     };
 };
 
+export const deleteUserHasBoard = (data) => {
+    return async (dispatch) => {
+        try {
+            await deleteUserHasBoardService(data);
+            dispatch(removeMember(data.userId));
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
 export const {
     setUser,
     setNewPhoto,
@@ -748,5 +775,6 @@ export const {
     changeActualBoard,
     updateActualBoard,
     setNewDescription,
+    removeMember,
 } = userSlice.actions;
 export default userSlice.reducer;
