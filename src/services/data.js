@@ -117,3 +117,12 @@ export const updateColumnNameService = async (data) => {
         console.log(err);
     }
 };
+
+export const deleteColumnService = async (data) => {
+    try {
+        const response = await axios.delete(`${baseURL}/column/${data.id}`);
+        return response.data;
+    } catch (err) {
+        console.log(err);
+    }
+};

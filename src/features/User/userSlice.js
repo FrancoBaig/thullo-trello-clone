@@ -14,6 +14,7 @@ import {
     updateTaskCoverService,
     updateColumnNameService,
     createColumn,
+    deleteColumnService,
 } from "../../services/data";
 
 const initialState = {
@@ -126,7 +127,7 @@ export const userSlice = createSlice({
                 id: taskId,
                 content: content,
                 description: "",
-                url_cover: "",
+                url_cover: null,
                 position: position,
                 labels: [],
             };
@@ -293,21 +294,21 @@ export const userSlice = createSlice({
             };
         },
         deleteColumn(state, action) {
-            const column = action.payload;
+            const data = action.payload;
 
             // Get columns without column -> newList
-            const { [column.id]: remove, ...newList } =
-                state.actualBoard.columns;
+            const { [data.id]: remove, ...newList } = state.actualBoard.columns;
 
             // Get columnOrder without column.id -> result
             const array = state.actualBoard.columnOrder;
-            const index = array.indexOf(column.id);
+            const id = data.id.toString();
+            const index = array.indexOf(id);
             const result = array.slice(0, index).concat(array.slice(index + 1));
 
             // New board
             const newBoard = {
                 ...state.actualBoard,
-                columnOrder: [...result],
+                columnOrder: result,
                 columns: { ...newList },
             };
 
@@ -661,6 +662,17 @@ export const createTask = (data) => {
                 taskId: response.insertId,
             };
             dispatch(addTask(payload));
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const deleteColumnAndTask = (data) => {
+    return async (dispatch) => {
+        try {
+            await deleteColumnService(data);
+            dispatch(deleteColumn(data));
         } catch (err) {
             console.log(err);
         }

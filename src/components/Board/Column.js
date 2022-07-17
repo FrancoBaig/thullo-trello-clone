@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
     createTask,
-    deleteColumn,
+    deleteColumnAndTask,
     updateColumnName,
 } from "../../features/User/userSlice";
 
@@ -118,7 +118,7 @@ function Column({ column, tasks }) {
     };
 
     const handleColumnDelete = () => {
-        dispatch(deleteColumn(column));
+        dispatch(deleteColumnAndTask(column));
         handleMenuClose();
     };
 

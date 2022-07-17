@@ -162,7 +162,8 @@ function DragAndDrop() {
             <Stack direction="row" spacing={3}>
                 <DragDropContext onDragEnd={onDragEnd}>
                     {actualBoard.columnOrder.map((columnId) => {
-                        const column = actualBoard.columns[columnId];
+                        const id = parseInt(columnId);
+                        const column = actualBoard.columns[id];
                         const tasks = column.taskIds.map(
                             (taskId) => actualBoard.tasks[taskId]
                         );

@@ -108,7 +108,7 @@ function CardDetails({ onClose, open, task, column }) {
     return (
         <Dialog onClose={onClose} open={open}>
             <Grid container spacing={2} sx={{ padding: "2rem" }}>
-                {openCard.url_cover !== "" ? (
+                {openCard.url_cover !== null ? (
                     <Grid item xs={12}>
                         <CardMedia
                             component="img"
