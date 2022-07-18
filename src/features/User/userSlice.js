@@ -304,7 +304,7 @@ export const userSlice = createSlice({
                         id: t.idTask,
                         url_cover: t.coverUrl,
                         content: t.content,
-                        description: "", // falta
+                        description: t.description,
                         labels: t.labels,
                     },
                 };
