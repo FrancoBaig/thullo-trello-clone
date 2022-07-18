@@ -18,10 +18,10 @@ import {
     updateBoardPrivacityService,
     createColumn,
     deleteColumnService,
-    searchUsersByEmailService,
     deleteUserHasBoardService,
     getAllUsers,
 } from "../../services/data";
+import { setLoadingLogin, setLoginError } from "./helperSlice";
 
 const initialState = {
     user: {
@@ -517,10 +517,21 @@ export const userSlice = createSlice({
 
 export const loginUser = (data) => {
     return async (dispatch) => {
+        dispatch(setLoadingLogin(true));
+
         const response = await loginService(data);
-        dispatch(setUser(response));
-        const token = response.token;
-        dispatch(initialBoards(token));
+
+        if (response.data.status === "error") {
+            const message = response.data.error;
+            dispatch(setLoginError(message));
+        } else {
+            const userData = response.data.data;
+            dispatch(setUser(userData));
+            const token = userData.token;
+            dispatch(initialBoards(token));
+        }
+
+        dispatch(setLoadingLogin(false));
     };
 };
 

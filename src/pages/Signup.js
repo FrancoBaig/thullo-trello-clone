@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Logo from "../assets/img/Logo.svg";
 
 // MUI
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import { styled } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
+import LoadingButton from "@mui/lab/LoadingButton";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
+import Container from "@mui/material/Container";
+import InputBase from "@mui/material/InputBase";
+import { styled } from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
+import Stack from "@mui/material/Stack";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
 
 // Redux
-import { useDispatch } from "react-redux";
 import { loginUser, signUpUser } from "../features/User/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 // React router
 import { useNavigate } from "react-router-dom";
@@ -35,10 +35,22 @@ const Input = styled(InputBase)(({ theme }) => ({
 function Signup() {
     let navigate = useNavigate();
     const dispatch = useDispatch();
+    const user = useSelector((state) => state.user.user);
+    const helper = useSelector((state) => state.helper);
     const [isLogin, setIsLogin] = useState(true);
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        if (helper.loading.login) return;
+        if (user.email === "") return;
+
+        setEmail("");
+        setName("");
+        setPassword("");
+        navigate("/", { replace: true });
+    }, [helper.loading.login, user]);
 
     const handleSignUp = async (e) => {
         e.preventDefault();
@@ -60,12 +72,8 @@ function Signup() {
             dispatch(signUpUser(dataSignUp));
             dispatch(loginUser({ email, password }));
         }
-
-        setEmail("");
-        setName("");
-        setPassword("");
-        navigate("/", { replace: true });
     };
+
     return (
         <Container maxWidth="xs">
             <Box sx={{ display: "flex", justifyContent: "center", mt: "5rem" }}>
@@ -104,9 +112,27 @@ function Signup() {
                             required
                             onChange={({ target }) => setPassword(target.value)}
                         />
-                        <Button variant="contained" fullWidth type="submit">
+                        {helper.error.login !== "" ? (
+                            <Box>
+                                <Typography
+                                    variant="body1"
+                                    color="error"
+                                    sx={{ fontSize: "1.2rem", pl: ".3rem" }}
+                                >
+                                    {helper.error.login}
+                                </Typography>
+                            </Box>
+                        ) : (
+                            ""
+                        )}
+                        <LoadingButton
+                            loading={helper.loading.login}
+                            variant="contained"
+                            fullWidth
+                            type="submit"
+                        >
                             {!isLogin ? "Sign up" : "Log in"}
-                        </Button>
+                        </LoadingButton>
                     </Stack>
                 </form>
                 <Stack spacing={1} sx={{ mt: 2 }} justifyContent="center">
