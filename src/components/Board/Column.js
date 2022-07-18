@@ -228,8 +228,11 @@ function Column({ column, tasks }) {
                                                 </Typography>
                                                 <Grid container spacing={1}>
                                                     {task.labels.map(
-                                                        (label) => (
-                                                            <Grid item>
+                                                        (label, index) => (
+                                                            <Grid
+                                                                item
+                                                                key={index}
+                                                            >
                                                                 <Label
                                                                     text={
                                                                         label.text

@@ -172,3 +172,11 @@ export const getAllUsers = async (boardId) => {
         console.log(err);
     }
 };
+
+export const insertLabelService = async (data) => {
+    try {
+        await axios.post(`${baseURL}/label`, data);
+    } catch (err) {
+        console.log(err);
+    }
+};

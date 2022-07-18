@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from "react";
+import LogoSmall from "../assets/img/LogoSmall.svg";
 import Logo from "../assets/img/Logo.svg";
 
-import ProfilePhoto from "./ProfilePhoto";
+// Components
 import ProfilePhotoModal from "./ProfilePhotoModal";
+import ProfilePhoto from "./ProfilePhoto";
 
 // Redux
-import { useDispatch, useSelector } from "react-redux";
 import { changeActualBoard } from "../features/User/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 // Router
 import { useParams, useNavigate } from "react-router-dom";
 
 // MUI
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Avatar from "@mui/material/Avatar";
-import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
-import MenuIcon from "@mui/icons-material/Menu";
-import FormControl, { useFormControl } from "@mui/material/FormControl";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
 import InputBase from "@mui/material/InputBase";
-import { alpha, styled } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
+import Divider from "@mui/material/Divider";
+import Toolbar from "@mui/material/Toolbar";
+import Avatar from "@mui/material/Avatar";
+import AppBar from "@mui/material/AppBar";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 const BoardButton = styled(Button)(({ theme }) => ({
     backgroundColor: theme.palette.secondary.main,
@@ -50,13 +52,13 @@ const InputSearch = styled(InputBase)(({ theme }) => ({
 
 function Navbar() {
     const dispatch = useDispatch();
-    const [anchorElNav, setAnchorElNav] = useState(null);
-    const [anchorElUser, setAnchorElUser] = useState(null);
     const [open, setOpen] = useState(false);
     const state = useSelector((state) => state.user);
     const userImg = state.user.img_id;
     const userName = state.user.name;
     const { boardId } = useParams();
+    const media = useMediaQuery("(min-width:600px)");
+    console.log("media", media);
 
     useEffect(() => {
         let board = state.data[boardId];
@@ -65,21 +67,6 @@ function Navbar() {
     }, [boardId]);
 
     let navigate = useNavigate();
-
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -100,7 +87,10 @@ function Navbar() {
                         <IconButton
                             onClick={() => navigate("/", { replace: true })}
                         >
-                            <img src={Logo} alt="pag-logo"></img>
+                            <img
+                                src={media ? Logo : LogoSmall}
+                                alt="pag-logo"
+                            ></img>
                         </IconButton>
                         {boardId !== undefined ? (
                             <>

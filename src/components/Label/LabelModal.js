@@ -1,24 +1,19 @@
 import React, { useState } from "react";
 
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+// MUI
 import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
-import FormControl, { useFormControl } from "@mui/material/FormControl";
-import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import LabelIcon from "@mui/icons-material/Label";
+import InputBase from "@mui/material/InputBase";
+import { styled } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import Grid from "@mui/material/Grid";
+import Menu from "@mui/material/Menu";
+import Box from "@mui/material/Box";
 
 // Redux
+import { insertLabel } from "../../features/User/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { addLabel } from "../../features/User/userSlice";
-
-import Label from "./Label";
 
 const LabelButton = styled(Button)(({ theme }) => ({
     boxShadow: "none",
@@ -55,6 +50,7 @@ const colors = {
     purple: "#9B51E0",
     blue: "#2F80ED",
 };
+
 function LabelModal({ task }) {
     const dispatch = useDispatch();
     const actualBoard = useSelector((state) => state.user.actualBoard);
@@ -70,18 +66,10 @@ function LabelModal({ task }) {
         setAnchorEl(null);
     };
 
-    const handleRequest = () => {
-        setInput("");
-    };
-
-    const handleSelectImage = (url) => {
-        setAnchorEl(null);
-    };
-
     const handleNewLabel = () => {
         if (input === "") return;
-        const payload = { task, input, selected };
-        dispatch(addLabel(payload));
+        const data = { task: task, text: input, color: selected };
+        dispatch(insertLabel(data));
         setInput("");
         setSelected("");
         handleClose();
@@ -129,12 +117,7 @@ function LabelModal({ task }) {
                             fullWidth
                             required
                         />
-                        <Grid
-                            container
-                            spacing={0}
-                            justifyContent="center"
-                            spacing={1}
-                        >
+                        <Grid container justifyContent="center" spacing={1}>
                             {Object.keys(colors).map((key, ind) => (
                                 <Grid item key={ind} xs={4}>
                                     <Box
@@ -151,26 +134,6 @@ function LabelModal({ task }) {
                                         }}
                                         onClick={() => setSelected(key)}
                                     ></Box>
-                                </Grid>
-                            ))}
-                        </Grid>
-
-                        <Stack
-                            direction="row"
-                            alignItems="center"
-                            spacing={1}
-                            sx={{ color: "#BDBDBD" }}
-                        >
-                            <LabelIcon />
-                            <Typography variant="body2">Available</Typography>
-                        </Stack>
-                        <Grid spacing={1} container>
-                            {actualBoard.labels.map((label) => (
-                                <Grid item>
-                                    <Label
-                                        text={label.text}
-                                        color={label.color}
-                                    />
                                 </Grid>
                             ))}
                         </Grid>

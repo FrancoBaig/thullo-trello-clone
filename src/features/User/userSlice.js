@@ -6,6 +6,7 @@ import {
     getBoardColumns,
     createBoard,
     createTaskService,
+    insertLabelService,
     updateDescription,
     updateTaskPositionService,
     updateTaskColumnService,
@@ -34,7 +35,6 @@ const initialState = {
             id: "board-1",
             title: "Devchallenges Board",
             isPrivate: true,
-            labels: [],
             description:
                 "Ideas are created and share here through a card. Here you can describe what you'd like to accomplish. For example you can follow three simple questions to create the card relatedto your idea: * Why ? (Why do you wish to do it ?) * What ?(What it is it, what are the goals, who is concerned) * How? (How do you think you can do it ? What are the requiredsteps ?) After creation, you can move your card to the todolist.",
             image_url:
@@ -305,7 +305,7 @@ export const userSlice = createSlice({
                         url_cover: t.coverUrl,
                         content: t.content,
                         description: "", // falta
-                        labels: [], // falta
+                        labels: t.labels,
                     },
                 };
             }
@@ -378,11 +378,11 @@ export const userSlice = createSlice({
             };
         },
         addLabel(state, action) {
-            const { task, input, selected } = action.payload;
+            const { task, text, color } = action.payload;
 
             const newLabel = {
-                text: input,
-                color: selected,
+                text: text,
+                color: color,
             };
 
             const newTask = {
@@ -751,6 +751,17 @@ export const deleteUserHasBoard = (data) => {
         try {
             await deleteUserHasBoardService(data);
             dispatch(removeMember(data.userId));
+        } catch (err) {
+            console.log(err);
+        }
+    };
+};
+
+export const insertLabel = (data) => {
+    return async (dispatch) => {
+        try {
+            await insertLabelService(data);
+            dispatch(addLabel(data));
         } catch (err) {
             console.log(err);
         }
