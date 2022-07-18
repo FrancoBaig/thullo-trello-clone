@@ -7,7 +7,6 @@ function BoardCard({ id, title, image_url }) {
     return (
         <Card
             sx={{
-                maxWidth: 345,
                 minWidth: 220,
                 padding: "1rem",
                 cursor: "pointer",

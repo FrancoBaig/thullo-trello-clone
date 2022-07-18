@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import Navbar from "../components/Navbar";
-import BoardCard from "../components/Board/BoardCard";
+
+// Components
 import CreateBoardModal from "../components/Board/CreateBoardModal";
+import BoardCard from "../components/Board/BoardCard";
+import Navbar from "../components/Navbar";
 
 // Redux
 import { useSelector } from "react-redux";
@@ -10,13 +12,14 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 // MUI
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
 import AddIcon from "@mui/icons-material/Add";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
 function Boards() {
     const boards = useSelector((state) => state.user.data);
@@ -61,7 +64,10 @@ function Boards() {
                     {Object.keys(boards).map((key, index) => (
                         <Grid
                             item
-                            xs={3}
+                            xs={12}
+                            sm={6}
+                            sd={4}
+                            md={3}
                             key={index}
                             onClick={() =>
                                 handleRedirectToBoard(boards[key].id)
