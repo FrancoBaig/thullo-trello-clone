@@ -242,13 +242,15 @@ function Column({ column, tasks }) {
                                                         )
                                                     )}
                                                 </Grid>
+                                                {/* V2: assign task to member
                                                 <Stack
                                                     direction="row"
                                                     justifyContent="space-between"
                                                     alignItems="center"
                                                 >
                                                     <CustomAddButton />
-                                                </Stack>
+                                                </Stack> 
+                                                */}
                                             </Stack>
                                             {draggableProvided.placeholder}
                                         </Card>

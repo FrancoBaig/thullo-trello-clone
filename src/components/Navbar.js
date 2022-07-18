@@ -137,6 +137,8 @@ function Navbar() {
                         )}
                     </Toolbar>
                     <Toolbar sx={{ gap: 2 }}>
+                        {/* V2: search public boards
+                        
                         <FormControl
                             sx={{
                                 position: "relative",
@@ -161,6 +163,7 @@ function Navbar() {
                                 Search
                             </Button>
                         </FormControl>
+                         */}
 
                         <Box sx={{ display: "flex", alignItems: "center" }}>
                             {userImg ? (
