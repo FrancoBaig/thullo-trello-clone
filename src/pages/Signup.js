@@ -15,6 +15,7 @@ import Box from "@mui/material/Box";
 // Redux
 import { loginUser, signUpUser } from "../features/User/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { setLoginError } from "../features/User/helperSlice";
 
 // React router
 import { useNavigate } from "react-router-dom";
@@ -52,6 +53,13 @@ function Signup() {
         navigate("/", { replace: true });
     }, [helper.loading.login, user]);
 
+    useEffect(() => {
+        if (!helper.success.signup) return;
+
+        dispatch(setLoginError(""));
+        setIsLogin(true);
+    }, [helper.success.signup]);
+
     const handleSignUp = async (e) => {
         e.preventDefault();
 
@@ -70,7 +78,6 @@ function Signup() {
             };
 
             dispatch(signUpUser(dataSignUp));
-            dispatch(loginUser({ email, password }));
         }
     };
 

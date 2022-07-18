@@ -58,7 +58,6 @@ function Navbar() {
     const userName = state.user.name;
     const { boardId } = useParams();
     const media = useMediaQuery("(min-width:600px)");
-    console.log("media", media);
 
     useEffect(() => {
         let board = state.data[boardId];

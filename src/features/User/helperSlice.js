@@ -8,6 +8,10 @@ const initialState = {
     },
     error: {
         login: "",
+        signup: "",
+    },
+    success: {
+        signup: false,
     },
 };
 
@@ -58,6 +62,16 @@ export const helperSlice = createSlice({
                 },
             };
         },
+        setSignupSuccess(state, action) {
+            const value = action.payload;
+
+            return {
+                ...state,
+                success: {
+                    signup: value,
+                },
+            };
+        },
     },
 });
 
@@ -66,5 +80,6 @@ export const {
     setLoadingBoard,
     setLoadingLogin,
     setLoginError,
+    setSignupSuccess,
 } = helperSlice.actions;
 export default helperSlice.reducer;
