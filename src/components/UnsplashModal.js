@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
-import FormControl, { useFormControl } from "@mui/material/FormControl";
-import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
-import ImageList from "@mui/material/ImageList";
+// MUI
 import ImageListItem from "@mui/material/ImageListItem";
-import Box from "@mui/material/Box";
+import FormControl from "@mui/material/FormControl";
+import Typography from "@mui/material/Typography";
 import ImageIcon from "@mui/icons-material/Image";
+import ImageList from "@mui/material/ImageList";
+import InputBase from "@mui/material/InputBase";
+import { styled } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import Menu from "@mui/material/Menu";
 
 import SkeletonGrid from "./Skeleton";
 import useUnsplash from "../services/unsplash";
@@ -48,7 +47,7 @@ function UnsplashModal({ setUrlCover }) {
     const open = Boolean(anchorEl);
     const [input, setInput] = useState("");
 
-    const { data, loading, error, getData } = useUnsplash(
+    const { data, loading, getData } = useUnsplash(
         `search/photos?page=1&per_page=12&query=office&client_id=${process.env.REACT_APP_ACCESS_KEY}`
     );
 

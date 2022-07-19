@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 
 // MUI
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
@@ -38,16 +37,6 @@ const BoardButton = styled(Button)(({ theme }) => ({
     "&:hover": {
         backgroundColor: theme.palette.secondary.main,
     },
-}));
-
-const InputSearch = styled(InputBase)(({ theme }) => ({
-    color: theme.palette.text.secondary,
-    fontSize: 10,
-    fontWeight: 500,
-    borderRadius: 8,
-    border: "1px solid #FFFFFF",
-    paddingLeft: "1rem",
-    boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
 }));
 
 function Navbar() {
