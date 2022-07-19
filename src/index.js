@@ -13,6 +13,7 @@ import { store } from "./app/store";
 
 // React router
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import PrivateRoute from "./components/PrivateRoute";
 
 // Theme
 import { ThemeProvider } from "@mui/material/styles";
@@ -26,9 +27,11 @@ root.render(
         <Provider store={store}>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/signup" element={<Signup />} />
-                    <Route path="/" element={<Boards />} />
-                    <Route path="/:boardId" element={<App />} />
+                    <Route element={<PrivateRoute />}>
+                        <Route path="/" exact element={<Boards />} />
+                        <Route path="/:boardId" element={<App />} />
+                    </Route>
+                    <Route path="/login" element={<Signup />} />
                 </Routes>
             </BrowserRouter>
         </Provider>

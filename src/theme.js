@@ -1,6 +1,4 @@
-import { lightGreen } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
-const { palette } = createTheme();
 
 export const theme = createTheme({
     palette: {
@@ -17,6 +15,7 @@ export const theme = createTheme({
             main: "#dae4fd",
             contrastText: "#2c81ea",
         },
+
         red: {
             main: "#FFEBEB",
             contrastText: "#EB5757",
