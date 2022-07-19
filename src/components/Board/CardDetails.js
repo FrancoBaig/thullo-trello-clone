@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from "react";
 
 // Redux
-import { useDispatch, useSelector } from "react-redux";
 import { updateTask } from "../../features/User/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 // MUI
-import Comments from "./Comments";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import ArticleIcon from "@mui/icons-material/Article";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import DialogActions from "@mui/material/DialogActions";
+import GroupIcon from "@mui/icons-material/Group";
+import CloseIcon from "@mui/icons-material/Close";
+import InputBase from "@mui/material/InputBase";
+import CardMedia from "@mui/material/CardMedia";
+import EditIcon from "@mui/icons-material/Edit";
+import { styled } from "@mui/material/styles";
+import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-
-import GroupIcon from "@mui/icons-material/Group";
-import ArticleIcon from "@mui/icons-material/Article";
-import EditIcon from "@mui/icons-material/Edit";
-import CardMedia from "@mui/material/CardMedia";
-
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Comments from "./Comments";
 
+// Components
 import UnsplashModal from "../UnsplashModal";
 import LabelModal from "../Label/LabelModal";
 
@@ -52,7 +54,6 @@ const OptionButton = styled(Button)(({ theme }) => ({
 
 function CardDetails({ onClose, open, task, column }) {
     const dispatch = useDispatch();
-    const actualBoard = useSelector((state) => state.user.actualBoard);
     const [editing, setEditing] = useState(false);
     const [editingTitle, setEditingTitle] = useState(false);
     const [openCard, setOpenCard] = useState(task);
@@ -61,6 +62,7 @@ function CardDetails({ onClose, open, task, column }) {
         openCard.description
     );
     const [inputName, setInputName] = useState(openCard.content);
+    const matches = useMediaQuery("(min-width:500px)");
 
     useEffect(() => {
         handleNewCover();
@@ -106,23 +108,46 @@ function CardDetails({ onClose, open, task, column }) {
     };
 
     return (
-        <Dialog onClose={onClose} open={open}>
-            <Grid container spacing={2} sx={{ padding: "2rem" }}>
+        <Dialog
+            onClose={onClose}
+            open={open}
+            fullScreen={!matches}
+            sx={{ padding: { xs: "4rem", sm: "0" } }}
+        >
+            {!matches ? (
+                <DialogActions>
+                    <Stack>
+                        <IconButton onClick={onClose}>
+                            <CloseIcon />
+                        </IconButton>
+                    </Stack>
+                </DialogActions>
+            ) : (
+                ""
+            )}
+            <Grid
+                container
+                spacing={2}
+                sx={{
+                    padding: { xs: "3rem", sm: "2rem" },
+                    minWidth: { sm: "50rem" },
+                }}
+            >
                 {openCard.url_cover !== null ? (
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sx={{ pt: 0 }}>
                         <CardMedia
                             component="img"
                             height="140"
                             image={openCard.url_cover}
                             alt="green iguana"
-                            sx={{ borderRadius: 1 }}
+                            sx={{ borderRadius: 1, pt: 0 }}
                         />
                     </Grid>
                 ) : (
                     ""
                 )}
 
-                <Grid item xs={8}>
+                <Grid item xs={6} sm={8}>
                     <Stack direction="row" spacing={1}>
                         {editingTitle ? (
                             <>
@@ -245,16 +270,8 @@ function CardDetails({ onClose, open, task, column }) {
                     <Comments />
                 </Grid>
 
-                <Grid item xs={4}>
+                <Grid item xs={6} sm={4}>
                     <Stack spacing={1}>
-                        <OptionButton
-                            variant="contained"
-                            color="secondary"
-                            fullWidth
-                            startIcon={<GroupIcon />}
-                        >
-                            Members
-                        </OptionButton>
                         <LabelModal task={openCard} />
                         <UnsplashModal setUrlCover={setUrlCover} />
                     </Stack>

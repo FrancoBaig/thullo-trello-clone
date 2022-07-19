@@ -70,7 +70,10 @@ function BoardDrawer({ state, setState }) {
                 },
             }}
         >
-            <Stack sx={{ width: "33rem", padding: "2rem" }} spacing={2}>
+            <Stack
+                sx={{ width: { xs: "40rem", sx: "33rem" }, padding: "2rem" }}
+                spacing={2}
+            >
                 <Typography variant="h4">Menu</Typography>
                 <Divider />
 

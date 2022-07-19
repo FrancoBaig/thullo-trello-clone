@@ -113,12 +113,18 @@ function Navbar() {
                                 />
                                 <BoardButton
                                     variant="contained"
-                                    startIcon={<MenuIcon fontSize="large" />}
+                                    startIcon={<MenuIcon size="small" />}
                                     onClick={() =>
                                         navigate("/", { replace: true })
                                     }
+                                    sx={{
+                                        fontSize: {
+                                            xs: "1.4rem",
+                                            sm: "1.6rem",
+                                        },
+                                    }}
                                 >
-                                    All board
+                                    All boards
                                 </BoardButton>
                             </>
                         ) : (
@@ -154,7 +160,12 @@ function Navbar() {
                         </FormControl>
                          */}
 
-                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                        >
                             {userImg ? (
                                 <ProfilePhoto
                                     upploadedImage={userImg}
@@ -182,13 +193,11 @@ function Navbar() {
                                     ml: "1rem",
                                     fontWeight: "500",
                                     fontSize: "1.1rem",
+                                    display: { xs: "none", sm: "unset" },
                                 }}
                             >
                                 {userName}
                             </Typography>
-                            <IconButton>
-                                <ExpandMoreIcon />
-                            </IconButton>
                         </Box>
                     </Toolbar>
                 </Box>
