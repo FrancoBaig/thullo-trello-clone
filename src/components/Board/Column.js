@@ -12,26 +12,25 @@ import {
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
 // MUI
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import { styled } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
-import CustomAddButton from "./CustomAddButton";
-import Button from "@mui/material/Button";
 import InputBase from "@mui/material/InputBase";
+import CardMedia from "@mui/material/CardMedia";
+import { styled } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
-import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
-import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import Paper from "@mui/material/Paper";
+import Menu from "@mui/material/Menu";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
+// Components
 import CardDetails from "./CardDetails";
 import Label from "../Label/Label";
-
 import Input from "./Input";
 
 const Card = styled(Paper)(({ theme }) => ({
@@ -187,6 +186,7 @@ function Column({ column, tasks }) {
                                     droppableSnapshot.isDraggingOver
                                         ? "#e2e8f6"
                                         : "",
+                                minHeight: "1rem",
                             }}
                         >
                             {tasks.map((task, index) => (
