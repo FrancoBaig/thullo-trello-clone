@@ -1,7 +1,9 @@
 import React from "react";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
+
+// MUI
 import Typography from "@mui/material/Typography";
+import CardMedia from "@mui/material/CardMedia";
+import Card from "@mui/material/Card";
 
 function BoardCard({ id, title, image_url }) {
     return (

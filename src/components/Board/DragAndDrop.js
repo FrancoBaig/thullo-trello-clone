@@ -3,6 +3,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import Column from "./Column";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
+import Skeleton from "@mui/material/Skeleton";
 
 import AddColumn from "./AddColumn";
 
@@ -34,6 +35,7 @@ function DragAndDrop() {
     const dispatch = useDispatch();
     const { boardId } = useParams();
     const actualBoard = useSelector((state) => state.user.actualBoard);
+    const loading = useSelector((state) => state.helper.loading.board);
 
     const onDragEnd = (result) => {
         const { destination, source } = result;
@@ -150,37 +152,49 @@ function DragAndDrop() {
     };
 
     return (
-        <Box
-            sx={{
-                backgroundColor: "#f8f9fd",
-                borderRadius: "24px",
-                mt: "2rem",
-                padding: "1.5rem 2.5rem",
-                minHeight: "70vh",
-            }}
-        >
-            <Stack direction="row" spacing={3}>
-                <DragDropContext onDragEnd={onDragEnd}>
-                    {actualBoard.columnOrder.map((columnId) => {
-                        const id = parseInt(columnId);
-                        const column = actualBoard.columns[id];
-                        const tasks = column.taskIds.map(
-                            (taskId) => actualBoard.tasks[taskId]
-                        );
+        <>
+            {loading ? (
+                <Box>
+                    <Skeleton
+                        variant="rectangular"
+                        height={"70vh"}
+                        sx={{ mt: "2rem" }}
+                    />
+                </Box>
+            ) : (
+                <Box
+                    sx={{
+                        backgroundColor: "#f8f9fd",
+                        borderRadius: "24px",
+                        mt: "2rem",
+                        padding: "1.5rem 2.5rem",
+                        minHeight: "70vh",
+                    }}
+                >
+                    <Stack direction="row" spacing={3}>
+                        <DragDropContext onDragEnd={onDragEnd}>
+                            {actualBoard.columnOrder.map((columnId) => {
+                                const id = parseInt(columnId);
+                                const column = actualBoard.columns[id];
+                                const tasks = column.taskIds.map(
+                                    (taskId) => actualBoard.tasks[taskId]
+                                );
 
-                        return (
-                            <Column
-                                key={column.id}
-                                column={column}
-                                tasks={tasks}
-                                state={actualBoard}
-                            />
-                        );
-                    })}
-                </DragDropContext>
-                <AddColumn />
-            </Stack>
-        </Box>
+                                return (
+                                    <Column
+                                        key={column.id}
+                                        column={column}
+                                        tasks={tasks}
+                                        state={actualBoard}
+                                    />
+                                );
+                            })}
+                        </DragDropContext>
+                        <AddColumn />
+                    </Stack>
+                </Box>
+            )}
+        </>
     );
 }
 

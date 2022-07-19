@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
+import Skeleton from "@mui/material/Skeleton";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 const OptionButton = styled(Button)(({ theme }) => ({
@@ -30,6 +31,7 @@ const OptionButton = styled(Button)(({ theme }) => ({
 function BoardNav() {
     const [state, setState] = useState(false);
     const store = useSelector((store) => store.user.data);
+    const loading = useSelector((store) => store.helper.loading.board);
 
     const dispatch = useDispatch();
     const boardId = useParams();
@@ -39,23 +41,33 @@ function BoardNav() {
     }, [boardId]);
 
     return (
-        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <AddMember />
-            <OptionButton
-                variant="contained"
-                color="secondary"
-                startIcon={<MoreHorizIcon />}
-                sx={{
-                    "& .MuiSvgIcon-fontSizeMedium": {
-                        fontSize: "2rem",
-                    },
-                }}
-                onClick={() => setState(true)}
-            >
-                Show Menu
-            </OptionButton>
-            <BoardDrawer state={state} setState={setState} store={store} />
-        </Box>
+        <>
+            {loading ? (
+                <Skeleton variant="rectangular" height={45} />
+            ) : (
+                <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                    <AddMember />
+                    <OptionButton
+                        variant="contained"
+                        color="secondary"
+                        startIcon={<MoreHorizIcon />}
+                        sx={{
+                            "& .MuiSvgIcon-fontSizeMedium": {
+                                fontSize: "2rem",
+                            },
+                        }}
+                        onClick={() => setState(true)}
+                    >
+                        Show Menu
+                    </OptionButton>
+                    <BoardDrawer
+                        state={state}
+                        setState={setState}
+                        store={store}
+                    />
+                </Box>
+            )}
+        </>
     );
 }
 
