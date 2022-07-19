@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:3001/api/board";
+const baseURL = "https://thullo-git.herokuapp.com/api/board";
 
 export const getUserBoards = async (token) => {
     try {

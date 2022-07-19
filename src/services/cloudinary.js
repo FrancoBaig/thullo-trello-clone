@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:3001/api/photo";
+const baseURL = "https://thullo-git.herokuapp.com/api/photo";
 
 export const sendPhoto = async (data) => {
     try {

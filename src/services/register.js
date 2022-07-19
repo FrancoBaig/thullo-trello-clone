@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:3001/api/register";
+const baseURL = "https://thullo-git.herokuapp.com/api/register";
 
 export const loginService = async (dataUser) => {
     try {

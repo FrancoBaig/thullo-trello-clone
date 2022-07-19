@@ -109,7 +109,6 @@ function Navbar() {
                                     sx={{
                                         fontSize: {
                                             xs: "1.4rem",
-                                            sm: "1.6rem",
                                         },
                                     }}
                                 >
