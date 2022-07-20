@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 
 // MUI
-import InputBase from "@mui/material/InputBase";
 import { styled } from "@mui/material/styles";
+import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import AddIcon from "@mui/icons-material/Add";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
