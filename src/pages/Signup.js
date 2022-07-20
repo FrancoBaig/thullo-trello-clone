@@ -51,6 +51,7 @@ function Signup() {
         setName("");
         setPassword("");
         navigate("/", { replace: true });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [helper.loading.login, user]);
 
     useEffect(() => {
@@ -58,6 +59,7 @@ function Signup() {
 
         dispatch(setLoginError(""));
         setIsLogin(true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [helper.success.signup]);
 
     const handleSignUp = async (e) => {

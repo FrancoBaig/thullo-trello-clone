@@ -45,10 +45,6 @@ function CardDetails({ onClose, open, task, column }) {
     const [inputName, setInputName] = useState(openCard.content);
     const matches = useMediaQuery("(min-width:500px)");
 
-    useEffect(() => {
-        handleNewCover();
-    }, [urlCover]);
-
     const handleEdit = () => {
         let newTask = {};
         const idColumn = column.id;
@@ -87,6 +83,12 @@ function CardDetails({ onClose, open, task, column }) {
         dispatch(updateTask(newTask, idColumn, "cover"));
         setOpenCard(newTask);
     };
+
+    useEffect(() => {
+        handleNewCover();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [urlCover]);
 
     return (
         <Dialog

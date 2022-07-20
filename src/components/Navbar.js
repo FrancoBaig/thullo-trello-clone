@@ -51,6 +51,7 @@ function Navbar() {
         let board = state.data[boardId];
         if (board === undefined) return;
         dispatch(changeActualBoard(board));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [boardId]);
 
     let navigate = useNavigate();
