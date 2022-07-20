@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
 
 // Redux
-import { useDispatch, useSelector } from "react-redux";
 import { getColumns } from "../../features/User/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
-// Compoennts
-import BoardDrawer from "./BoardDrawer";
-import AddMember from "./members/AddMember";
-
+// React Router
 import { useParams } from "react-router-dom";
 
+// Components
+import AddMember from "./members/AddMember";
+import BoardDrawer from "./BoardDrawer";
+
 // MUI
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { styled } from "@mui/material/styles";
 import Skeleton from "@mui/material/Skeleton";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 
 const OptionButton = styled(Button)(({ theme }) => ({
     boxShadow: "none",
@@ -38,7 +39,7 @@ function BoardNav() {
 
     useEffect(() => {
         dispatch(getColumns(boardId.boardId));
-    }, [boardId]);
+    }, [boardId, dispatch]);
 
     return (
         <>

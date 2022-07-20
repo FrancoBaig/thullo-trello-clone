@@ -6,19 +6,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { createNewBoard } from "../../features/User/userSlice";
 
 // MUI
-import Dialog from "@mui/material/Dialog";
-import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
-import Button from "@mui/material/Button";
-import CardMedia from "@mui/material/CardMedia";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-
-import LockIcon from "@mui/icons-material/Lock";
-import AddIcon from "@mui/icons-material/Add";
 import PublicIcon from "@mui/icons-material/Public";
+import Typography from "@mui/material/Typography";
+import LockIcon from "@mui/icons-material/Lock";
+import InputBase from "@mui/material/InputBase";
+import CardMedia from "@mui/material/CardMedia";
+import { styled } from "@mui/material/styles";
+import AddIcon from "@mui/icons-material/Add";
+import Dialog from "@mui/material/Dialog";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
 
 const Input = styled(InputBase)(({ theme }) => ({
     backgroundColor: "#fafbfc",

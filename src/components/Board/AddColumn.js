@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 
+// Redux
+import { createNewColumn } from "../../features/User/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+
+// Components
+import Input from "./Input";
+
 // MUI
 import { styled } from "@mui/material/styles";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-
-// Redux
-import { useDispatch, useSelector } from "react-redux";
-import { createNewColumn } from "../../features/User/userSlice";
-
-import Input from "./Input";
 
 const AddColumnButton = styled(Button)(({ theme }) => ({
     backgroundColor: theme.palette.light.main,

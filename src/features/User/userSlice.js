@@ -112,7 +112,7 @@ export const userSlice = createSlice({
                 ...state,
                 actualBoard: {
                     ...state.actualBoard,
-                    members: [...state.actualBoard.members, ...data],
+                    members: [data],
                 },
             };
         },
@@ -683,6 +683,8 @@ export const updateTask = (newTask, columnId, mode) => {
                     console.log(err);
                 }
                 break;
+            default:
+                return;
         }
 
         dispatch(setUpdatedTask(newTask));

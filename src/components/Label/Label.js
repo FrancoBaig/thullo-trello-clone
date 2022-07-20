@@ -1,6 +1,6 @@
 import React from "react";
 import Chip from "@mui/material/Chip";
-import { alpha, styled } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 
 const CustomChip = styled(Chip)(({ theme }) => ({
     fontFamily: "Noto Sans",

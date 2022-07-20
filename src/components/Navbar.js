@@ -18,7 +18,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import InputBase from "@mui/material/InputBase";
 import { styled } from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
 import Toolbar from "@mui/material/Toolbar";

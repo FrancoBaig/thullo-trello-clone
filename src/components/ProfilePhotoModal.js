@@ -4,12 +4,13 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changePhoto } from "../features/User/userSlice";
 
-import Dialog from "@mui/material/Dialog";
-import Stack from "@mui/material/Stack";
-import CardMedia from "@mui/material/CardMedia";
+// MUI
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import CardMedia from "@mui/material/CardMedia";
+import { styled } from "@mui/material/styles";
+import Dialog from "@mui/material/Dialog";
 import Button from "@mui/material/Button";
-import { alpha, styled } from "@mui/material/styles";
+import Stack from "@mui/material/Stack";
 
 const Input = styled("input")({
     display: "none",
@@ -98,7 +99,7 @@ function ProfilePhotoModal({ open, setOpen }) {
                             fullWidth
                             type="submit"
                             onClick={(e) => handleSubmit(e)}
-                            disabled={image == ""}
+                            disabled={image === ""}
                         >
                             Send
                         </Button>
