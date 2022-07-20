@@ -6,6 +6,7 @@ import { changePhoto } from "../features/User/userSlice";
 
 // MUI
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
@@ -20,22 +21,33 @@ function ProfilePhotoModal({ open, setOpen }) {
     const dispatch = useDispatch();
     const [file, setFile] = useState("");
     const [image, setImage] = useState("");
+    const [errorSize, setErrorSize] = useState(false);
     const state = useSelector((state) => state.user);
     const userName = state.user.name;
 
     const handleFile = (e) => {
         const file = e.target.files[0];
-        setFile(file);
-        previewFiles(file);
+        setFile("");
+        setImage("");
+        setErrorSize(false);
+
+        if (file.size > 10000) {
+            setErrorSize(true);
+        } else {
+            setFile(file);
+            previewFiles(file);
+        }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!file) return;
+
         const data = {
             image: image,
             token: state.user.token,
         };
+
         dispatch(changePhoto(data));
         handleClose();
     };
@@ -68,6 +80,13 @@ function ProfilePhotoModal({ open, setOpen }) {
                 )}
 
                 <form onSubmit={(e) => handleSubmit(e)}>
+                    {errorSize ? (
+                        <Typography variant="h5" color="error" sx={{ mb: 1 }}>
+                            Image too big
+                        </Typography>
+                    ) : (
+                        ""
+                    )}
                     <label htmlFor="contained-button-file">
                         <Input
                             accept="image/*"
@@ -99,7 +118,7 @@ function ProfilePhotoModal({ open, setOpen }) {
                             fullWidth
                             type="submit"
                             onClick={(e) => handleSubmit(e)}
-                            disabled={image === ""}
+                            disabled={image === "" || errorSize}
                         >
                             Send
                         </Button>

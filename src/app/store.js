@@ -8,10 +8,3 @@ export const store = configureStore({
         helper: helperReducer,
     },
 });
-
-store.subscribe(() => {
-    const storeNow = store.getState();
-    console.log("---------------------");
-    console.log("Store now", storeNow);
-    console.log("---------------------");
-});

@@ -108,8 +108,6 @@ export const userSlice = createSlice({
 
             delete data[0].boardId;
 
-            console.log("Se prende");
-
             return {
                 ...state,
                 actualBoard: {
@@ -738,6 +736,7 @@ export const assignBoardToUser = (data) => {
             await assignBoardToUserService(data.user);
 
             const users = await getAllUsers(data.boardId);
+
             dispatch(setUserToBoard(users));
         } catch (err) {
             console.log(err);
