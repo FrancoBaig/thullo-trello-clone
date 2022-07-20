@@ -97,7 +97,6 @@ function CreateBoardModal({ onClose, open }) {
                     onChange={({ target }) => setBoardName(target.value)}
                     required
                     id="BoardName"
-                    helperText="No input"
                     error={noInput}
                 />
                 {noInput ? (
