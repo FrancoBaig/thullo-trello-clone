@@ -7,20 +7,20 @@ import {
     deleteUserHasBoard,
 } from "../../features/User/userSlice";
 
-// MUI
-import Drawer from "@mui/material/Drawer";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
-import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
-import TextareaAutosize from "@mui/material/TextareaAutosize";
-import { alpha, styled } from "@mui/material/styles";
-
-import PersonPinIcon from "@mui/icons-material/PersonPin";
-import FeedIcon from "@mui/icons-material/Feed";
-
+// Components
 import ProfilePhoto from "../ProfilePhoto";
+
+// MUI
+import TextareaAutosize from "@mui/material/TextareaAutosize";
+import PersonPinIcon from "@mui/icons-material/PersonPin";
+import Typography from "@mui/material/Typography";
+import FeedIcon from "@mui/icons-material/Feed";
+import { styled } from "@mui/material/styles";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
 
 const CustomTextArea = styled(TextareaAutosize)(({ theme }) => ({
     fontFamily: theme.typography.h1.fontFamily,

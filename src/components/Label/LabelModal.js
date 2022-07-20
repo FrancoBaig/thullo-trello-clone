@@ -13,7 +13,7 @@ import Box from "@mui/material/Box";
 
 // Redux
 import { insertLabel } from "../../features/User/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const LabelButton = styled(Button)(({ theme }) => ({
     boxShadow: "none",
@@ -53,7 +53,6 @@ const colors = {
 
 function LabelModal({ task }) {
     const dispatch = useDispatch();
-    const actualBoard = useSelector((state) => state.user.actualBoard);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const [input, setInput] = useState("");

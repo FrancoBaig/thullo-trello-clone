@@ -1,11 +1,16 @@
 import React from "react";
-import { DragDropContext } from "react-beautiful-dnd";
-import Column from "./Column";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import Skeleton from "@mui/material/Skeleton";
 
+// DND
+import { DragDropContext } from "react-beautiful-dnd";
+
+// MUI
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+
+// Components
 import AddColumn from "./AddColumn";
+import Column from "./Column";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -14,9 +19,6 @@ import {
     updateTaskPositions,
     updateTwoColumnsPosition,
 } from "../../features/User/userSlice";
-
-// Router
-import { useParams } from "react-router-dom";
 
 const reorderColumnList = (sourceCol, startIndex, endIndex) => {
     const newTaskIds = [...sourceCol.taskIds];
@@ -33,7 +35,6 @@ const reorderColumnList = (sourceCol, startIndex, endIndex) => {
 
 function DragAndDrop() {
     const dispatch = useDispatch();
-    const { boardId } = useParams();
     const actualBoard = useSelector((state) => state.user.actualBoard);
     const loading = useSelector((state) => state.helper.loading.board);
 

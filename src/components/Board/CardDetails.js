@@ -2,15 +2,14 @@ import React, { useState, useEffect } from "react";
 
 // Redux
 import { updateTask } from "../../features/User/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 // MUI
 import useMediaQuery from "@mui/material/useMediaQuery";
+import DialogActions from "@mui/material/DialogActions";
 import ArticleIcon from "@mui/icons-material/Article";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import DialogActions from "@mui/material/DialogActions";
-import GroupIcon from "@mui/icons-material/Group";
 import CloseIcon from "@mui/icons-material/Close";
 import InputBase from "@mui/material/InputBase";
 import CardMedia from "@mui/material/CardMedia";
@@ -21,7 +20,6 @@ import Dialog from "@mui/material/Dialog";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Comments from "./Comments";
 
 // Components
 import UnsplashModal from "../UnsplashModal";
@@ -32,24 +30,7 @@ const Input = styled(InputBase)(({ theme }) => ({
     padding: "1rem 1.5rem",
     border: `1px solid #dfe1e6`,
     fontSize: "1.4rem",
-
     borderRadius: theme.shape.borderRadius,
-}));
-
-const OptionButton = styled(Button)(({ theme }) => ({
-    boxShadow: "none",
-    padding: "1 2rem",
-    fontSize: "1.4rem",
-    textTransform: "capitalize",
-    justifyContent: "flex-start",
-    paddingLeft: "3rem",
-    gap: "1rem",
-    "&:hover": {
-        color: theme.palette.primary.contrastText,
-    },
-    "& .MuiSvgIcon-fontSizeMedium": {
-        fontSize: "1.4rem",
-    },
 }));
 
 function CardDetails({ onClose, open, task, column }) {
@@ -266,8 +247,6 @@ function CardDetails({ onClose, open, task, column }) {
                             )}
                         </Stack>
                     </Box>
-
-                    <Comments />
                 </Grid>
 
                 <Grid item xs={6} sm={4}>

@@ -12,7 +12,6 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 // MUI
-import useMediaQuery from "@mui/material/useMediaQuery";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import AddIcon from "@mui/icons-material/Add";
