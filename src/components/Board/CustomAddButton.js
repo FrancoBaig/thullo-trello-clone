@@ -78,7 +78,13 @@ function CustomAddButton({ size = "medium" }) {
                 boardId: actualBoard.id,
             };
 
-            dispatch(assignBoardToUser(user));
+            const boardId = actualBoard.id
+
+            const data = {
+                user: user,
+                boardId: boardId
+            }
+            dispatch(assignBoardToUser(data));
         }
 
         handleMenuClose();

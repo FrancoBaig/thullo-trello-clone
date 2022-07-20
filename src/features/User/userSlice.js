@@ -108,11 +108,13 @@ export const userSlice = createSlice({
 
             delete data[0].boardId;
 
+            console.log("Se prende");
+
             return {
                 ...state,
                 actualBoard: {
                     ...state.actualBoard,
-                    members: [...state.actualBoard.members, ...data],
+                    members: [...data],
                 },
             };
         },
@@ -416,6 +418,8 @@ export const userSlice = createSlice({
         },
         setNewBoard(state, action) {
             const boardData = action.payload;
+
+            console.log(boardData, "boardData");
 
             const newBoard = {
                 id: boardData.boardId,
@@ -728,13 +732,13 @@ export const updateBoardPrivacity = (data) => {
     };
 };
 
-export const assignBoardToUser = (user) => {
+export const assignBoardToUser = (data) => {
     return async (dispatch) => {
         try {
-            await assignBoardToUserService(user);
-            console.log([user]);
+            await assignBoardToUserService(data.user);
 
-            dispatch(setUserToBoard([user]));
+            const users = await getAllUsers(data.boardId);
+            dispatch(setUserToBoard(users));
         } catch (err) {
             console.log(err);
         }
