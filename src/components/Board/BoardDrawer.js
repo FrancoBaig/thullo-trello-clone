@@ -150,12 +150,12 @@ function BoardDrawer({ state, setState }) {
                     <Typography variant="body2">Team</Typography>
                 </Stack>
                 <Stack spacing={1}>
-                    {actualBoard.members.map((member) => (
+                    {actualBoard.members.map((member, index) => (
                         <Stack
                             direction="row"
                             alignItems="center"
                             justifyContent="space-between"
-                            key={member.userId}
+                            key={index}
                         >
                             <Stack
                                 direction="row"

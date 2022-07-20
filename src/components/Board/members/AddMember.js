@@ -18,11 +18,8 @@ function AddMember() {
             <TogglePrivate />
 
             <Stack direction="row" spacing={1}>
-                {members.map((member) => (
-                    <ProfilePhoto
-                        upploadedImage={member.imgUrl}
-                        key={member.userId}
-                    />
+                {members.map((member, index) => (
+                    <ProfilePhoto upploadedImage={member.imgUrl} key={index} />
                 ))}
             </Stack>
 
