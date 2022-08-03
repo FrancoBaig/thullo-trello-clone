@@ -35,34 +35,7 @@ const initialState = {
         token: "",
         img_id: "",
     },
-    data: {
-        1: {
-            id: "",
-            title: "",
-            isPrivate: true,
-            description: "",
-            image_url: "",
-            tasks: {
-                "task-1": {
-                    id: "",
-                    content: "",
-                    url_cover: "",
-                    description: "",
-                    labels: [],
-                },
-            },
-            columns: {
-                "col-1": {
-                    id: "col-1",
-                    title: "",
-                    taskIds: ["task-1"],
-                },
-            },
-            columnOrder: ["col-1"],
-            members: [],
-            admins: [],
-        },
-    },
+    data: {},
     actualBoard: {
         id: "",
         title: "",
