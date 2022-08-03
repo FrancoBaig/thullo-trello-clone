@@ -31,7 +31,7 @@ function ProfilePhotoModal({ open, setOpen }) {
         setImage("");
         setErrorSize(false);
 
-        if (file.size > 10000) {
+        if (file.size > 100000) {
             setErrorSize(true);
         } else {
             setFile(file);
