@@ -116,6 +116,11 @@ function Column({ column, tasks }) {
         setNewCardInput("");
     };
 
+    const handleCancelNewCard = (e) => {
+        setAddCard(false);
+        setNewCardInput("");
+    };
+
     const handleColumnDelete = () => {
         dispatch(deleteColumnAndTask(column));
         handleMenuClose();
@@ -276,15 +281,30 @@ function Column({ column, tasks }) {
                                 setNewCardInput(target.value);
                             }}
                         />
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="success"
-                            size="small"
-                            onClick={(e) => handleNewCard(e)}
-                        >
-                            Save
-                        </Button>
+                        <Stack spacing={1} direction="row">
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="success"
+                                size="small"
+                                onClick={(e) => handleNewCard(e)}
+                            >
+                                Save
+                            </Button>
+                            <Button
+                                type="submit"
+                                variant="outlined"
+                                color="secondary"
+                                size="small"
+                                onClick={(e) => handleCancelNewCard(e)}
+                                sx={{
+                                    color: "#a9a9a9",
+                                    borderColor: "#a9a9a9",
+                                }}
+                            >
+                                Cancel
+                            </Button>
+                        </Stack>
                     </form>
                 </Card>
             ) : (
