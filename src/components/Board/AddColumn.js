@@ -49,7 +49,7 @@ function AddColumn() {
     };
 
     return (
-        <Box sx={{ minWidth: "25rem" }}>
+        <Box sx={{ minWidth: "25rem", maxWidth: "30rem" }}>
             {open ? (
                 <Input
                     input={columnName}
