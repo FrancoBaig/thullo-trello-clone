@@ -270,7 +270,7 @@ function Column({ column, tasks }) {
                     <form onSubmit={handleNewCard}>
                         <InputBase
                             placeholder="Enter a title for this card..."
-                            sx={{ fontSize: "1.4rem" }}
+                            sx={{ fontSize: "1.4rem", mb: "1rem" }}
                             value={newCardInput}
                             onChange={({ target }) => {
                                 setNewCardInput(target.value);
