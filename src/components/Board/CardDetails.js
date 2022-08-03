@@ -95,7 +95,9 @@ function CardDetails({ onClose, open, task, column }) {
             onClose={onClose}
             open={open}
             fullScreen={!matches}
-            sx={{ padding: { xs: "4rem", sm: "0" } }}
+            sx={{
+                padding: { xs: "4rem", sm: "0" },
+            }}
         >
             {!matches ? (
                 <DialogActions>
@@ -130,7 +132,7 @@ function CardDetails({ onClose, open, task, column }) {
                     ""
                 )}
 
-                <Grid item xs={6} sm={8}>
+                <Grid item xs={6} sm={8} sx={{ height: "70vh" }}>
                     <Stack direction="row" spacing={1}>
                         {editingTitle ? (
                             <>
