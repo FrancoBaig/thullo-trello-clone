@@ -370,7 +370,6 @@ export const userSlice = createSlice({
 
             const newBoard = {
                 ...state.actualBoard,
-                labels: [...state.actualBoard.labels, newLabel],
                 tasks: {
                     ...state.actualBoard.tasks,
                     [newTask.id]: newTask,
@@ -416,9 +415,6 @@ export const userSlice = createSlice({
         },
         setNewBoard(state, action) {
             const boardData = action.payload;
-
-            console.log(boardData, "boardData");
-
             const newBoard = {
                 id: boardData.boardId,
                 title: boardData.title,
