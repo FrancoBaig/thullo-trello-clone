@@ -5,6 +5,7 @@ import { updateTask } from "../../features/User/userSlice";
 import { useDispatch } from "react-redux";
 
 // MUI
+import TextareaAutosize from "@mui/material/TextareaAutosize";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import DialogActions from "@mui/material/DialogActions";
 import ArticleIcon from "@mui/icons-material/Article";
@@ -31,6 +32,16 @@ const Input = styled(InputBase)(({ theme }) => ({
     border: `1px solid #dfe1e6`,
     fontSize: "1.4rem",
     borderRadius: theme.shape.borderRadius,
+}));
+
+const CustomTextArea = styled(TextareaAutosize)(({ theme }) => ({
+    fontFamily: theme.typography.h1.fontFamily,
+    fontSize: "1.4rem",
+    resize: "vertical",
+    padding: ".5rem",
+    border: "1px solid #828282",
+    borderRadius: 4,
+    outline: "none",
 }));
 
 function CardDetails({ onClose, open, task, column }) {
@@ -137,7 +148,7 @@ function CardDetails({ onClose, open, task, column }) {
                         {editingTitle ? (
                             <>
                                 <Input
-                                    placeholder="description..."
+                                    placeholder="title..."
                                     value={inputName}
                                     onChange={({ target }) =>
                                         setInputName(target.value)
@@ -221,9 +232,12 @@ function CardDetails({ onClose, open, task, column }) {
                             </Box>
                             {editing || openCard.description === "" ? (
                                 <>
-                                    <Input
+                                    <CustomTextArea
+                                        aria-label="description"
+                                        minRows={3}
                                         placeholder="description..."
                                         value={inputDescription}
+                                        style={{ width: "100%" }}
                                         onChange={({ target }) =>
                                             setInputDescription(target.value)
                                         }
